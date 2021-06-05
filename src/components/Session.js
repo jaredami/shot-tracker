@@ -1,7 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Session.css";
 
 export default function Session(props) {
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [timer, setTimer] = useState("--:--");
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds + 1);
+      if (seconds >= 60) {
+        setSeconds(0);
+        setMinutes(minutes + 1);
+      }
+      const newTimer =
+        (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
+        ":" +
+        (seconds > 9 ? seconds : "0" + seconds);
+      console.log("newTimer", newTimer);
+      setTimer(newTimer);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [minutes, seconds]);
+
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
 
@@ -30,7 +50,7 @@ export default function Session(props) {
         <button onClick={() => handleMiss()}>Miss</button>
         <button onClick={() => handleMake()}>Make</button>
       </div>
-      <div>00:00</div>
+      <div>{timer}</div>
     </>
   );
 }
