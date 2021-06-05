@@ -30,6 +30,7 @@ export default function Session(props) {
         <button onClick={() => handleMiss()}>Miss</button>
         <button onClick={() => handleMake()}>Make</button>
       </div>
+      <div>00:00</div>
     </>
   );
 }

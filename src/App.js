@@ -3,7 +3,7 @@ import Session from "./components/Session";
 
 function App() {
   return (
-    <div>
+    <div className="main-wrapper">
       <h1 className="main-header">Shot Tracker</h1>
       <Session />
     </div>
