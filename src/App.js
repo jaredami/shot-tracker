@@ -4,11 +4,7 @@ import Session from "./components/Session";
 function App() {
   return (
     <div>
-      <h1>Shot Tracker</h1>
-      {/* <div className="buttons-container">
-        <button>Miss</button>
-        <button>Make</button>
-      </div> */}
+      <h1 className="main-header">Shot Tracker</h1>
       <Session />
     </div>
   );

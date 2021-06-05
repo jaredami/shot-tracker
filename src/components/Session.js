@@ -14,14 +14,18 @@ export default function Session(props) {
     setShotsMadeCount(shotsMadeCount + 1);
   }
 
+  function getPercentage() {
+    return shotsTakenCount
+      ? Math.floor((shotsMadeCount / shotsTakenCount) * 100) + "%"
+      : "--";
+  }
+
   return (
     <>
       <h2 className="session-stat">
         {shotsMadeCount}/{shotsTakenCount}
       </h2>
-      <h2 className="session-stat">
-        {((shotsMadeCount / shotsTakenCount) * 100).toFixed(3)}
-      </h2>
+      <h2 className="session-stat">{getPercentage()}</h2>
       <div className="buttons-container">
         <button onClick={() => handleMiss()}>Miss</button>
         <button onClick={() => handleMake()}>Make</button>
