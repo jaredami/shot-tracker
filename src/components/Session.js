@@ -43,12 +43,18 @@ export default function Session(props) {
   return (
     <>
       <div className="buttons-container">
-        <button onClick={() => handleMiss()}>Miss</button>
-        <button onClick={() => handleMake()}>Make</button>
+        <button className="make-miss-btn miss-btn" onClick={() => handleMiss()}>
+          MISS
+        </button>
+        <div className="timer-container">
+          <div className="timer">{timer}</div>
+        </div>
+        <button className="make-miss-btn make-btn" onClick={() => handleMake()}>
+          MAKE
+        </button>
       </div>
-      <div>{timer}</div>
       <h4 className="session-stat">
-        Made/Taken: {shotsMadeCount}/{shotsTakenCount}
+        Shots Made: {shotsMadeCount}/{shotsTakenCount}
       </h4>
       <h4 className="session-stat">Percentage: {getPercentage()}</h4>
     </>

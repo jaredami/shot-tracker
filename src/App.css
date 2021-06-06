@@ -6,7 +6,8 @@ body {
 
 .main-wrapper {
   text-align: center;
-  font-family: "Oswald", sans-serif;
+  font-family: "Share Tech Mono", monospace;
+  /* font-family: "Roboto", sans-serif; */
 }
 
 .main-header {
