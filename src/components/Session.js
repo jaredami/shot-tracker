@@ -42,15 +42,15 @@ export default function Session(props) {
 
   return (
     <>
-      <h2 className="session-stat">
-        {shotsMadeCount}/{shotsTakenCount}
-      </h2>
-      <h2 className="session-stat">{getPercentage()}</h2>
       <div className="buttons-container">
         <button onClick={() => handleMiss()}>Miss</button>
         <button onClick={() => handleMake()}>Make</button>
       </div>
       <div>{timer}</div>
+      <h4 className="session-stat">
+        Made/Taken: {shotsMadeCount}/{shotsTakenCount}
+      </h4>
+      <h4 className="session-stat">Percentage: {getPercentage()}</h4>
     </>
   );
 }

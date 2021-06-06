@@ -1,5 +1,12 @@
+body {
+  background: #202225;
+  height: 100%;
+  color: #f5f5f5;
+}
+
 .main-wrapper {
   text-align: center;
+  font-family: "Oswald", sans-serif;
 }
 
 .main-header {
