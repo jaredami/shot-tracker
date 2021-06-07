@@ -12,4 +12,8 @@ body {
 
 .main-header {
   text-align: center;
+  background-color: #414349;
+  width: 110vw;
+  padding: 1rem 0rem;
+  margin: 0;
 }

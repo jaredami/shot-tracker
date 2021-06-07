@@ -3,18 +3,18 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 3rem 0;
+  margin-top: 8rem;
 }
 
 .make-miss-btn {
   width: 8rem;
   height: 4rem;
-  background: #202225;
+  background-color: #414349;
   border: 2px solid #f5f5f5;
   border-radius: 4px;
   color: #f5f5f5;
   filter: brightness(110%);
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 .miss-btn {
   border-color: #c23b23;
