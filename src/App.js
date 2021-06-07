@@ -1,4 +1,5 @@
 import "./App.css";
+import Nav from "./components/Nav";
 import Session from "./components/Session";
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <div className="main-wrapper">
       <h1 className="main-header">SHOT TRACKER</h1>
       <Session />
+      <Nav />
     </div>
   );
 }
