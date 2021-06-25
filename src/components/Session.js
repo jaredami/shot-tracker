@@ -53,10 +53,10 @@ export default function Session(props) {
           MAKE
         </button>
       </div>
-      <h4 className="session-stat">
+      <p className="session-stat">
         Shots Made: {shotsMadeCount}/{shotsTakenCount}
-      </h4>
-      <h4 className="session-stat">Percentage: {getPercentage()}</h4>
+      </p>
+      <p className="session-stat">Percentage: {getPercentage()}</p>
     </>
   );
 }
