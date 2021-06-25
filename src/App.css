@@ -1,3 +1,13 @@
+:root {
+  --background-primary: #222626;
+  --background-secondary: #2d3134;
+  --red: #90413f;
+  --green: #7a933c;
+  --white: #dedae0;
+  --light-gray: #afafaf;
+  --dark-gray: #505155;
+}
+
 body {
   background: #202225;
   height: 100%;
