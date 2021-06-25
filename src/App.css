@@ -9,10 +9,17 @@
   --font-primary: "HelveticaNeue-CondensedBold", "Helvetica Neue";
 }
 
+html {
+  height: 100%;
+}
 body {
   background: var(--background-primary);
   height: 100%;
   color: var(--white);
+}
+
+#root {
+  height: 100%;
 }
 
 button {
@@ -24,6 +31,7 @@ button {
   /* font-family: "Roboto", sans-serif; */
   /* font-family: "Bebas Neue", sans-serif; */
   font-family: var(--font-primary);
+  height: 100%;
 }
 
 .main-header {

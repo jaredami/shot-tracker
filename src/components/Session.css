@@ -1,9 +1,48 @@
-.buttons-container {
+/* .buttons-container {
   width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-top: 8rem;
+} */
+
+.container {
+  /* height: 100%; */
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "timer"
+    "stats"
+    "make-miss";
+}
+.timer {
+  font-size: 1.5rem;
+  width: 4rem;
+  grid-area: timer;
+  place-items: center;
+}
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    ". ."
+    ". .";
+  grid-area: stats;
+  place-items: center;
+}
+.make-miss {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: ". .";
+  grid-area: make-miss;
+  place-items: center;
 }
 
 .make-miss-btn {
@@ -21,11 +60,6 @@
 }
 .make-btn {
   border-color: #03c03c;
-}
-
-.timer {
-  font-size: 1.5rem;
-  width: 4rem;
 }
 
 .session-stat {
