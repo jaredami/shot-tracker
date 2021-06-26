@@ -67,7 +67,7 @@ export default function Session(props) {
           <p className="stat-label">Current Streak</p>
         </div>
       </div>
-      <div className="make-miss">
+      <div className="make-miss-container">
         <button className="make-miss-btn miss-btn" onClick={() => handleMiss()}>
           MISS
         </button>

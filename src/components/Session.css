@@ -42,7 +42,6 @@
   background: var(--background-secondary);
   border-radius: 10px;
   padding: 1rem;
-  width: auto;
   justify-self: stretch;
   display: flex;
   flex-direction: column;
@@ -56,31 +55,32 @@
   color: var(--light-gray);
 }
 
-.make-miss {
+.make-miss-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-  gap: 0px 0px;
+  gap: 1rem;
   grid-template-areas: ". .";
   grid-area: make-miss;
   place-items: center;
 }
 
 .make-miss-btn {
-  width: 8rem;
-  height: 4rem;
+  justify-self: stretch;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   background: #202225;
-  border: 2px solid #f5f5f5;
+  border: none;
   border-radius: 4px;
   color: #f5f5f5;
   filter: brightness(110%);
-  font-size: 1rem;
+  font-size: 2rem;
 }
 .miss-btn {
-  border-color: #c23b23;
+  background: var(--red);
 }
 .make-btn {
-  border-color: #03c03c;
+  background: var(--green);
 }
 
 .session-stat {
