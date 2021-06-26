@@ -48,14 +48,20 @@ export default function Session(props) {
         </div>
       </div>
       <div className="stats">
-        <p className="session-stat">
-          Shots Made: {shotsMadeCount}/{shotsTakenCount}
-        </p>
-        <p className="session-stat">Percentage: {getPercentage()}</p>
-        <p className="session-stat">
-          Shots Made: {shotsMadeCount}/{shotsTakenCount}
-        </p>
-        <p className="session-stat">Percentage: {getPercentage()}</p>
+        <div className="stat-container">
+          <p className="stat">
+            Shots Made: {shotsMadeCount}/{shotsTakenCount}
+          </p>
+        </div>
+        <div className="stat-container">
+          <p className="stat">Percentage: {getPercentage()}</p>
+        </div>
+        <div className="stat-container">
+          <p className="stat">Best Streak: 4</p>
+        </div>
+        <div className="stat-container">
+          <p className="stat">Current Streak: 2</p>
+        </div>
       </div>
       <div className="make-miss">
         <button className="make-miss-btn miss-btn" onClick={() => handleMiss()}>
