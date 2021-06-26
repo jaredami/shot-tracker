@@ -50,17 +50,21 @@ export default function Session(props) {
       <div className="stats">
         <div className="stat-container">
           <p className="stat">
-            Shots Made: {shotsMadeCount}/{shotsTakenCount}
+            {shotsMadeCount}/{shotsTakenCount}
           </p>
+          <p className="stat-label">Shots Made</p>
         </div>
         <div className="stat-container">
-          <p className="stat">Percentage: {getPercentage()}</p>
+          <p className="stat">{getPercentage()}</p>
+          <p className="stat-label">Percentage</p>
         </div>
         <div className="stat-container">
-          <p className="stat">Best Streak: 4</p>
+          <p className="stat">4</p>
+          <p className="stat-label">Best Streak</p>
         </div>
         <div className="stat-container">
-          <p className="stat">Current Streak: 2</p>
+          <p className="stat">2</p>
+          <p className="stat-label">Current Streak</p>
         </div>
       </div>
       <div className="make-miss">
