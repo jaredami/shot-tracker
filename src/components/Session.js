@@ -16,7 +16,6 @@ export default function Session(props) {
         (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
         ":" +
         (seconds > 9 ? seconds : "0" + seconds);
-      console.log("newTimer", newTimer);
       setTimer(newTimer);
     }, 1000);
     return () => clearInterval(interval);
@@ -24,14 +23,21 @@ export default function Session(props) {
 
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
 
   function handleMiss() {
     setShotsTakenCount(shotsTakenCount + 1);
+    setCurrentStreak(0);
   }
 
   function handleMake() {
     setShotsTakenCount(shotsTakenCount + 1);
     setShotsMadeCount(shotsMadeCount + 1);
+    setCurrentStreak(currentStreak + 1);
+    if (currentStreak >= bestStreak) {
+      setBestStreak(currentStreak + 1);
+    }
   }
 
   function getPercentage() {
@@ -57,12 +63,12 @@ export default function Session(props) {
           <p className="stat-label">Percentage</p>
         </div>
         <div className="stat-container">
-          <p className="stat">4</p>
-          <p className="stat-label">Best Streak</p>
+          <p className="stat">{currentStreak}</p>
+          <p className="stat-label">Current Streak</p>
         </div>
         <div className="stat-container">
-          <p className="stat">2</p>
-          <p className="stat-label">Current Streak</p>
+          <p className="stat">{bestStreak}</p>
+          <p className="stat-label">Best Streak</p>
         </div>
         <button className="make-miss-btn miss-btn" onClick={() => handleMiss()}>
           MISS
