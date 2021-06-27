@@ -1,21 +1,22 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import "./Nav.css";
 
 export default function Nav() {
   return (
     <nav>
-      <a href="#">
+      <NavLink activeClassName="active" to="/train">
         <i className="fas fa-basketball-ball"></i>
         <b>train</b>
-      </a>
-      <a href="#">
+      </NavLink>
+      <NavLink activeClassName="active" to="/stats">
         <i className="fas fa-chart-bar"></i>
-        <b>home</b>
-      </a>
-      <a href="#">
+        <b>stats</b>
+      </NavLink>
+      <NavLink activeClassName="active" to="/rankings">
         <i className="fas fa-list-ol"></i>
-        <b>settings</b>
-      </a>
+        <b>rankings</b>
+      </NavLink>
       <span></span>
     </nav>
   );

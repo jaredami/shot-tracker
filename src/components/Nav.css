@@ -14,7 +14,7 @@ nav {
 nav a {
   position: relative;
   text-decoration: none;
-  color: var(--white);
+  color: var(--light-gray);
   font-size: 1rem;
   line-height: 1;
   text-align: center;
@@ -77,4 +77,8 @@ nav a:nth-child(3):hover ~ span {
   nav a {
     width: 100px;
   }
+}
+
+.active {
+  color: var(--white);
 }
