@@ -35,7 +35,11 @@ button {
   height: 100%;
 }
 
-.main-header {
+.header-container {
+  padding: 1rem;
+}
+
+.header {
   width: 110vw;
-  margin: 1rem 0rem 0rem 1rem;
+  margin: 0rem;
 }

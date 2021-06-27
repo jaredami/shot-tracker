@@ -5,8 +5,10 @@ import Session from "./components/Session";
 function App() {
   return (
     <div className="main-wrapper">
-      <h1 className="main-header">TRAIN</h1>
-      <hr />
+      <div className="header-container">
+        <h1 className="header">TRAIN</h1>
+        <hr />
+      </div>
       <Session />
       <Nav />
     </div>
