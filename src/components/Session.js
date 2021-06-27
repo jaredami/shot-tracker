@@ -42,10 +42,8 @@ export default function Session(props) {
 
   return (
     <div className="container">
-      <div className="timer">
-        <div className="timer-container">
-          <div className="timer">{timer}</div>
-        </div>
+      <div className="timer-container">
+        <div className="timer">{timer}</div>
       </div>
       <div className="stats">
         <div className="stat-container">
@@ -66,8 +64,6 @@ export default function Session(props) {
           <p className="stat">2</p>
           <p className="stat-label">Current Streak</p>
         </div>
-      </div>
-      <div className="make-miss-container">
         <button className="make-miss-btn miss-btn" onClick={() => handleMiss()}>
           MISS
         </button>
