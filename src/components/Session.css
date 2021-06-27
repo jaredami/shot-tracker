@@ -61,3 +61,11 @@
 .make-btn {
   background: var(--green);
 }
+
+@media only screen and (max-height: 700px) {
+  .timer-container {
+    height: 5rem;
+    border-radius: 10px;
+    border-width: 4px;
+  }
+}
