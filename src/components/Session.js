@@ -45,7 +45,7 @@ export default function Session(props) {
       <div className="timer-container">
         <div className="timer">{timer}</div>
       </div>
-      <div className="stats">
+      <div className="session-grid">
         <div className="stat-container">
           <p className="stat">
             {shotsMadeCount}/{shotsTakenCount}

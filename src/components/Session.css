@@ -5,28 +5,26 @@
 .timer-container {
   margin: 2rem auto;
   box-sizing: border-box;
-  font-size: 1.5rem;
-  width: 4rem;
-  display: grid;
-  place-items: center;
+  background: var(--background-secondary);
   border: 8px solid var(--white);
   border-radius: 50%;
   height: 14rem;
   width: 14rem;
-  grid-column-start: 1;
-  grid-column-end: 3;
+  font-size: 2rem;
+  display: grid;
+  place-items: center;
 }
-
 .timer {
   place-self: center;
 }
 
-.stats {
+.session-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   place-items: stretch;
 }
+
 .stat-container {
   background: var(--background-secondary);
   border-radius: 10px;
