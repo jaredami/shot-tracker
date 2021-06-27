@@ -1,37 +1,18 @@
-/* .buttons-container {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 8rem;
-} */
-
 .container {
-  /* height: 100%; */
   margin: 0 1rem;
-  display: grid;
-  grid-auto-rows: 1fr;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 2fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    "timer-container"
-    "stats";
 }
 
 .timer-container {
-  margin: 1rem;
+  margin: 2rem auto;
   box-sizing: border-box;
   font-size: 1.5rem;
   width: 4rem;
-  grid-area: timer-container;
   display: grid;
-  justify-self: center;
   place-items: center;
   border: 8px solid var(--white);
   border-radius: 50%;
-  height: 10rem;
-  width: 10rem;
+  height: 14rem;
+  width: 14rem;
   grid-column-start: 1;
   grid-column-end: 3;
 }
@@ -43,12 +24,7 @@
 .stats {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1.5fr;
   gap: 1rem;
-  grid-template-areas:
-    ". ."
-    ". .";
-  grid-area: stats;
   place-items: stretch;
 }
 .stat-container {
@@ -68,16 +44,6 @@
   color: var(--light-gray);
 }
 
-/* .make-miss-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 1rem;
-  grid-template-areas: ". .";
-  grid-area: make-miss;
-  place-items: center;
-} */
-
 .make-miss-btn {
   justify-self: stretch;
   padding-top: 2rem;
@@ -94,8 +60,4 @@
 }
 .make-btn {
   background: var(--green);
-}
-
-.session-stat {
-  font-size: 1.4rem;
 }
