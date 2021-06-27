@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav";
+import History from "./components/History";
 import Session from "./components/Session";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
               <h1 className="header">HISTORY</h1>
               <hr />
             </div>
+            <History />
           </Route>
           <Route path="/rankings">
             <div className="header-container">
