@@ -7,19 +7,25 @@ function App() {
   return (
     <Router>
       <div className="main-wrapper">
-        <div className="header-container">
-          <h1 className="header">TRAIN</h1>
-          <hr />
-        </div>
         <Switch>
           <Route path="/train">
+            <div className="header-container">
+              <h1 className="header">TRAIN</h1>
+              <hr />
+            </div>
             <Session />
           </Route>
           <Route path="/stats">
-            <h1>Stats</h1>
+            <div className="header-container">
+              <h1 className="header">STATS</h1>
+              <hr />
+            </div>
           </Route>
           <Route path="/rankings">
-            <h1>Rankings</h1>
+            <div className="header-container">
+              <h1 className="header">RANKINGS</h1>
+              <hr />
+            </div>
           </Route>
         </Switch>
         <Nav />
