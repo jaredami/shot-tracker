@@ -9,9 +9,9 @@ export default function Nav() {
         <i className="fas fa-basketball-ball"></i>
         <b>train</b>
       </NavLink>
-      <NavLink activeClassName="active" to="/stats">
+      <NavLink activeClassName="active" to="/history">
         <i className="fas fa-chart-bar"></i>
-        <b>stats</b>
+        <b>history</b>
       </NavLink>
       <NavLink activeClassName="active" to="/rankings">
         <i className="fas fa-list-ol"></i>

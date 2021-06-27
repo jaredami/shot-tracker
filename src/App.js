@@ -15,9 +15,9 @@ function App() {
             </div>
             <Session />
           </Route>
-          <Route path="/stats">
+          <Route path="/history">
             <div className="header-container">
-              <h1 className="header">STATS</h1>
+              <h1 className="header">HISTORY</h1>
               <hr />
             </div>
           </Route>
