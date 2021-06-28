@@ -1,0 +1,32 @@
+.historyContainer {
+  height: 100%;
+  padding: 0rem 1rem;
+  overflow-y: auto;
+}
+
+.session {
+  border-radius: 10px;
+  background: var(--background-secondary);
+  margin-bottom: 1rem;
+}
+
+.date {
+  background: var(--white);
+  color: var(--background-primary);
+  border-radius: 10px 10px 0px 0px;
+  padding: 0.5rem 1rem;
+}
+
+.statsContainer {
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat {
+  font-size: 2rem;
+}
+
+.statLabel {
+  color: var(--light-gray);
+}
