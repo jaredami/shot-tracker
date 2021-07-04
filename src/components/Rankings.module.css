@@ -16,14 +16,26 @@
   background: var(--background-secondary);
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .userCard:last-of-type {
   margin-bottom: 11rem;
+}
+
+.userInfoContainer {
+  justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.rank {
+  padding-right: 1rem;
+  color: var(--light-gray);
 }
 
 .userPicContainer {

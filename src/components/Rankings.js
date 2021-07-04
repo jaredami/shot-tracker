@@ -5,13 +5,16 @@ export default function Rankings() {
   return (
     <div className={styles.rankingsContainer}>
       <div className={styles.currentStatLabel}>Percentage</div>
-      {data.map((user) => (
+      {data.map((user, index) => (
         <div key={user.userId} className={styles.userCard}>
-          <div className={styles.userPicContainer}>
-            <i className="fas fa-user"></i>
+          <div className={styles.rank}>{index + 1}</div>
+          <div className={styles.userInfoContainer}>
+            <div className={styles.userPicContainer}>
+              <i className="fas fa-user"></i>
+            </div>
+            <div>{user.userName}</div>
+            <div>{user.percentage}</div>
           </div>
-          <div>{user.userName}</div>
-          <div>{user.percentage}</div>
         </div>
       ))}
     </div>
