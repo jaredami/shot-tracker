@@ -4,6 +4,7 @@ import * as styles from "./Rankings.module.css";
 export default function Rankings() {
   return (
     <div className={styles.rankingsContainer}>
+      <div className={styles.currentStatLabel}>Percentage</div>
       {data.map((user) => (
         <div key={user.userId} className={styles.userCard}>
           <div className={styles.userPicContainer}>

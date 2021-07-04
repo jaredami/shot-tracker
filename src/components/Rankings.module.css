@@ -4,6 +4,13 @@
   overflow-y: auto;
 }
 
+.currentStatLabel {
+  font-size: 1.5rem;
+  text-align: center;
+  padding-bottom: 1rem;
+  color: var(--light-gray);
+}
+
 .userCard {
   border-radius: 10px;
   background: var(--background-secondary);
