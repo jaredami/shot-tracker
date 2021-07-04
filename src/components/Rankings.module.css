@@ -40,8 +40,8 @@
 
 .userPicContainer {
   background: var(--dark-gray);
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 100%;
   display: flex;
   flex-direction: row;
@@ -56,4 +56,10 @@
 .statLabel {
   color: var(--light-gray);
   font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 400px) {
+  .userCard {
+    font-size: 1rem;
+  }
 }
