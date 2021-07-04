@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Nav from "./components/Nav";
 import History from "./components/History";
+import Nav from "./components/Nav";
+import Rankings from "./components/Rankings";
 import Session from "./components/Session";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <h1 className="header">RANKINGS</h1>
               <hr />
             </div>
+            <Rankings />
           </Route>
         </Switch>
         <Nav />

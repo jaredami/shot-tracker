@@ -1,0 +1,5 @@
+.rankingsContainer {
+  height: 100%;
+  padding: 0rem 1rem;
+  overflow-y: auto;
+}
