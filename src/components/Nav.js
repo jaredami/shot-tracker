@@ -7,15 +7,15 @@ export default function Nav() {
     <nav>
       <NavLink activeClassName="active" to="/train">
         <i className="fas fa-basketball-ball"></i>
-        <b>train</b>
+        <b>Train</b>
       </NavLink>
       <NavLink activeClassName="active" to="/history">
         <i className="fas fa-chart-bar"></i>
-        <b>history</b>
+        <b>History</b>
       </NavLink>
       <NavLink activeClassName="active" to="/rankings">
         <i className="fas fa-list-ol"></i>
-        <b>rankings</b>
+        <b>Rankings</b>
       </NavLink>
       <span></span>
     </nav>
