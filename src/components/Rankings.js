@@ -4,7 +4,17 @@ import * as styles from "./Rankings.module.css";
 export default function Rankings() {
   return (
     <div className={styles.rankingsContainer}>
-      <div className={styles.currentStatLabel}>Percentage</div>
+      <div className={styles.dropdown}>
+        <button className={styles.dropbtn}>
+          Dropdown
+          <i className="fa fa-caret-down"></i>
+        </button>
+        <div className={styles.dropdownContent}>
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+      </div>
       {data.map((user, index) => (
         <div key={user.userId} className={styles.userCard}>
           <div className={styles.rank}>{index + 1}</div>

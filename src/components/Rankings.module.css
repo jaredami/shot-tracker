@@ -2,13 +2,54 @@
   height: 100%;
   padding: 0rem 1rem;
   overflow-y: auto;
+  max-width: 40rem;
+  margin: 0 auto;
 }
 
-.currentStatLabel {
-  font-size: 1.5rem;
-  text-align: center;
-  padding-bottom: 1rem;
-  color: var(--light-gray);
+.dropdown {
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: var(--white);
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+/* .navbar a:hover,
+.dropdown:hover .dropbtn {
+  background-color: red;
+} */
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdownContent a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdownContent a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
 }
 
 .userCard {

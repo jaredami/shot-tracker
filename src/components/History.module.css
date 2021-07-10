@@ -2,6 +2,8 @@
   height: 100%;
   padding: 0rem 1rem;
   overflow-y: auto;
+  max-width: 40rem;
+  margin: 1rem auto;
 }
 
 .session {
