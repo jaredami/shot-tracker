@@ -11,7 +11,7 @@ export default function Rankings() {
     <div className={styles.rankingsContainer}>
       <div className={styles.dropdown}>
         <button className={styles.dropbtn} onClick={() => toggleDropdown()}>
-          Dropdown
+          Stat
           <i className="fa fa-caret-down"></i>
         </button>
         <div
@@ -19,9 +19,10 @@ export default function Rankings() {
             isDropdownExpanded ? styles.visible : ""
           }`}
         >
-          <a href="#">Link 1</a>
-          <a href="#">Link 2</a>
-          <a href="#">Link 3</a>
+          <a href="#">Percentage</a>
+          <a href="#">Shots Made</a>
+          <a href="#">Shots Taken</a>
+          <a href="#">Best Streak</a>
         </div>
       </div>
       {data.map((user, index) => (
