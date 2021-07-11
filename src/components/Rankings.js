@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import * as styles from "./Rankings.module.css";
 
 export default function Rankings() {
+  const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
+
+  function toggleDropdown() {
+    setIsDropdownExpanded(!isDropdownExpanded);
+  }
   return (
     <div className={styles.rankingsContainer}>
       <div className={styles.dropdown}>
-        <button className={styles.dropbtn}>
+        <button className={styles.dropbtn} onClick={() => toggleDropdown()}>
           Dropdown
           <i className="fa fa-caret-down"></i>
         </button>
-        <div className={styles.dropdownContent}>
+        <div
+          className={`${styles.dropdownContent} ${
+            isDropdownExpanded ? styles.visible : ""
+          }`}
+        >
           <a href="#">Link 1</a>
           <a href="#">Link 2</a>
           <a href="#">Link 3</a>
