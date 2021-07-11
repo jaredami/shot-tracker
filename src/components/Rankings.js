@@ -3,7 +3,7 @@ import * as styles from "./Rankings.module.css";
 
 export default function Rankings() {
   const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
-  const [currentStat, setCurrentStat] = useState("");
+  const [currentStat, setCurrentStat] = useState("Select a stat...");
 
   function toggleDropdown() {
     setIsDropdownExpanded(!isDropdownExpanded);
@@ -14,7 +14,7 @@ export default function Rankings() {
   }
 
   return (
-    <div className={styles.rankingsContainer}>
+    <>
       <div className={styles.dropdown}>
         <button className={styles.dropbtn} onClick={() => toggleDropdown()}>
           {currentStat}
@@ -35,19 +35,21 @@ export default function Rankings() {
           </div>
         </div>
       </div>
-      {data.map((user, index) => (
-        <div key={user.userId} className={styles.userCard}>
-          <div className={styles.rank}>{index + 1}</div>
-          <div className={styles.userInfoContainer}>
-            <div className={styles.userPicContainer}>
-              <i className="fas fa-user"></i>
+      <div className={styles.rankingsContainer}>
+        {data.map((user, index) => (
+          <div key={user.userId} className={styles.userCard}>
+            <div className={styles.rank}>{index + 1}</div>
+            <div className={styles.userInfoContainer}>
+              <div className={styles.userPicContainer}>
+                <i className="fas fa-user"></i>
+              </div>
+              <div>{user.userName}</div>
+              <div>{user.percentage}</div>
             </div>
-            <div>{user.userName}</div>
-            <div>{user.percentage}</div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
 
