@@ -3,15 +3,21 @@ import * as styles from "./Rankings.module.css";
 
 export default function Rankings() {
   const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
+  const [currentStat, setCurrentStat] = useState("");
 
   function toggleDropdown() {
     setIsDropdownExpanded(!isDropdownExpanded);
   }
+
+  function handleStatSelected(stat) {
+    setCurrentStat(stat);
+  }
+
   return (
     <div className={styles.rankingsContainer}>
       <div className={styles.dropdown}>
         <button className={styles.dropbtn} onClick={() => toggleDropdown()}>
-          Stat
+          {currentStat}
           <i className="fa fa-caret-down"></i>
         </button>
         <div
@@ -19,10 +25,14 @@ export default function Rankings() {
             isDropdownExpanded ? styles.visible : ""
           }`}
         >
-          <a href="#">Percentage</a>
-          <a href="#">Shots Made</a>
-          <a href="#">Shots Taken</a>
-          <a href="#">Best Streak</a>
+          <div onClick={() => handleStatSelected("Percentage")}>Percentage</div>
+          <div onClick={() => handleStatSelected("Shots Made")}>Shots Made</div>
+          <div onClick={() => handleStatSelected("Shots Taken")}>
+            Shots Taken
+          </div>
+          <div onClick={() => handleStatSelected("Best Streak")}>
+            Best Streak
+          </div>
         </div>
       </div>
       {data.map((user, index) => (
