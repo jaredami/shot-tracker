@@ -11,6 +11,7 @@ export default function Rankings() {
 
   function handleStatSelected(stat) {
     setCurrentStat(stat);
+    setIsDropdownExpanded(false);
   }
 
   return (
