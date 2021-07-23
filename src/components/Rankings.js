@@ -3,7 +3,10 @@ import * as styles from "./Rankings.module.css";
 
 export default function Rankings() {
   const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
-  const [currentStat, setCurrentStat] = useState("Select a stat...");
+  const [currentStat, setCurrentStat] = useState({
+    label: "Percentage",
+    value: "percentage",
+  });
 
   function toggleDropdown() {
     setIsDropdownExpanded(!isDropdownExpanded);
@@ -18,7 +21,7 @@ export default function Rankings() {
     <>
       <div className={styles.dropdown}>
         <button className={styles.dropbtn} onClick={() => toggleDropdown()}>
-          {currentStat}
+          {currentStat.label}
           <i className="fa fa-caret-down"></i>
         </button>
         <div
@@ -26,12 +29,32 @@ export default function Rankings() {
             isDropdownExpanded ? styles.visible : ""
           }`}
         >
-          <div onClick={() => handleStatSelected("Percentage")}>Percentage</div>
-          <div onClick={() => handleStatSelected("Shots Made")}>Shots Made</div>
-          <div onClick={() => handleStatSelected("Shots Taken")}>
+          <div
+            onClick={() =>
+              handleStatSelected({ label: "Percentage", value: "percentage" })
+            }
+          >
+            Percentage
+          </div>
+          <div
+            onClick={() =>
+              handleStatSelected({ label: "Shots Made", value: "shotsMade" })
+            }
+          >
+            Shots Made
+          </div>
+          <div
+            onClick={() =>
+              handleStatSelected({ label: "Shots Taken", value: "shotsTaken" })
+            }
+          >
             Shots Taken
           </div>
-          <div onClick={() => handleStatSelected("Best Streak")}>
+          <div
+            onClick={() =>
+              handleStatSelected({ label: "Best Streak", value: "bestStreak" })
+            }
+          >
             Best Streak
           </div>
         </div>
@@ -45,7 +68,7 @@ export default function Rankings() {
                 <i className="fas fa-user"></i>
               </div>
               <div>{user.userName}</div>
-              <div>{user.percentage}</div>
+              <div>{user[currentStat.value]}</div>
             </div>
           </div>
         ))}
