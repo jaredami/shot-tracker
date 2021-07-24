@@ -1,0 +1,184 @@
+{
+  "sessions": [
+    {
+      "id": 1,
+      "date": "5/22/21",
+      "percentage": "43",
+      "shotsMade": "43/100",
+      "bestStreak": "8"
+    },
+    {
+      "id": 2,
+      "date": "5/21/21",
+      "percentage": "36",
+      "shotsMade": "36/100",
+      "bestStreak": "3"
+    },
+    {
+      "id": 3,
+      "date": "5/20/21",
+      "percentage": "51",
+      "shotsMade": "51/100",
+      "bestStreak": "5"
+    },
+    {
+      "id": 4,
+      "date": "5/20/21",
+      "percentage": "48",
+      "shotsMade": "48/100",
+      "bestStreak": "14"
+    },
+    {
+      "id": 5,
+      "date": "5/19/21",
+      "percentage": "33",
+      "shotsMade": "33/100",
+      "bestStreak": "4"
+    },
+    {
+      "id": 6,
+      "date": "5/18/21",
+      "percentage": "47",
+      "shotsMade": "47/100",
+      "bestStreak": "5"
+    },
+    {
+      "id": 7,
+      "date": "5/16/21",
+      "percentage": "61",
+      "shotsMade": "61/100",
+      "bestStreak": "14"
+    },
+    {
+      "id": 8,
+      "date": "5/12/21",
+      "percentage": "58",
+      "shotsMade": "58/100",
+      "bestStreak": "7"
+    },
+    {
+      "id": 9,
+      "date": "5/11/21",
+      "percentage": "41",
+      "shotsMade": "41/100",
+      "bestStreak": "11"
+    },
+    {
+      "id": 10,
+      "date": "5/10/21",
+      "percentage": "55",
+      "shotsMade": "55/100",
+      "bestStreak": "8"
+    }
+  ],
+  "playerData": [
+    {
+      "userId": 1,
+      "userName": "Domantas Sabonis",
+      "percentage": 56,
+      "shotsMade": 56,
+      "shotsTaken": 100,
+      "bestStreak": 7,
+      "sessionCount": 1
+    },
+    {
+      "userId": 2,
+      "userName": "Goga Bitadze",
+      "percentage": 55,
+      "shotsMade": 55,
+      "shotsTaken": 100,
+      "bestStreak": 5,
+      "sessionCount": 1
+    },
+    {
+      "userId": 3,
+      "userName": "Malcolm Brogdon",
+      "percentage": 54,
+      "shotsMade": 54,
+      "shotsTaken": 100,
+      "bestStreak": 8,
+      "sessionCount": 1
+    },
+    {
+      "userId": 4,
+      "userName": "Aaron Holiday",
+      "percentage": 52,
+      "shotsMade": 52,
+      "shotsTaken": 100,
+      "bestStreak": 10,
+      "sessionCount": 1
+    },
+    {
+      "userId": 5,
+      "userName": "T.J. McConnell",
+      "percentage": 50,
+      "shotsMade": 50,
+      "shotsTaken": 100,
+      "bestStreak": 9,
+      "sessionCount": 1
+    },
+    {
+      "userId": 6,
+      "userName": "Justin Holiday",
+      "percentage": 48,
+      "shotsMade": 48,
+      "shotsTaken": 100,
+      "bestStreak": 9,
+      "sessionCount": 1
+    },
+    {
+      "userId": 7,
+      "userName": "Doug McDermott",
+      "percentage": 47,
+      "shotsMade": 47,
+      "shotsTaken": 100,
+      "bestStreak": 7,
+      "sessionCount": 1
+    },
+    {
+      "userId": 8,
+      "userName": "T.J. Warren",
+      "percentage": 45,
+      "shotsMade": 45,
+      "shotsTaken": 100,
+      "bestStreak": 6,
+      "sessionCount": 1
+    },
+    {
+      "userId": 9,
+      "userName": "Myles Turner",
+      "percentage": 42,
+      "shotsMade": 42,
+      "shotsTaken": 100,
+      "bestStreak": 7,
+      "sessionCount": 1
+    },
+    {
+      "userId": 10,
+      "userName": "Jeremy Lamb",
+      "percentage": 42,
+      "shotsMade": 42,
+      "shotsTaken": 100,
+      "bestStreak": 4,
+      "sessionCount": 1
+    },
+    {
+      "userId": 11,
+      "userName": "JaKarr Sampson",
+      "percentage": 41,
+      "shotsMade": 82,
+      "shotsTaken": 200,
+      "bestStreak": 6,
+      "sessionCount": 1
+    },
+    {
+      "userId": 12,
+      "userName": "Edmond Sumner",
+      "percentage": 39,
+      "shotsMade": 117,
+      "shotsTaken": 300,
+      "bestStreak": 11,
+      "sessionCount": 1
+    }
+  ]
+}

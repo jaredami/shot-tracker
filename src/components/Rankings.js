@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { playerData } from "../data/db";
+import { playerData } from "../mock-data/db";
 import * as styles from "./Rankings.module.css";
 
 export default function Rankings() {
