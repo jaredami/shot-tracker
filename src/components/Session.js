@@ -54,7 +54,12 @@ export default function Session(props) {
 
   return (
     <div className="container">
-      <div className="timer-container" onClick={() => handleIsRunningChange()}>
+      <div
+        className={`timer-container ${
+          !isRunning ? "timer-container--paused" : ""
+        }`}
+        onClick={() => handleIsRunningChange()}
+      >
         <div className="timer">{timer}</div>
       </div>
       <div className="session-grid">

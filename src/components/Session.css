@@ -14,6 +14,10 @@
   display: grid;
   place-items: center;
 }
+.timer-container--paused {
+  color: var(--light-gray);
+  border-color: var(--light-gray);
+}
 .timer {
   place-self: center;
 }
