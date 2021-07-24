@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./Session.css";
 
 export default function Session(props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [timer, setTimer] = useState("--:--");
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const [isRunning, setIsRunning] = useState(false);
+
+  useInterval(
+    () => {
       setSeconds(seconds + 1);
       if (seconds >= 60) {
         setSeconds(0);
@@ -17,9 +19,13 @@ export default function Session(props) {
         ":" +
         (seconds > 9 ? seconds : "0" + seconds);
       setTimer(newTimer);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [minutes, seconds]);
+    },
+    isRunning ? 1000 : null
+  );
+
+  function handleIsRunningChange() {
+    setIsRunning(!isRunning);
+  }
 
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
@@ -48,7 +54,7 @@ export default function Session(props) {
 
   return (
     <div className="container">
-      <div className="timer-container">
+      <div className="timer-container" onClick={() => handleIsRunningChange()}>
         <div className="timer">{timer}</div>
       </div>
       <div className="session-grid">
@@ -79,4 +85,24 @@ export default function Session(props) {
       </div>
     </div>
   );
+}
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
 }
