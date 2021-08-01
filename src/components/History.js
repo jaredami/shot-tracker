@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { sessions } from "../mock-data/db";
 import * as styles from "./History.module.css";
 
 export default function History() {
-  const [sessions, setSessions] = useState(null);
+  // const [sessions, setSessions] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:8000/sessions")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setSessions(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:8000/sessions")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setSessions(data);
+  //     });
+  // }, []);
 
   return (
     <div className={styles.historyContainer}>
