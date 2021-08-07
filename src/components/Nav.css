@@ -49,23 +49,23 @@ nav a i {
   transition: 0.3s ease left;
 } */
 
-nav a:hover b {
+nav a.active b {
   top: 0;
 }
 
-nav a:hover i {
+nav a.active i {
   left: 0;
 }
 
-nav a:nth-child(1):hover ~ span {
+nav a:nth-child(1).active ~ span {
   left: 2.8rem;
 }
 
-nav a:nth-child(2):hover ~ span {
+nav a:nth-child(2).active ~ span {
   left: 10.4rem;
 }
 
-nav a:nth-child(3):hover ~ span {
+nav a:nth-child(3).active ~ span {
   left: 17.5rem;
 }
 
