@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import "./App.css";
 import History from "./components/History";
 import Nav from "./components/Nav";
@@ -10,6 +15,9 @@ function App() {
     <Router>
       <div className="main-wrapper">
         <Switch>
+          <Route exact path="/">
+            <Redirect to="/train" />
+          </Route>
           <Route path="/train">
             <div className="header-container">
               <h1 className="header">TRAIN</h1>
