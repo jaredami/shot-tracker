@@ -33,7 +33,7 @@
 
 .stat-container {
   background: var(--background-secondary);
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 1rem;
   justify-self: stretch;
   display: flex;
@@ -50,8 +50,7 @@
 
 .make-miss-btn {
   justify-self: stretch;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 2rem;
   background: #202225;
   border: none;
   border-radius: 4px;
@@ -69,7 +68,20 @@
 @media only screen and (max-height: 700px) {
   .timer-container {
     height: 5rem;
-    border-radius: 10px;
+    border-radius: 4px;
     border-width: 4px;
+  }
+}
+
+@media only screen and (max-height: 550px) {
+  .stat-container {
+    padding: 0.5rem 1rem;
+  }
+  .stat {
+    font-size: 20px;
+  }
+
+  .make-miss-btn {
+    padding: 1rem;
   }
 }
