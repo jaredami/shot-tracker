@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { sessions } from "../mock-data/db";
 import * as styles from "./History.module.css";
 
