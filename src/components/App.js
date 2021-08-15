@@ -7,6 +7,7 @@ import {
 import { AuthProvider } from "../contexts/AuthContext";
 import "./App.css";
 import History from "./History";
+import Login from "./Login";
 import Nav from "./Nav";
 import Rankings from "./Rankings";
 import Session from "./Session";
@@ -27,6 +28,13 @@ function App() {
                 <hr />
               </div>
               <Signup />
+            </Route>
+            <Route path="/login">
+              <div className="header-container">
+                <h1 className="header">LOG IN</h1>
+                <hr />
+              </div>
+              <Login />
             </Route>
             <Route path="/train">
               <div className="header-container">
