@@ -5,10 +5,10 @@ import {
   Switch,
 } from "react-router-dom";
 import "./App.css";
-import History from "./components/History";
-import Nav from "./components/Nav";
-import Rankings from "./components/Rankings";
-import Session from "./components/Session";
+import History from "./History";
+import Nav from "./Nav";
+import Rankings from "./Rankings";
+import Session from "./Session";
 
 function App() {
   return (
