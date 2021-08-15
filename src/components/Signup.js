@@ -36,7 +36,7 @@ export default function Signup() {
         <div>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <div variant="danger">{error}</div>}
-          <div onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div id="email">
               <label>Email</label>
               <input type="email" ref={emailRef} required />
@@ -52,7 +52,7 @@ export default function Signup() {
             <button disabled={loading} className="w-100" type="submit">
               Sign Up
             </button>
-          </div>
+          </form>
         </div>
       </div>
       <div className="w-100 text-center mt-2">
