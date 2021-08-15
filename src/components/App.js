@@ -14,8 +14,8 @@ import Signup from "./Signup";
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         <div className="main-wrapper">
           <Switch>
             <Route exact path="/">
@@ -52,8 +52,8 @@ function App() {
           </Switch>
           <Nav />
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
 
