@@ -9,6 +9,7 @@ import History from "./History";
 import Nav from "./Nav";
 import Rankings from "./Rankings";
 import Session from "./Session";
+import Signup from "./Signup";
 
 function App() {
   return (
@@ -16,7 +17,14 @@ function App() {
       <div className="main-wrapper">
         <Switch>
           <Route exact path="/">
-            <Redirect to="/train" />
+            <Redirect to="/signup" />
+          </Route>
+          <Route path="/signup">
+            <div className="header-container">
+              <h1 className="header">SIGN UP</h1>
+              <hr />
+            </div>
+            <Signup />
           </Route>
           <Route path="/train">
             <div className="header-container">
