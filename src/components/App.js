@@ -9,6 +9,8 @@ import "./App.css";
 import History from "./History";
 import Login from "./Login";
 import Nav from "./Nav";
+import PrivateRoute from "./PrivateRoute";
+import Profile from "./Profile";
 import Rankings from "./Rankings";
 import Session from "./Session";
 import Signup from "./Signup";
@@ -20,7 +22,7 @@ function App() {
         <div className="main-wrapper">
           <Switch>
             <Route exact path="/">
-              <Redirect to="/signup" />
+              <Redirect to="/train" />
             </Route>
             <Route path="/signup">
               <div className="header-container">
@@ -36,27 +38,32 @@ function App() {
               </div>
               <Login />
             </Route>
-            <Route path="/train">
+            <PrivateRoute
+              path="/profile"
+              component={Profile}
+              pageTitle="PROFILE"
+            ></PrivateRoute>
+            <PrivateRoute path="/train">
               <div className="header-container">
                 <h1 className="header">TRAIN</h1>
                 <hr />
               </div>
               <Session />
-            </Route>
-            <Route path="/history">
+            </PrivateRoute>
+            <PrivateRoute path="/history">
               <div className="header-container">
                 <h1 className="header">HISTORY</h1>
                 <hr />
               </div>
               <History />
-            </Route>
-            <Route path="/rankings">
+            </PrivateRoute>
+            <PrivateRoute path="/rankings">
               <div className="header-container">
                 <h1 className="header">RANKINGS</h1>
                 <hr />
               </div>
               <Rankings />
-            </Route>
+            </PrivateRoute>
           </Switch>
           <Nav />
         </div>
