@@ -24,6 +24,8 @@ function App() {
             <Route exact path="/">
               <Redirect to="/train" />
             </Route>
+
+            {/* Auth routes */}
             <Route path="/signup">
               <div className="header-container">
                 <h1 className="header">SIGN UP</h1>
@@ -38,32 +40,28 @@ function App() {
               </div>
               <Login />
             </Route>
+
+            {/* Auth protected routes */}
             <PrivateRoute
               path="/profile"
               component={Profile}
               pageTitle="PROFILE"
             ></PrivateRoute>
-            <PrivateRoute path="/train">
-              <div className="header-container">
-                <h1 className="header">TRAIN</h1>
-                <hr />
-              </div>
-              <Session />
-            </PrivateRoute>
-            <PrivateRoute path="/history">
-              <div className="header-container">
-                <h1 className="header">HISTORY</h1>
-                <hr />
-              </div>
-              <History />
-            </PrivateRoute>
-            <PrivateRoute path="/rankings">
-              <div className="header-container">
-                <h1 className="header">RANKINGS</h1>
-                <hr />
-              </div>
-              <Rankings />
-            </PrivateRoute>
+            <PrivateRoute
+              path="/train"
+              component={Session}
+              pageTitle="TRAIN"
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/history"
+              component={History}
+              pageTitle="HISTORY"
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/rankings"
+              component={Rankings}
+              pageTitle="RANKINGS"
+            ></PrivateRoute>
           </Switch>
           <Nav />
         </div>
