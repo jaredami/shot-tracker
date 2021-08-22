@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { NavLink, Redirect, Route } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import "./App.css";
 
@@ -17,7 +17,16 @@ export default function PrivateRoute({
         return currentUser ? (
           <>
             <div className="header-container">
-              <h1 className="header">{pageTitle}</h1>
+              <div className="header-content-container">
+                <h1 className="header">{pageTitle}</h1>
+                <NavLink
+                  className="profile-icon"
+                  activeClassName="profile-link-active"
+                  to="/profile"
+                >
+                  <i className="fas fa-user-circle"></i>
+                </NavLink>
+              </div>
               <hr />
             </div>
             <Component {...props} />

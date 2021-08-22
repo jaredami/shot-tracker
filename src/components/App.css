@@ -39,6 +39,24 @@ button {
   padding: 1rem 1rem 0rem;
 }
 
+.header-content-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon {
+  color: var(--light-gray);
+  font-size: 2rem;
+}
+.profile-icon:hover {
+  color: var(--white);
+  transition: all 300ms;
+}
+
+.profile-link-active {
+  color: var(--white);
+}
+
 .header {
   width: 110vw;
   margin: 0rem;
