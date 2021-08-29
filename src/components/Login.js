@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import "./Login.css";
 
 export default function Login() {
   const emailRef = useRef();
@@ -26,32 +27,27 @@ export default function Login() {
   }
 
   return (
-    <>
-      <div>
-        <div>
-          <h2 className="text-center mb-4">Log In</h2>
-          {error && <div variant="danger">{error}</div>}
-          <form onSubmit={handleSubmit}>
-            <div id="email">
-              <label>Email</label>
-              <input type="email" ref={emailRef} required />
-            </div>
-            <div id="password">
-              <label>Password</label>
-              <input type="password" ref={passwordRef} required />
-            </div>
-            <button disabled={loading} className="w-100" type="submit">
-              Log In
-            </button>
-          </form>
-          <div className="w-100 text-center mt-3">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
+    <div className="login-container">
+      {error && <div variant="danger">{error}</div>}
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="login-form-row" id="email">
+          <label>Email</label>
+          <input type="email" ref={emailRef} required />
         </div>
+        <div className="login-form-row" id="password">
+          <label>Password</label>
+          <input type="password" ref={passwordRef} required />
+        </div>
+        <button disabled={loading} className="log-in-btn" type="submit">
+          Log In
+        </button>
+      </form>
+      <div className="">
+        <Link to="/forgot-password">Forgot Password?</Link>
       </div>
-      <div className="w-100 text-center mt-2">
+      <div className="sign-up-btn">
         Need an account? <Link to="/signup">Sign Up</Link>
       </div>
-    </>
+    </div>
   );
 }

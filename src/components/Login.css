@@ -1,0 +1,29 @@
+.login-container {
+  padding: 0 1rem;
+}
+
+.login-form {
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.login-form-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form-row input {
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}
+
+.log-in-btn {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 0;
+  border-radius: 4px;
+}
