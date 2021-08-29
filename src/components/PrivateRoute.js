@@ -16,6 +16,7 @@ export default function PrivateRoute({
       render={(props) => {
         return currentUser ? (
           <>
+            {/* TODO: move styles fro App.css to PrivateRoute.css ? */}
             <div className="header-container">
               <div className="header-content-container">
                 <h1 className="header">{pageTitle}</h1>
