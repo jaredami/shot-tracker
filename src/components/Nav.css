@@ -9,6 +9,8 @@ nav {
   margin: 0 auto;
   bottom: 0;
   text-align: center;
+  width: 100%;
+  max-width: 600px;
 }
 
 nav a {

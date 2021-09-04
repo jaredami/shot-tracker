@@ -13,7 +13,7 @@ html {
   height: 100%;
 }
 body {
-  background: var(--background-primary);
+  background: black;
   height: 100%;
   color: var(--white);
 }
@@ -32,7 +32,10 @@ button {
   /* font-family: "Roboto", sans-serif; */
   /* font-family: "Bebas Neue", sans-serif; */
   font-family: var(--font-primary);
+  background: var(--background-primary);
   height: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .header-container {
