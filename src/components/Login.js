@@ -3,7 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
 
-export default function Login() {
+export default function Login(props) {
+  console.log("props", props);
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();

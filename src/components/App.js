@@ -9,6 +9,7 @@ import "./App.css";
 import History from "./History";
 import Login from "./Login";
 import Nav from "./Nav";
+import PageHeader from "./PageHeader";
 import PrivateRoute from "./PrivateRoute";
 import Profile from "./Profile";
 import Rankings from "./Rankings";
@@ -27,18 +28,12 @@ function App() {
 
             {/* Auth routes */}
             <Route path="/signup">
-              <div className="header-container">
-                <h1 className="header">SIGN UP</h1>
-                <hr />
-              </div>
+              <PageHeader pageTitle="SIGN UP" displaysProfileBtn={false} />
               <Signup />
             </Route>
             <Route path="/login">
-              <div className="header-container">
-                <h1 className="header">LOG IN</h1>
-                <hr />
-              </div>
-              <Login />
+              <PageHeader pageTitle="LOGIN" displaysProfileBtn={false} />
+              <Login isLoginRoute={true} />
             </Route>
 
             {/* Auth protected routes */}
