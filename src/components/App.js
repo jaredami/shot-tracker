@@ -29,7 +29,7 @@ function App() {
             {/* Auth routes */}
             <Route path="/signup">
               <PageHeader pageTitle="SIGN UP" displaysProfileBtn={false} />
-              <Signup />
+              <Login isLoginRoute={false} />
             </Route>
             <Route path="/login">
               <PageHeader pageTitle="LOGIN" displaysProfileBtn={false} />

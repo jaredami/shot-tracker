@@ -3,10 +3,11 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
 
-export default function Login(props) {
-  console.log("props", props);
+export default function Login({ isLoginRoute }) {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+  const { signup } = useAuth();
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,13 +16,30 @@ export default function Login(props) {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (
+      !isLoginRoute &&
+      passwordRef.current.value !== passwordConfirmRef.current.value
+    ) {
+      return setError("Passwords do not match");
+    }
+
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
+
+      if (isLoginRoute) {
+        await login(emailRef.current.value, passwordRef.current.value);
+      } else {
+        await signup(emailRef.current.value, passwordRef.current.value);
+      }
+
       history.push("/");
     } catch {
-      setError("Failed to log in");
+      if (isLoginRoute) {
+        setError("Failed to log in");
+      } else {
+        setError("Failed to create an account");
+      }
     }
 
     setLoading(false);
@@ -30,6 +48,7 @@ export default function Login(props) {
   return (
     <div className="login-container">
       {error && <div variant="danger">{error}</div>}
+
       <form className="login-form" onSubmit={handleSubmit}>
         <div className="login-form-row" id="email">
           <label>Email</label>
@@ -39,16 +58,31 @@ export default function Login(props) {
           <label>Password</label>
           <input type="password" ref={passwordRef} required />
         </div>
+        {!isLoginRoute && (
+          <div className="login-form-row" id="password-confirm">
+            <label>Password Confirmation</label>
+            <input type="password" ref={passwordConfirmRef} required />
+          </div>
+        )}
         <button disabled={loading} className="log-in-btn" type="submit">
-          Log In
+          {isLoginRoute ? "Log In" : "Sign Up"}
         </button>
       </form>
-      <div className="">
-        <Link to="/forgot-password">Forgot Password?</Link>
-      </div>
-      <div className="sign-up-btn">
-        Need an account? <Link to="/signup">Sign Up</Link>
-      </div>
+
+      {isLoginRoute ? (
+        <div>
+          <div className="">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
+          <div className="sign-up-btn">
+            Need an account? <Link to="/signup">Sign Up</Link>
+          </div>
+        </div>
+      ) : (
+        <div className="sign-up-btn">
+          Already have an account? <Link to="/login">Log In</Link>
+        </div>
+      )}
     </div>
   );
 }
