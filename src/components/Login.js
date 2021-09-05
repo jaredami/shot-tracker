@@ -26,20 +26,18 @@ export default function Login({ isLoginRoute }) {
     try {
       setError("");
       setLoading(true);
+      const email = emailRef.current.value;
+      const password = passwordRef.current.value;
 
       if (isLoginRoute) {
-        await login(emailRef.current.value, passwordRef.current.value);
+        await login(email, password);
       } else {
-        await signup(emailRef.current.value, passwordRef.current.value);
+        await signup(email, password);
       }
 
       history.push("/");
     } catch {
-      if (isLoginRoute) {
-        setError("Failed to log in");
-      } else {
-        setError("Failed to create an account");
-      }
+      setError(`Failed to ${isLoginRoute ? "log in" : "create an account"}`);
     }
 
     setLoading(false);
