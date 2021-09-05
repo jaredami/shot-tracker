@@ -14,7 +14,6 @@ import PrivateRoute from "./PrivateRoute";
 import Profile from "./Profile";
 import Rankings from "./Rankings";
 import Session from "./Session";
-import Signup from "./Signup";
 
 function App() {
   return (
