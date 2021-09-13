@@ -30,7 +30,7 @@ export default function History() {
       );
     };
     fetchData();
-  }, []);
+  }, [currentUser.uid]);
 
   return (
     <div className={styles.historyContainer}>
