@@ -1,32 +1,35 @@
+import firebase from "firebase/app";
 import { useEffect, useRef, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import "./Session.css";
 
 export default function Session(props) {
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [timer, setTimer] = useState("--:--");
-  const [isRunning, setIsRunning] = useState(false);
+  // const [seconds, setSeconds] = useState(0);
+  // const [minutes, setMinutes] = useState(0);
+  // const [timer, setTimer] = useState("--:--");
+  // const [isRunning, setIsRunning] = useState(false);
 
-  useInterval(
-    () => {
-      setSeconds(seconds + 1);
-      if (seconds >= 60) {
-        setSeconds(0);
-        setMinutes(minutes + 1);
-      }
-      const newTimer =
-        (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
-        ":" +
-        (seconds > 9 ? seconds : "0" + seconds);
-      setTimer(newTimer);
-    },
-    isRunning ? 1000 : null
-  );
+  // useInterval(
+  //   () => {
+  //     setSeconds(seconds + 1);
+  //     if (seconds >= 60) {
+  //       setSeconds(0);
+  //       setMinutes(minutes + 1);
+  //     }
+  //     const newTimer =
+  //       (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
+  //       ":" +
+  //       (seconds > 9 ? seconds : "0" + seconds);
+  //     setTimer(newTimer);
+  //   },
+  //   isRunning ? 1000 : null
+  // );
 
-  function handleIsRunningChange() {
-    setIsRunning(!isRunning);
-  }
+  // function handleIsRunningChange() {
+  //   setIsRunning(!isRunning);
+  // }
 
+  const { currentUser } = useAuth();
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
@@ -50,6 +53,17 @@ export default function Session(props) {
     return shotsTakenCount
       ? Math.floor((shotsMadeCount / shotsTakenCount) * 100) + "%"
       : "--";
+  }
+
+  function logSession() {
+    const session = {
+      userId: currentUser.uid,
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+      shotsTaken: shotsTakenCount,
+      shotsMade: shotsMadeCount,
+      bestStreak,
+    };
+    console.log("session", session);
   }
 
   return (
@@ -87,7 +101,7 @@ export default function Session(props) {
         <button className="make-miss-btn make-btn" onClick={() => handleMake()}>
           MAKE
         </button>
-        <button className="log-session-btn" onClick={() => console.log("test")}>
+        <button className="log-session-btn" onClick={() => logSession()}>
           LOG SESSION
         </button>
       </div>
