@@ -64,6 +64,7 @@ export default function Session(props) {
       bestStreak,
     };
     console.log("session", session);
+    // TODO: save to db
   }
 
   return (
