@@ -54,14 +54,14 @@ export default function Session(props) {
 
   return (
     <div className="container">
-      <div
+      {/* <div
         className={`timer-container ${
           !isRunning ? "timer-container--paused" : ""
         }`}
         onClick={() => handleIsRunningChange()}
       >
         <div className="timer">{timer}</div>
-      </div>
+      </div> */}
       <div className="session-grid">
         <div className="stat-container">
           <p className="stat">
@@ -86,6 +86,9 @@ export default function Session(props) {
         </button>
         <button className="make-miss-btn make-btn" onClick={() => handleMake()}>
           MAKE
+        </button>
+        <button className="log-session-btn" onClick={() => console.log("test")}>
+          LOG SESSION
         </button>
       </div>
     </div>
