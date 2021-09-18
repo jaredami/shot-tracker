@@ -31,17 +31,20 @@ export default function Session(props) {
   }
 
   const { currentUser } = useAuth();
+  const [sessionStarted, setSessionStarted] = useState(false);
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
 
   function handleMiss() {
+    setSessionStarted(true);
     setShotsTakenCount(shotsTakenCount + 1);
     setCurrentStreak(0);
   }
 
   function handleMake() {
+    setSessionStarted(true);
     setShotsTakenCount(shotsTakenCount + 1);
     setShotsMadeCount(shotsMadeCount + 1);
     setCurrentStreak(currentStreak + 1);
@@ -104,7 +107,11 @@ export default function Session(props) {
         <button className="make-miss-btn make-btn" onClick={() => handleMake()}>
           MAKE
         </button>
-        <button className="log-session-btn" onClick={() => logSession()}>
+        <button
+          className="log-session-btn"
+          onClick={() => logSession()}
+          disabled={!sessionStarted}
+        >
           LOG SESSION
         </button>
       </div>

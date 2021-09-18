@@ -77,6 +77,11 @@
   font-size: 2rem;
 }
 
+.log-session-btn:disabled {
+  filter: brightness(80%);
+  cursor: not-allowed;
+}
+
 @media only screen and (max-height: 700px) {
   .timer-container {
     height: 5rem;
