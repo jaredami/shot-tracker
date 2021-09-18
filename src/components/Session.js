@@ -8,7 +8,7 @@ export default function Session(props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [timer, setTimer] = useState("--:--");
-  const [isRunning, setIsRunning] = useState(false);
+  const [sessionStarted, setSessionStarted] = useState(false);
 
   useInterval(
     () => {
@@ -23,15 +23,10 @@ export default function Session(props) {
         (seconds > 9 ? seconds : "0" + seconds);
       setTimer(newTimer);
     },
-    isRunning ? 1000 : null
+    sessionStarted ? 1000 : null
   );
 
-  function handleIsRunningChange() {
-    setIsRunning(!isRunning);
-  }
-
   const { currentUser } = useAuth();
-  const [sessionStarted, setSessionStarted] = useState(false);
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
@@ -77,16 +72,20 @@ export default function Session(props) {
     setShotsMadeCount(0);
     setCurrentStreak(0);
     setBestStreak(0);
+
     setSessionStarted(false);
+    setSeconds(0);
+    setMinutes(0);
+    setTimer("--:--");
   }
 
   return (
     <div className="container">
       <div
         className={`timer-container ${
-          !isRunning ? "timer-container--paused" : ""
+          !sessionStarted ? "timer-container--paused" : ""
         }`}
-        onClick={() => handleIsRunningChange()}
+        // onClick={() => handleIsRunningChange()}
       >
         <div className="timer">{timer}</div>
       </div>
