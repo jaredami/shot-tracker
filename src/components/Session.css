@@ -94,11 +94,18 @@
   }
 
   .make-miss-btn {
-    padding: 1.5rem;
+    padding: 2rem;
     font-size: 1rem;
   }
 
   .log-session-btn {
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  .make-miss-btn {
     padding: 1.5rem;
     font-size: 1rem;
   }
