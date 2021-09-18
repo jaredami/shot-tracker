@@ -68,8 +68,16 @@ export default function Session(props) {
       bestStreak,
     };
     db.collection("sessions").doc().set(session);
-    // TODO: reset to start new session.
+    resetSession();
     // TODO prevent spamming logSession button
+  }
+
+  function resetSession() {
+    setShotsTakenCount(0);
+    setShotsMadeCount(0);
+    setCurrentStreak(0);
+    setBestStreak(0);
+    setSessionStarted(false);
   }
 
   return (
