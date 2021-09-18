@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { db } from "../firebase";
 import "./Session.css";
 
 export default function Session(props) {
@@ -63,8 +64,9 @@ export default function Session(props) {
       shotsMade: shotsMadeCount,
       bestStreak,
     };
-    console.log("session", session);
-    // TODO: save to db
+    db.collection("sessions").doc().set(session);
+    // TODO: reset to start new session.
+    // TODO prevent spamming logSession button
   }
 
   return (
