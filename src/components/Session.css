@@ -85,15 +85,21 @@
   }
 }
 
-@media only screen and (max-height: 550px) {
+@media only screen and (max-height: 850px) {
   .stat-container {
     padding: 0.5rem 1rem;
   }
   .stat {
-    font-size: 20px;
+    font-size: 1rem;
   }
 
   .make-miss-btn {
-    padding: 1rem;
+    padding: 1.5rem;
+    font-size: 1rem;
+  }
+
+  .log-session-btn {
+    padding: 1.5rem;
+    font-size: 1rem;
   }
 }

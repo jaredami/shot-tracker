@@ -5,30 +5,30 @@ import { db } from "../firebase";
 import "./Session.css";
 
 export default function Session(props) {
-  // const [seconds, setSeconds] = useState(0);
-  // const [minutes, setMinutes] = useState(0);
-  // const [timer, setTimer] = useState("--:--");
-  // const [isRunning, setIsRunning] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [timer, setTimer] = useState("--:--");
+  const [isRunning, setIsRunning] = useState(false);
 
-  // useInterval(
-  //   () => {
-  //     setSeconds(seconds + 1);
-  //     if (seconds >= 60) {
-  //       setSeconds(0);
-  //       setMinutes(minutes + 1);
-  //     }
-  //     const newTimer =
-  //       (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
-  //       ":" +
-  //       (seconds > 9 ? seconds : "0" + seconds);
-  //     setTimer(newTimer);
-  //   },
-  //   isRunning ? 1000 : null
-  // );
+  useInterval(
+    () => {
+      setSeconds(seconds + 1);
+      if (seconds >= 60) {
+        setSeconds(0);
+        setMinutes(minutes + 1);
+      }
+      const newTimer =
+        (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") +
+        ":" +
+        (seconds > 9 ? seconds : "0" + seconds);
+      setTimer(newTimer);
+    },
+    isRunning ? 1000 : null
+  );
 
-  // function handleIsRunningChange() {
-  //   setIsRunning(!isRunning);
-  // }
+  function handleIsRunningChange() {
+    setIsRunning(!isRunning);
+  }
 
   const { currentUser } = useAuth();
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
@@ -71,14 +71,14 @@ export default function Session(props) {
 
   return (
     <div className="container">
-      {/* <div
+      <div
         className={`timer-container ${
           !isRunning ? "timer-container--paused" : ""
         }`}
         onClick={() => handleIsRunningChange()}
       >
         <div className="timer">{timer}</div>
-      </div> */}
+      </div>
       <div className="session-grid">
         <div className="stat-container">
           <p className="stat">
