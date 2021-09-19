@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
+import Modal from "./Modal";
 import "./Session.css";
 
 export default function Session(props) {
@@ -9,6 +10,7 @@ export default function Session(props) {
   const [minutes, setMinutes] = useState(0);
   const [timer, setTimer] = useState("--:--");
   const [sessionStarted, setSessionStarted] = useState(false);
+  const [isModalDisplayed, setIsModalDisplayed] = useState(false);
 
   useInterval(
     () => {
@@ -54,6 +56,10 @@ export default function Session(props) {
       : "--";
   }
 
+  function handleLogSessionClicked() {
+    setIsModalDisplayed(true);
+  }
+
   function logSession() {
     const session = {
       userId: currentUser.uid,
@@ -80,49 +86,62 @@ export default function Session(props) {
   }
 
   return (
-    <div className="container">
-      <div
-        className={`timer-container ${
-          !sessionStarted ? "timer-container--paused" : ""
-        }`}
-        // onClick={() => handleIsRunningChange()}
-      >
-        <div className="timer">{timer}</div>
-      </div>
-      <div className="session-grid">
-        <div className="stat-container">
-          <p className="stat">
-            {shotsMadeCount}/{shotsTakenCount}
-          </p>
-          <p className="stat-label">Shots Made</p>
-        </div>
-        <div className="stat-container">
-          <p className="stat">{getPercentage()}</p>
-          <p className="stat-label">Percentage</p>
-        </div>
-        <div className="stat-container">
-          <p className="stat">{currentStreak}</p>
-          <p className="stat-label">Current Streak</p>
-        </div>
-        <div className="stat-container">
-          <p className="stat">{bestStreak}</p>
-          <p className="stat-label">Best Streak</p>
-        </div>
-        <button className="make-miss-btn miss-btn" onClick={() => handleMiss()}>
-          MISS
-        </button>
-        <button className="make-miss-btn make-btn" onClick={() => handleMake()}>
-          MAKE
-        </button>
-        <button
-          className="log-session-btn"
-          onClick={() => logSession()}
-          disabled={!sessionStarted}
+    <>
+      <div className="container">
+        <div
+          className={`timer-container ${
+            !sessionStarted ? "timer-container--paused" : ""
+          }`}
+          // onClick={() => handleIsRunningChange()}
         >
-          LOG SESSION
-        </button>
+          <div className="timer">{timer}</div>
+        </div>
+        <div className="session-grid">
+          <div className="stat-container">
+            <p className="stat">
+              {shotsMadeCount}/{shotsTakenCount}
+            </p>
+            <p className="stat-label">Shots Made</p>
+          </div>
+          <div className="stat-container">
+            <p className="stat">{getPercentage()}</p>
+            <p className="stat-label">Percentage</p>
+          </div>
+          <div className="stat-container">
+            <p className="stat">{currentStreak}</p>
+            <p className="stat-label">Current Streak</p>
+          </div>
+          <div className="stat-container">
+            <p className="stat">{bestStreak}</p>
+            <p className="stat-label">Best Streak</p>
+          </div>
+          <button
+            className="make-miss-btn miss-btn"
+            onClick={() => handleMiss()}
+            disabled={isModalDisplayed}
+          >
+            MISS
+          </button>
+          <button
+            className="make-miss-btn make-btn"
+            onClick={() => handleMake()}
+            disabled={isModalDisplayed}
+          >
+            MAKE
+          </button>
+          <button
+            className="log-session-btn"
+            onClick={() => handleLogSessionClicked()}
+            disabled={!sessionStarted || isModalDisplayed}
+          >
+            LOG SESSION
+          </button>
+        </div>
       </div>
-    </div>
+      {isModalDisplayed && (
+        <Modal message="Are you sure you want to log the current session?" />
+      )}
+    </>
   );
 }
 
