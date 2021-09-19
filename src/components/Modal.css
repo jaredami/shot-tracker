@@ -1,0 +1,10 @@
+.modal-container {
+  width: 80vw;
+  height: 20vh;
+  background-color: white;
+  position: absolute;
+  top: 40vh;
+  margin: 0 auto;
+  left: 10vw;
+  border-radius: 4px;
+}
