@@ -60,6 +60,10 @@ export default function Session(props) {
     setIsModalDisplayed(true);
   }
 
+  function cancelLogSession() {
+    setIsModalDisplayed(false);
+  }
+
   function logSession() {
     const session = {
       userId: currentUser.uid,
@@ -70,7 +74,7 @@ export default function Session(props) {
     };
     db.collection("sessions").doc().set(session);
     resetSession();
-    // TODO prevent spamming logSession button
+    setIsModalDisplayed(false);
   }
 
   function resetSession() {
@@ -139,7 +143,11 @@ export default function Session(props) {
         </div>
       </div>
       {isModalDisplayed && (
-        <Modal message="Are you sure you want to log the current session?" />
+        <Modal
+          message="Are you sure you want to log the current session?"
+          onConfirm={() => logSession()}
+          onCancel={() => cancelLogSession()}
+        />
       )}
     </>
   );
