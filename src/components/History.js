@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import * as styles from "./History.module.css";
+import LoadingIndicator from "./LoadingIndicator";
 
 export default function History() {
   const { currentUser } = useAuth();
   const [sessions, setSessions] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
+
       const data = await db
         .collection("sessions")
         .where("userId", "==", currentUser.uid)
         .get();
+
+      setIsLoading(false);
+
       const sessionsData = data.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -34,7 +41,9 @@ export default function History() {
 
   return (
     <div className={styles.historyContainer}>
+      {isLoading && <LoadingIndicator />}
       {sessions &&
+        !isLoading &&
         sessions.map((session) => (
           <div className={styles.session} key={session.id}>
             <div className={styles.date}>{session.date}</div>
