@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import { useEffect, useRef, useState } from "react";
+import { Prompt } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import Modal from "./Modal";
@@ -91,12 +92,15 @@ export default function Session(props) {
 
   return (
     <>
+      <Prompt
+        when={sessionStarted}
+        message="If you leave without logging the current session, it will not be saved. Are you sure you want to leave?"
+      />
       <div className="container">
         <div
           className={`timer-container ${
             !sessionStarted ? "timer-container--paused" : ""
           }`}
-          // onClick={() => handleIsRunningChange()}
         >
           <div className="timer">{timer}</div>
         </div>
