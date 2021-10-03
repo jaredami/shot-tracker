@@ -19,26 +19,26 @@ export default function Dashboard() {
     }
   }
 
-  const [shotsTakenCount, setShotsTakenCount] = useState(0);
-  const [shotsMadeCount, setShotsMadeCount] = useState(0);
+  const [totalShotsTakenCount, setTotalShotsTakenCount] = useState(0);
+  const [totalShotsMadeCount, setTotalShotsMadeCount] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
 
   function getPercentage() {
-    return shotsTakenCount
-      ? Math.floor((shotsMadeCount / shotsTakenCount) * 100) + "%"
+    return totalShotsTakenCount
+      ? Math.floor((totalShotsMadeCount / totalShotsTakenCount) * 100) + "%"
       : "--";
   }
 
   return (
     <div className="profile-container">
-      <div className="session-grid">
+      <div className="profile-grid">
         <div className="stat-container">
           <p className="stat">23</p>
           <p className="stat-label">Sessions</p>
         </div>
         <div className="stat-container">
           <p className="stat">
-            {shotsMadeCount}/{shotsTakenCount}
+            {totalShotsMadeCount}/{totalShotsTakenCount}
           </p>
           <p className="stat-label">Shots Made</p>
         </div>
