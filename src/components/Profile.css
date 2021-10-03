@@ -1,6 +1,5 @@
 .profile-container {
   padding: 0 1rem;
-  max-width: 500px;
 }
 
 .profile-grid {
@@ -8,7 +7,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   place-items: stretch;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 
 .stat-container {
