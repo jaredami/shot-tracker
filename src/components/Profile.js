@@ -55,13 +55,13 @@ export default function Dashboard() {
         <div>
           {error && <div variant="danger">{error}</div>}
           <strong>Email:</strong> {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+          {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
-          </Link>
+          </Link> */}
         </div>
       </div>
-      <div className="w-100 text-center mt-2">
-        <button variant="link" onClick={handleLogout}>
+      <div className="">
+        <button className="logout-btn" onClick={handleLogout}>
           Log Out
         </button>
       </div>
