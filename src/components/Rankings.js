@@ -119,7 +119,7 @@ export default function Rankings() {
       {isLoading && <LoadingIndicator />}
       {!isLoading && (
         <div className={styles.rankingsContainer}>
-          {getRankings(currentStat).map((user, index) => {
+          {getRankings(currentStat.value).map((user, index) => {
             return (
               <div key={user[0]} className={styles.userCard}>
                 <div className={styles.rank}>{index + 1}</div>
