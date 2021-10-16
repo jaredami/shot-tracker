@@ -32,16 +32,24 @@ export default function Rankings() {
             shotsMade: session.shotsMade,
             shotsTaken: session.shotsTaken,
             bestStreak: session.bestStreak,
+            percentage: Math.floor(
+              (session.shotsMade / session.shotsTaken) * 100
+            ),
           });
 
+        const shotsMade = userEntry.shotsMade + session.shotsMade;
+        const shotsTaken = userEntry.shotsTaken + session.shotsTaken;
+        const bestStreak =
+          session.bestStreak > userEntry.bestStreak
+            ? session.bestStreak
+            : userEntry.bestStreak;
+        const percentage = Math.floor((shotsMade / shotsTaken) * 100);
         updateUsersDataMap(userId, {
           ...userEntry,
-          shotsMade: userEntry.shotsMade + session.shotsMade,
-          shotsTaken: userEntry.shotsTaken + session.shotsTaken,
-          bestStreak:
-            session.bestStreak > userEntry.bestStreak
-              ? session.bestStreak
-              : userEntry.bestStreak,
+          shotsMade,
+          shotsTaken,
+          bestStreak,
+          percentage,
         });
       });
       console.log("usersDataMap", usersDataMap);
@@ -108,7 +116,7 @@ export default function Rankings() {
           </div>
         </div>
       </div>
-      {console.log("getRankings", getRankings("bestStreak"))}
+      {console.log("getRankings", getRankings(currentStat))}
       {isLoading && <LoadingIndicator />}
       {!isLoading && (
         <div className={styles.rankingsContainer}>
