@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { db } from "../firebase";
-import { playerData } from "../mock-data/db";
+import { playerData, sessions } from "../mock-data/db";
 import LoadingIndicator from "./LoadingIndicator";
 import * as styles from "./Rankings.module.css";
 
@@ -16,14 +16,34 @@ export default function Rankings() {
     const fetchData = async () => {
       setIsLoading(true);
 
-      await db
-        .collection("sessions")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            console.log("doc.data()", doc.data());
+      const sessionsData = [];
+      const data = await db.collection("sessions").get();
+      data.forEach((doc) => sessionsData.push(doc.data()));
+      console.log("sessionsData", sessionsData);
+
+      const usersDataMap = new Map();
+
+      sessionsData.forEach((session) => {
+        const userId = session.userId;
+        const userEntry = usersDataMap.get(session.userId);
+        if (!userEntry)
+          return usersDataMap.set(session.userId, {
+            shotsMade: session.shotsMade,
+            shotsTaken: session.shotsTaken,
+            bestStreak: session.bestStreak,
           });
+
+        usersDataMap.set(userId, {
+          ...userEntry,
+          shotsMade: userEntry.shotsMade + session.shotsMade,
+          shotsTaken: userEntry.shotsTaken + session.shotsTaken,
+          bestStreak:
+            session.bestStreak > userEntry.bestStreak
+              ? session.bestStreak
+              : userEntry.bestStreak,
         });
+      });
+      console.log("usersDataMap", usersDataMap);
 
       setIsLoading(false);
     };
