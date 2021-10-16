@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { db } from "../firebase";
-import { playerData, sessions } from "../mock-data/db";
 import LoadingIndicator from "./LoadingIndicator";
 import * as styles from "./Rankings.module.css";
 
@@ -69,9 +68,10 @@ export default function Rankings() {
   }
 
   function getRankings(stat) {
-    return new Map(
+    const sortedMap = new Map(
       [...usersDataMap.entries()].sort((a, b) => b[1][stat] - a[1][stat])
     );
+    return Array.from(sortedMap);
   }
 
   return (
@@ -116,26 +116,23 @@ export default function Rankings() {
           </div>
         </div>
       </div>
-      {console.log("getRankings", getRankings(currentStat))}
       {isLoading && <LoadingIndicator />}
       {!isLoading && (
         <div className={styles.rankingsContainer}>
-          {playerData
-            .sort((a, b) =>
-              a[currentStat.value] < b[currentStat.value] ? 1 : -1
-            )
-            .map((user, index) => (
-              <div key={user.userId} className={styles.userCard}>
+          {getRankings(currentStat).map((user, index) => {
+            return (
+              <div key={user[0]} className={styles.userCard}>
                 <div className={styles.rank}>{index + 1}</div>
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userPicContainer}>
                     <i className="fas fa-user"></i>
                   </div>
-                  <div>{user.userName}</div>
-                  <div>{user[currentStat.value]}</div>
+                  <div>{user[0]}</div>
+                  <div>{user[1][currentStat.value]}</div>
                 </div>
               </div>
-            ))}
+            );
+          })}
         </div>
       )}
     </>
