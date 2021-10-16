@@ -33,7 +33,7 @@ export default function Dashboard() {
       let totalMade = 0;
       let totalTaken = 0;
       let bestStreak = 0;
-      const data = await db
+      await db
         .collection("sessions")
         .where("userId", "==", currentUser.uid)
         .get()
