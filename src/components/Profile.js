@@ -24,26 +24,32 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [totalShotsTakenCount, setTotalShotsTakenCount] = useState(0);
   const [totalShotsMadeCount, setTotalShotsMadeCount] = useState(0);
-  const [bestStreak, setBestStreak] = useState(0);
+  const [bestStreakEver, setBestStreakEver] = useState(0);
 
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
       let totalMade = 0;
+      let totalTaken = 0;
+      let bestStreak = 0;
       const data = await db
         .collection("sessions")
         .where("userId", "==", currentUser.uid)
         .get()
         .then((querySnapshot) => {
-          console.log("querySnapshot", querySnapshot);
-          querySnapshot.forEach(function (doc) {
+          querySnapshot.forEach((doc) => {
             totalMade = totalMade + doc.data().shotsMade;
+            totalTaken = totalTaken + doc.data().shotsTaken;
+            if (doc.data().bestStreak > bestStreak)
+              bestStreak = doc.data().bestStreak;
           });
         });
 
       setIsLoading(false);
       setTotalShotsMadeCount(totalMade);
+      setTotalShotsTakenCount(totalTaken);
+      setBestStreakEver(bestStreak);
     };
     fetchData();
   }, [currentUser.uid]);
@@ -75,7 +81,7 @@ export default function Dashboard() {
               <p className="stat-label">Percentage</p>
             </div>
             <div className="stat-container">
-              <p className="stat">{bestStreak}</p>
+              <p className="stat">{bestStreakEver}</p>
               <p className="stat-label">Best Streak</p>
             </div>
           </div>
