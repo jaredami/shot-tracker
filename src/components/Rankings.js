@@ -11,6 +11,10 @@ export default function Rankings() {
     label: "Percentage",
     value: "percentage",
   });
+  const [usersDataMap, setUsersDataMap] = useState(new Map());
+  function updateUsersDataMap(k, v) {
+    setUsersDataMap(new Map(usersDataMap.set(k, v)));
+  }
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -19,21 +23,18 @@ export default function Rankings() {
       const sessionsData = [];
       const data = await db.collection("sessions").get();
       data.forEach((doc) => sessionsData.push(doc.data()));
-      console.log("sessionsData", sessionsData);
-
-      const usersDataMap = new Map();
 
       sessionsData.forEach((session) => {
         const userId = session.userId;
         const userEntry = usersDataMap.get(session.userId);
         if (!userEntry)
-          return usersDataMap.set(session.userId, {
+          return updateUsersDataMap(session.userId, {
             shotsMade: session.shotsMade,
             shotsTaken: session.shotsTaken,
             bestStreak: session.bestStreak,
           });
 
-        usersDataMap.set(userId, {
+        updateUsersDataMap(userId, {
           ...userEntry,
           shotsMade: userEntry.shotsMade + session.shotsMade,
           shotsTaken: userEntry.shotsTaken + session.shotsTaken,
@@ -57,6 +58,12 @@ export default function Rankings() {
   function handleStatSelected(stat) {
     setCurrentStat(stat);
     setIsDropdownExpanded(false);
+  }
+
+  function getRankings(stat) {
+    return new Map(
+      [...usersDataMap.entries()].sort((a, b) => b[1][stat] - a[1][stat])
+    );
   }
 
   return (
@@ -101,6 +108,7 @@ export default function Rankings() {
           </div>
         </div>
       </div>
+      {console.log("getRankings", getRankings("bestStreak"))}
       {isLoading && <LoadingIndicator />}
       {!isLoading && (
         <div className={styles.rankingsContainer}>
