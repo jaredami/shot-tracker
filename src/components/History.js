@@ -41,9 +41,10 @@ export default function History() {
 
   return (
     <div className={styles.historyContainer}>
-      {isLoading && <LoadingIndicator />}
-      {sessions &&
-        !isLoading &&
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
+        sessions &&
         sessions.map((session) => (
           <div className={styles.session} key={session.id}>
             <div className={styles.date}>{session.date}</div>
@@ -66,7 +67,8 @@ export default function History() {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 }

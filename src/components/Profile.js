@@ -62,8 +62,9 @@ export default function Dashboard() {
 
   return (
     <>
-      {isLoading && <LoadingIndicator />}
-      {!isLoading && (
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
         <div className="profile-container">
           <div className="profile-grid">
             <div className="stat-container">

@@ -102,8 +102,9 @@ export default function Rankings() {
           </div>
         </div>
       </div>
-      {isLoading && <LoadingIndicator />}
-      {!isLoading && (
+      {isLoading ? (
+        <LoadingIndicator />
+      ) : (
         <div className={styles.rankingsContainer}>
           {getRankings(currentStat.value).map((user, index) => {
             return (
