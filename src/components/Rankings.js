@@ -43,8 +43,7 @@ export default function Rankings() {
     <>
       <div className={styles.dropdown}>
         <button className={styles.dropbtn} onClick={() => toggleDropdown()}>
-          {currentStat.label}
-          <i className="fa fa-caret-down"></i>
+          {currentStat.label} <i className="fa fa-caret-down"></i>
         </button>
         <div
           className={`${styles.dropdownContent} ${
@@ -90,6 +89,16 @@ export default function Rankings() {
             }
           >
             Best Streak
+          </div>
+          <div
+            onClick={() =>
+              handleStatSelected({
+                label: "Sessions",
+                value: "totalSessions",
+              })
+            }
+          >
+            Sessions
           </div>
         </div>
       </div>
