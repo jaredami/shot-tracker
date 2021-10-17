@@ -6,52 +6,20 @@ import * as styles from "./Rankings.module.css";
 export default function Rankings() {
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
+  const [users, setUsers] = useState([]);
   const [currentStat, setCurrentStat] = useState({
     label: "Percentage",
-    value: "percentage",
+    value: "totalPercentage",
   });
-  const [usersDataMap, setUsersDataMap] = useState(new Map());
-  function updateUsersDataMap(k, v) {
-    setUsersDataMap(new Map(usersDataMap.set(k, v)));
-  }
 
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
-      const sessionsData = [];
-      const data = await db.collection("sessions").get();
-      data.forEach((doc) => sessionsData.push(doc.data()));
-
-      sessionsData.forEach((session) => {
-        const userId = session.userId;
-        const userEntry = usersDataMap.get(session.userId);
-        if (!userEntry)
-          return updateUsersDataMap(session.userId, {
-            shotsMade: session.shotsMade,
-            shotsTaken: session.shotsTaken,
-            bestStreak: session.bestStreak,
-            percentage: Math.floor(
-              (session.shotsMade / session.shotsTaken) * 100
-            ),
-          });
-
-        const shotsMade = userEntry.shotsMade + session.shotsMade;
-        const shotsTaken = userEntry.shotsTaken + session.shotsTaken;
-        const bestStreak =
-          session.bestStreak > userEntry.bestStreak
-            ? session.bestStreak
-            : userEntry.bestStreak;
-        const percentage = Math.floor((shotsMade / shotsTaken) * 100);
-        updateUsersDataMap(userId, {
-          ...userEntry,
-          shotsMade,
-          shotsTaken,
-          bestStreak,
-          percentage,
-        });
+      const usersData = await db.collection("users").get();
+      usersData.forEach((doc) => {
+        setUsers((users) => [...users, doc.data()]);
       });
-      console.log("usersDataMap", usersDataMap);
 
       setIsLoading(false);
     };
@@ -68,10 +36,7 @@ export default function Rankings() {
   }
 
   function getRankings(stat) {
-    const sortedMap = new Map(
-      [...usersDataMap.entries()].sort((a, b) => b[1][stat] - a[1][stat])
-    );
-    return Array.from(sortedMap);
+    return users.sort((a, b) => (a[stat] < b[stat] ? 1 : -1));
   }
 
   return (
@@ -88,28 +53,40 @@ export default function Rankings() {
         >
           <div
             onClick={() =>
-              handleStatSelected({ label: "Percentage", value: "percentage" })
+              handleStatSelected({
+                label: "Percentage",
+                value: "totalPercentage",
+              })
             }
           >
             Percentage
           </div>
           <div
             onClick={() =>
-              handleStatSelected({ label: "Shots Made", value: "shotsMade" })
+              handleStatSelected({
+                label: "Shots Made",
+                value: "totalShotsMade",
+              })
             }
           >
             Shots Made
           </div>
           <div
             onClick={() =>
-              handleStatSelected({ label: "Shots Taken", value: "shotsTaken" })
+              handleStatSelected({
+                label: "Shots Taken",
+                value: "totalShotsTaken",
+              })
             }
           >
             Shots Taken
           </div>
           <div
             onClick={() =>
-              handleStatSelected({ label: "Best Streak", value: "bestStreak" })
+              handleStatSelected({
+                label: "Best Streak",
+                value: "bestStreakEver",
+              })
             }
           >
             Best Streak
@@ -121,14 +98,14 @@ export default function Rankings() {
         <div className={styles.rankingsContainer}>
           {getRankings(currentStat.value).map((user, index) => {
             return (
-              <div key={user[0]} className={styles.userCard}>
+              <div key={index} className={styles.userCard}>
                 <div className={styles.rank}>{index + 1}</div>
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userPicContainer}>
                     <i className="fas fa-user"></i>
                   </div>
-                  <div>{user[0]}</div>
-                  <div>{user[1][currentStat.value]}</div>
+                  <div>{user.userName}</div>
+                  <div>{user[currentStat.value]}</div>
                 </div>
               </div>
             );
