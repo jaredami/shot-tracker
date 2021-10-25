@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, useHistory } from "react-router-dom";
-import "./Profile.css";
 import { db } from "../firebase";
 import LoadingIndicator from "./LoadingIndicator";
+import "./Profile.css";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
