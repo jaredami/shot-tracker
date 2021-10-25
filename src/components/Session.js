@@ -29,7 +29,7 @@ export default function Session(props) {
     sessionStarted ? 1000 : null
   );
 
-  const { currentUser } = useAuth();
+  const { currentUser, currentUserData } = useAuth();
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
@@ -74,6 +74,39 @@ export default function Session(props) {
       bestStreak,
     };
     db.collection("sessions").doc().set(session);
+
+    const totalShotsTaken = currentUserData?.totalShotsTaken
+      ? currentUserData.totalShotsTaken + shotsTakenCount
+      : shotsTakenCount;
+    const totalShotsMade = currentUserData?.totalShotsMade
+      ? currentUserData.totalShotsMade + shotsMadeCount
+      : shotsMadeCount;
+    const bestStreakEver = currentUserData?.bestStreakEver
+      ? currentUserData.bestStreakEver >= bestStreak
+        ? currentUserData.bestStreakEver
+        : bestStreak
+      : bestStreak;
+    const totalSessions = currentUserData?.totalSessions
+      ? currentUserData.totalSessions + 1
+      : 1;
+    const totalPercentage = currentUserData?.totalPercentage
+      ? Math.floor(
+          ((currentUserData.totalShotsMade + shotsMadeCount) /
+            (currentUserData.totalShotsTaken + shotsTakenCount)) *
+            100
+        )
+      : Math.floor((shotsMadeCount / shotsTakenCount) * 100);
+    const userData = {
+      totalShotsMade,
+      bestStreakEver,
+      totalShotsTaken,
+      totalSessions,
+      totalPercentage,
+      // userName: currentUserData.userName,
+      // email: currentUserData.email,
+    };
+    db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
+
     resetSession();
     setIsModalDisplayed(false);
   }
