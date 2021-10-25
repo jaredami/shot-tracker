@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -9,6 +9,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
+  const [userData, setUserData] = useState();
   const [loading, setLoading] = useState(true);
 
   function signup(email, password) {
@@ -41,11 +42,29 @@ export function AuthProvider({ children }) {
       setLoading(false);
     });
 
+    const fetchUserData = async () => {
+      setLoading(true);
+      if (!currentUser) return;
+      await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .get()
+        .then((docRef) => {
+          setUserData(docRef.data());
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.warn(error);
+        });
+    };
+    fetchUserData();
+
     return unsubscribe;
-  }, []);
+  }, [currentUser]);
 
   const value = {
     currentUser,
+    userData,
     login,
     signup,
     logout,
