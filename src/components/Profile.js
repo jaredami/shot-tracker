@@ -6,7 +6,7 @@ import "./Profile.css";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
-  const { currentUser, logout, userData, loading } = useAuth();
+  const { currentUser, logout, currentUserData, loading } = useAuth();
   const history = useHistory();
 
   async function handleLogout() {
@@ -25,25 +25,26 @@ export default function Dashboard() {
       {loading ? (
         <LoadingIndicator />
       ) : (
-        userData && (
+        currentUserData && (
           <div className="profile-container">
             <div className="profile-grid">
               <div className="stat-container">
-                <p className="stat">{userData.totalSessions}</p>
+                <p className="stat">{currentUserData.totalSessions}</p>
                 <p className="stat-label">Sessions</p>
               </div>
               <div className="stat-container">
                 <p className="stat">
-                  {userData.totalShotsMade}/{userData.totalShotsTaken}
+                  {currentUserData.totalShotsMade}/
+                  {currentUserData.totalShotsTaken}
                 </p>
                 <p className="stat-label">Shots Made</p>
               </div>
               <div className="stat-container">
-                <p className="stat">{userData.totalPercentage}</p>
+                <p className="stat">{currentUserData.totalPercentage}</p>
                 <p className="stat-label">Percentage</p>
               </div>
               <div className="stat-container">
-                <p className="stat">{userData.bestStreakEver}</p>
+                <p className="stat">{currentUserData.bestStreakEver}</p>
                 <p className="stat-label">Best Streak</p>
               </div>
             </div>
