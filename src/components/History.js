@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import * as styles from "./History.module.css";
@@ -9,7 +9,7 @@ export default function History() {
   const [sessions, setSessions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
@@ -24,7 +24,7 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       await db

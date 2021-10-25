@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { db } from "../firebase";
 import LoadingIndicator from "./LoadingIndicator";
 import * as styles from "./Rankings.module.css";
@@ -12,7 +12,7 @@ export default function Rankings() {
     value: "totalPercentage",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
 
