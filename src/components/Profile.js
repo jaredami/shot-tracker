@@ -22,85 +22,69 @@ export default function Dashboard() {
   }
 
   const [isLoading, setIsLoading] = useState(false);
-  const [totalShotsTakenCount, setTotalShotsTakenCount] = useState(0);
-  const [totalShotsMadeCount, setTotalShotsMadeCount] = useState(0);
-  const [bestStreakEver, setBestStreakEver] = useState(0);
+  const [user, setUser] = useState();
 
   React.useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-
-      let totalMade = 0;
-      let totalTaken = 0;
-      let bestStreak = 0;
       await db
-        .collection("sessions")
-        .where("userId", "==", currentUser.uid)
+        .collection("users")
+        .doc(currentUser.uid)
         .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            totalMade = totalMade + doc.data().shotsMade;
-            totalTaken = totalTaken + doc.data().shotsTaken;
-            if (doc.data().bestStreak > bestStreak)
-              bestStreak = doc.data().bestStreak;
-          });
+        .then((docRef) => {
+          setUser(docRef.data());
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.warn(error);
         });
-
-      setIsLoading(false);
-      setTotalShotsMadeCount(totalMade);
-      setTotalShotsTakenCount(totalTaken);
-      setBestStreakEver(bestStreak);
     };
     fetchData();
   }, [currentUser.uid]);
-
-  function getPercentage() {
-    return totalShotsTakenCount
-      ? Math.floor((totalShotsMadeCount / totalShotsTakenCount) * 100) + "%"
-      : "--";
-  }
 
   return (
     <>
       {isLoading ? (
         <LoadingIndicator />
       ) : (
-        <div className="profile-container">
-          <div className="profile-grid">
-            <div className="stat-container">
-              <p className="stat">23</p>
-              <p className="stat-label">Sessions</p>
+        user && (
+          <div className="profile-container">
+            <div className="profile-grid">
+              <div className="stat-container">
+                <p className="stat">{user.totalSessions}</p>
+                <p className="stat-label">Sessions</p>
+              </div>
+              <div className="stat-container">
+                <p className="stat">
+                  {user.totalShotsMade}/{user.totalShotsTaken}
+                </p>
+                <p className="stat-label">Shots Made</p>
+              </div>
+              <div className="stat-container">
+                <p className="stat">{user.totalPercentage}</p>
+                <p className="stat-label">Percentage</p>
+              </div>
+              <div className="stat-container">
+                <p className="stat">{user.bestStreakEver}</p>
+                <p className="stat-label">Best Streak</p>
+              </div>
             </div>
-            <div className="stat-container">
-              <p className="stat">
-                {totalShotsMadeCount}/{totalShotsTakenCount}
-              </p>
-              <p className="stat-label">Shots Made</p>
-            </div>
-            <div className="stat-container">
-              <p className="stat">{getPercentage()}</p>
-              <p className="stat-label">Percentage</p>
-            </div>
-            <div className="stat-container">
-              <p className="stat">{bestStreakEver}</p>
-              <p className="stat-label">Best Streak</p>
-            </div>
-          </div>
-          <div>
             <div>
-              {error && <div variant="danger">{error}</div>}
-              <strong>Email:</strong> {currentUser.email}
-              {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+              <div>
+                {error && <div variant="danger">{error}</div>}
+                <strong>Email:</strong> {currentUser.email}
+                {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
             Update Profile
           </Link> */}
+              </div>
+            </div>
+            <div className="">
+              <button className="logout-btn" onClick={handleLogout}>
+                Log Out
+              </button>
             </div>
           </div>
-          <div className="">
-            <button className="logout-btn" onClick={handleLogout}>
-              Log Out
-            </button>
-          </div>
-        </div>
+        )
       )}
     </>
   );
