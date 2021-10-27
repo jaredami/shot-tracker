@@ -43,8 +43,7 @@ export default function History() {
     <div className={styles.historyContainer}>
       {isLoading ? (
         <LoadingIndicator />
-      ) : (
-        sessions &&
+      ) : sessions ? (
         sessions.map((session) => (
           <div className={styles.session} key={session.id}>
             <div className={styles.date}>{session.date}</div>
@@ -68,6 +67,8 @@ export default function History() {
             </div>
           </div>
         ))
+      ) : (
+        <div>No Sessions Logged</div>
       )}
     </div>
   );
