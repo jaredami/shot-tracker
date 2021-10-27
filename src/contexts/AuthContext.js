@@ -15,7 +15,7 @@ export function AuthProvider({ children }) {
   function signup(userName, email, password) {
     return auth.createUserWithEmailAndPassword(email, password).then((resp) => {
       db.collection("users")
-        .doc(currentUser.uid)
+        .doc(resp.user.uid)
         .set({ email: resp.user.email, userName: userName });
     });
   }
