@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 
 const AuthContext = React.createContext();
@@ -41,24 +41,14 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
     });
+    if (!currentUser) return unsubscribe;
 
-    const fetchUserData = async () => {
-      setLoading(true);
-      if (!currentUser) return;
-      await db
-        .collection("users")
-        .doc(currentUser.uid)
-        .get()
-        .then((docRef) => {
-          setCurrentUserData(docRef.data());
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.warn(error);
-        });
-    };
-    fetchUserData();
-
+    // Need to unsubscribe?
+    db.collection("users")
+      .doc(currentUser.uid)
+      .onSnapshot((doc) => {
+        setCurrentUserData(doc.data());
+      });
     return unsubscribe;
   }, [currentUser]);
 

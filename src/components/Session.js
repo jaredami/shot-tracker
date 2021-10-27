@@ -102,8 +102,6 @@ export default function Session(props) {
       totalShotsTaken,
       totalSessions,
       totalPercentage,
-      // userName: currentUserData.userName,
-      // email: currentUserData.email,
     };
     db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
 
