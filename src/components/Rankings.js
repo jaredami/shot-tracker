@@ -16,7 +16,10 @@ export default function Rankings() {
     const fetchData = async () => {
       setIsLoading(true);
 
-      const usersData = await db.collection("users").get();
+      const usersData = await db
+        .collection("users")
+        .where("totalSessions", ">", 0)
+        .get();
       usersData.forEach((doc) => {
         setUsers((users) => [...users, doc.data()]);
       });
