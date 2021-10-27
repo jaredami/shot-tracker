@@ -4,6 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import "./Login.css";
 
 export default function Login({ isLoginRoute }) {
+  const userNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
@@ -32,7 +33,8 @@ export default function Login({ isLoginRoute }) {
       if (isLoginRoute) {
         await login(email, password);
       } else {
-        await signup(email, password);
+        const userName = userNameRef.current.value;
+        await signup(userName, email, password);
       }
 
       history.push("/");
@@ -48,6 +50,12 @@ export default function Login({ isLoginRoute }) {
       {error && <div variant="danger">{error}</div>}
 
       <form className="login-form" onSubmit={handleSubmit}>
+        {!isLoginRoute && (
+          <div className="login-form-row" id="user-name">
+            <label>User Name</label>
+            <input type="text" ref={userNameRef} required />
+          </div>
+        )}
         <div className="login-form-row" id="email">
           <label>Email</label>
           <input type="email" ref={emailRef} required />

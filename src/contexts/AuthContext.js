@@ -12,8 +12,12 @@ export function AuthProvider({ children }) {
   const [currentUserData, setCurrentUserData] = useState();
   const [loading, setLoading] = useState(true);
 
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
+  function signup(userName, email, password) {
+    return auth.createUserWithEmailAndPassword(email, password).then((resp) => {
+      db.collection("users")
+        .doc(currentUser.uid)
+        .set({ email: resp.user.email, userName: userName });
+    });
   }
 
   function login(email, password) {
