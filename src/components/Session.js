@@ -73,7 +73,7 @@ export default function Session(props) {
       shotsMade: shotsMadeCount,
       bestStreak,
     };
-    db.collection("sessions").doc().set(session);
+    // db.collection("sessions").doc().set(session);
 
     const totalShotsTaken = currentUserData?.totalShotsTaken
       ? currentUserData.totalShotsTaken + shotsTakenCount
@@ -103,7 +103,19 @@ export default function Session(props) {
       totalSessions,
       totalPercentage,
     };
-    db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
+    // db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
+
+    var batch = db.batch();
+
+    var sessionsRef = db.collection("sessions").doc();
+    batch.set(sessionsRef, session);
+
+    var userRef = db.collection("users").doc(currentUser.uid);
+    batch.set(userRef, userData, { merge: true });
+
+    batch.commit().then((resp) => {
+      console.log("resp", resp);
+    });
 
     resetSession();
     setIsModalDisplayed(false);
