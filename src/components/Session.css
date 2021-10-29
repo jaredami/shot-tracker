@@ -57,6 +57,11 @@
   color: #f5f5f5;
   filter: brightness(110%);
   font-size: 2rem;
+  cursor: pointer;
+  transition: transform 100ms ease;
+}
+.make-miss-btn:active {
+  transform: scale(0.98);
 }
 .miss-btn {
   background: var(--red);
