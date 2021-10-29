@@ -2,7 +2,8 @@
   --background-primary: #222626;
   --background-secondary: #2d3134;
   --red: #90413f;
-  --green: #7a933c;
+  --green: #6c863b;
+  --blue: #5c8688;
   --white: #dedae0;
   --light-gray: #afafaf;
   --dark-gray: #505155;
@@ -25,6 +26,10 @@ body {
 
 button {
   font-family: var(--font-primary);
+}
+
+a {
+  color: var(--blue);
 }
 
 .main-wrapper {
