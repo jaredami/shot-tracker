@@ -96,8 +96,9 @@ export default function Rankings() {
       ) : (
         <div className={styles.rankingsContainer}>
           {getRankings(currentStat.value).map((user, index) => {
+            const style = { "--animation-order": index + 1 };
             return (
-              <div key={index} className={styles.userCard}>
+              <div style={style} key={index} className={styles.userCard}>
                 <div className={styles.rank}>{index + 1}</div>
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userPicContainer}>
