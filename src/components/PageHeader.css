@@ -7,6 +7,11 @@
   align-items: center;
 }
 
+.user-name {
+  white-space: nowrap;
+  margin-right: 1rem;
+}
+
 .profile-icon {
   color: var(--light-gray);
   font-size: 2rem;
