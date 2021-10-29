@@ -1,11 +1,19 @@
 .modal__container {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+}
+
+.modal {
   width: 80vw;
+  max-width: 516px;
   height: 30vh;
   background-color: white;
-  position: absolute;
-  top: 40vh;
-  margin: 0 auto;
-  left: 10vw;
   border-radius: 4px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -19,6 +27,7 @@
 .modal__message {
   grid-area: 1 / 1 / 2 / 3;
   color: var(--background-primary);
+  padding: 1rem;
 }
 
 .modal__button {
