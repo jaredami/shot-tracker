@@ -17,6 +17,7 @@ export default function History() {
       const data = await db
         .collection("sessions")
         .where("userId", "==", currentUser.uid)
+        .orderBy("timestamp", "desc")
         .get();
 
       setIsLoading(false);
