@@ -77,6 +77,7 @@ export default function Rankings() {
         >
           {statOptions.map((option, index) => (
             <div
+              className={styles.dropdownOption}
               key={index}
               onClick={() =>
                 handleStatSelected({

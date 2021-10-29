@@ -24,18 +24,34 @@
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   margin-left: 1rem;
+  animation: growDown 200ms ease-in-out forwards;
+  transform-origin: top center;
 }
 
-.dropdownContent div {
+@keyframes growDown {
+  0% {
+    transform: scaleY(0);
+  }
+  80% {
+    transform: scaleY(1.1);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.dropdownOption {
   float: none;
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   text-align: left;
+  cursor: pointer;
+  transition: background-color 100ms ease;
 }
 
-.dropdownContent div:hover {
+.dropdownOption:hover {
   background-color: #ddd;
 }
 
