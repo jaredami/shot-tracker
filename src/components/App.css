@@ -33,6 +33,10 @@ a {
   color: var(--blue);
 }
 
+input:focus-visible {
+  outline: 2px solid var(--blue);
+}
+
 .main-wrapper {
   /* font-family: "Share Tech Mono", monospace; */
   /* font-family: "Roboto", sans-serif; */
