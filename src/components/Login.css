@@ -11,7 +11,6 @@
   display: grid;
   grid-auto-flow: row;
   row-gap: 1rem;
-  margin-bottom: 1rem;
 }
 
 .login-form-row {
@@ -36,8 +35,4 @@
 
 .login-links-container {
   text-align: center;
-}
-
-.signup-link-container {
-  margin-top: 0.5rem;
 }

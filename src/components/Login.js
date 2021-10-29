@@ -77,7 +77,7 @@ export default function Login({ isLoginRoute }) {
       {isLoginRoute ? (
         <div className="login-links-container">
           {/* <Link to="/forgot-password">Forgot Password?</Link> */}
-          <div className="signup-link-container">
+          <div>
             Need an account? <Link to="/signup">Sign Up</Link>
           </div>
         </div>
