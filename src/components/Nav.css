@@ -85,3 +85,17 @@ nav a:nth-child(3).active ~ span {
 .active {
   color: var(--white);
 }
+
+@media only screen and (max-width: 300px) {
+  nav a {
+    width: 50px;
+  }
+
+  nav a i {
+    left: 0;
+  }
+
+  nav a b {
+    display: none;
+  }
+}
