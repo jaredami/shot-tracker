@@ -37,3 +37,9 @@
   color: var(--light-gray);
   font-size: 0.8rem;
 }
+
+@media only screen and (max-width: 400px) {
+  .statLabel {
+    font-size: 0.5rem;
+  }
+}
