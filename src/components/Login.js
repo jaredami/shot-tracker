@@ -47,8 +47,6 @@ export default function Login({ isLoginRoute }) {
 
   return (
     <div className="login-container">
-      {error && <div variant="danger">{error}</div>}
-
       <form className="login-form" onSubmit={handleSubmit}>
         {!isLoginRoute && (
           <div className="login-form-row" id="user-name">
@@ -70,6 +68,7 @@ export default function Login({ isLoginRoute }) {
             <input type="password" ref={passwordConfirmRef} required />
           </div>
         )}
+        {error && <div className="login-error">{error}</div>}
         <button disabled={loading} className="login-btn" type="submit">
           {isLoginRoute ? "Log In" : "Sign Up"}
         </button>
