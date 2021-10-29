@@ -67,6 +67,8 @@ export default function Session(props) {
   }
 
   function logSession() {
+    var batch = db.batch();
+
     const session = {
       userId: currentUser.uid,
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -75,6 +77,8 @@ export default function Session(props) {
       bestStreak,
     };
     // db.collection("sessions").doc().set(session);
+    var sessionsRef = db.collection("sessions").doc();
+    batch.set(sessionsRef, session);
 
     const totalShotsTaken = currentUserData?.totalShotsTaken
       ? currentUserData.totalShotsTaken + shotsTakenCount
@@ -104,18 +108,10 @@ export default function Session(props) {
       totalPercentage,
     };
     // db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
-
-    var batch = db.batch();
-
-    var sessionsRef = db.collection("sessions").doc();
-    batch.set(sessionsRef, session);
-
     var userRef = db.collection("users").doc(currentUser.uid);
     batch.set(userRef, userData, { merge: true });
 
-    batch.commit().then((resp) => {
-      console.log("resp", resp);
-    });
+    batch.commit();
 
     resetSession();
     setIsModalDisplayed(false);
