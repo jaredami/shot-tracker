@@ -70,22 +70,20 @@ export default function Login({ isLoginRoute }) {
             <input type="password" ref={passwordConfirmRef} required />
           </div>
         )}
-        <button disabled={loading} className="log-in-btn" type="submit">
+        <button disabled={loading} className="login-btn" type="submit">
           {isLoginRoute ? "Log In" : "Sign Up"}
         </button>
       </form>
 
       {isLoginRoute ? (
-        <div>
-          <div className="">
-            <Link to="/forgot-password">Forgot Password?</Link>
-          </div>
-          <div className="sign-up-btn">
+        <div className="login-links-container">
+          {/* <Link to="/forgot-password">Forgot Password?</Link> */}
+          <div className="signup-link-container">
             Need an account? <Link to="/signup">Sign Up</Link>
           </div>
         </div>
       ) : (
-        <div className="sign-up-btn">
+        <div className="login-links-container">
           Already have an account? <Link to="/login">Log In</Link>
         </div>
       )}
