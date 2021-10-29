@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
+import { calcPercentage } from "../util/utils";
 import * as styles from "./History.module.css";
 import LoadingIndicator from "./LoadingIndicator";
 
@@ -29,9 +30,7 @@ export default function History() {
           return {
             ...session,
             date: session.timestamp.toDate().toDateString(),
-            percentage: Math.round(
-              (session.shotsMade / session.shotsTaken) * 100
-            ),
+            percentage: calcPercentage(session.shotsMade, session.shotsTaken),
           };
         })
       );

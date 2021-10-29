@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Prompt } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
+import { calcPercentage } from "../util/utils";
 import Modal from "./Modal";
 import "./Session.css";
 
@@ -53,7 +54,7 @@ export default function Session(props) {
 
   function getPercentage() {
     return shotsTakenCount
-      ? Math.floor((shotsMadeCount / shotsTakenCount) * 100) + "%"
+      ? calcPercentage(shotsMadeCount, shotsTakenCount) + "%"
       : "--";
   }
 
@@ -90,12 +91,11 @@ export default function Session(props) {
       ? currentUserData.totalSessions + 1
       : 1;
     const totalPercentage = currentUserData?.totalPercentage
-      ? Math.floor(
-          ((currentUserData.totalShotsMade + shotsMadeCount) /
-            (currentUserData.totalShotsTaken + shotsTakenCount)) *
-            100
+      ? calcPercentage(
+          currentUserData.totalShotsMade + shotsMadeCount,
+          currentUserData.totalShotsTaken + shotsTakenCount
         )
-      : Math.floor((shotsMadeCount / shotsTakenCount) * 100);
+      : calcPercentage(shotsMadeCount, shotsTakenCount);
     const userData = {
       totalShotsMade,
       bestStreakEver,
