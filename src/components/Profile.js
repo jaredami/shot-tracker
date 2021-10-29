@@ -29,22 +29,22 @@ export default function Dashboard() {
           <div className="profile-container">
             <div className="profile-grid">
               <div className="stat-container">
-                <p className="stat">{currentUserData.totalSessions}</p>
+                <p className="stat">{currentUserData.totalSessions || "0"}</p>
                 <p className="stat-label">Sessions</p>
               </div>
               <div className="stat-container">
                 <p className="stat">
-                  {currentUserData.totalShotsMade}/
-                  {currentUserData.totalShotsTaken}
+                  {currentUserData.totalShotsMade || "-"}/
+                  {currentUserData.totalShotsTaken || "-"}
                 </p>
                 <p className="stat-label">Shots Made</p>
               </div>
               <div className="stat-container">
-                <p className="stat">{currentUserData.totalPercentage}</p>
+                <p className="stat">{currentUserData.totalPercentage || "-"}</p>
                 <p className="stat-label">Percentage</p>
               </div>
               <div className="stat-container">
-                <p className="stat">{currentUserData.bestStreakEver}</p>
+                <p className="stat">{currentUserData.bestStreakEver || "-"}</p>
                 <p className="stat-label">Best Streak</p>
               </div>
             </div>
