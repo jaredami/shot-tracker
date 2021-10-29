@@ -4,6 +4,28 @@ import LoadingIndicator from "./LoadingIndicator";
 import * as styles from "./Rankings.module.css";
 
 export default function Rankings() {
+  const statOptions = [
+    {
+      label: "Percentage",
+      value: "totalPercentage",
+    },
+    {
+      label: "Shots Made",
+      value: "totalShotsMade",
+    },
+    {
+      label: "Shots Taken",
+      value: "totalShotsTaken",
+    },
+    {
+      label: "Best Streak",
+      value: "bestStreakEver",
+    },
+    {
+      label: "Sessions",
+      value: "totalSessions",
+    },
+  ];
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownExpanded, setIsDropdownExpanded] = useState(false);
   const [users, setUsers] = useState([]);
@@ -53,56 +75,19 @@ export default function Rankings() {
             isDropdownExpanded ? styles.visible : ""
           }`}
         >
-          <div
-            onClick={() =>
-              handleStatSelected({
-                label: "Percentage",
-                value: "totalPercentage",
-              })
-            }
-          >
-            Percentage
-          </div>
-          <div
-            onClick={() =>
-              handleStatSelected({
-                label: "Shots Made",
-                value: "totalShotsMade",
-              })
-            }
-          >
-            Shots Made
-          </div>
-          <div
-            onClick={() =>
-              handleStatSelected({
-                label: "Shots Taken",
-                value: "totalShotsTaken",
-              })
-            }
-          >
-            Shots Taken
-          </div>
-          <div
-            onClick={() =>
-              handleStatSelected({
-                label: "Best Streak",
-                value: "bestStreakEver",
-              })
-            }
-          >
-            Best Streak
-          </div>
-          <div
-            onClick={() =>
-              handleStatSelected({
-                label: "Sessions",
-                value: "totalSessions",
-              })
-            }
-          >
-            Sessions
-          </div>
+          {statOptions.map((option, index) => (
+            <div
+              key={index}
+              onClick={() =>
+                handleStatSelected({
+                  label: option.label,
+                  value: option.value,
+                })
+              }
+            >
+              {option.label}
+            </div>
+          ))}
         </div>
       </div>
       {isLoading ? (
