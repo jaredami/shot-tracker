@@ -40,9 +40,8 @@ export default function Login({ isLoginRoute }) {
       history.push("/");
     } catch {
       setError(`Failed to ${isLoginRoute ? "log in" : "create an account"}`);
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   return (
