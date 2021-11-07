@@ -41,22 +41,20 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    // TODO: Understand what is happening here better
-    const unsubscribeAuthState = auth.onAuthStateChanged((user) => {
+    let unsubscribeCurrentUser;
+    if (currentUser) {
+      unsubscribeCurrentUser = db
+        .collection("users")
+        .doc(currentUser?.uid)
+        .onSnapshot((doc) => {
+          setCurrentUserData(doc.data());
+        });
+    }
+    auth.onAuthStateChanged((user) => {
+      if (!user && unsubscribeCurrentUser) unsubscribeCurrentUser();
       setCurrentUser(user);
       setLoading(false);
     });
-    if (!currentUser) return unsubscribeAuthState;
-
-    const unsubscribeCurrentUser = db
-      .collection("users")
-      .doc(currentUser.uid)
-      .onSnapshot((doc) => {
-        setCurrentUserData(doc.data());
-      });
-    unsubscribeCurrentUser();
-
-    return unsubscribeAuthState;
   }, [currentUser]);
 
   const value = {
