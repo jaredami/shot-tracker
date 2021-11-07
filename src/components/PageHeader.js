@@ -9,9 +9,9 @@ export default function PageHeader({ pageTitle, displaysProfileBtn }) {
     <div className="header-container">
       <div className="header-content-container">
         <h1 className="header">{pageTitle}</h1>
-        {displaysProfileBtn && currentUserData && (
+        {displaysProfileBtn && (
           <>
-            <div className="user-name">{currentUserData.userName}</div>
+            <div className="user-name">{currentUserData?.userName}</div>
             <NavLink
               className="profile-icon"
               activeClassName="profile-link-active"

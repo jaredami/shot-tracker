@@ -25,45 +25,43 @@ export default function Dashboard() {
       {loading ? (
         <LoadingIndicator />
       ) : (
-        currentUserData && (
-          <div className="profile-container">
-            <div className="profile-grid">
-              <div className="stat-container">
-                <p className="stat">{currentUserData.totalSessions || "0"}</p>
-                <p className="stat-label">Sessions</p>
-              </div>
-              <div className="stat-container">
-                <p className="stat">
-                  {currentUserData.totalShotsMade || "-"}/
-                  {currentUserData.totalShotsTaken || "-"}
-                </p>
-                <p className="stat-label">Shots Made</p>
-              </div>
-              <div className="stat-container">
-                <p className="stat">{currentUserData.totalPercentage || "-"}</p>
-                <p className="stat-label">Percentage</p>
-              </div>
-              <div className="stat-container">
-                <p className="stat">{currentUserData.bestStreakEver || "-"}</p>
-                <p className="stat-label">Best Streak</p>
-              </div>
+        <div className="profile-container">
+          <div className="profile-grid">
+            <div className="stat-container">
+              <p className="stat">{currentUserData?.totalSessions || "0"}</p>
+              <p className="stat-label">Sessions</p>
             </div>
-            <div>
-              <div>
-                {error && <div variant="danger">{error}</div>}
-                <strong>Email:</strong> {currentUser.email}
-                {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link> */}
-              </div>
+            <div className="stat-container">
+              <p className="stat">
+                {currentUserData?.totalShotsMade || "-"}/
+                {currentUserData?.totalShotsTaken || "-"}
+              </p>
+              <p className="stat-label">Shots Made</p>
             </div>
-            <div className="">
-              <button className="logout-btn" onClick={handleLogout}>
-                Log Out
-              </button>
+            <div className="stat-container">
+              <p className="stat">{currentUserData?.totalPercentage || "-"}</p>
+              <p className="stat-label">Percentage</p>
+            </div>
+            <div className="stat-container">
+              <p className="stat">{currentUserData?.bestStreakEver || "-"}</p>
+              <p className="stat-label">Best Streak</p>
             </div>
           </div>
-        )
+          <div>
+            <div>
+              {error && <div variant="danger">{error}</div>}
+              <strong>Email:</strong> {currentUser.email}
+              {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
+            Update Profile
+          </Link> */}
+            </div>
+          </div>
+          <div className="">
+            <button className="logout-btn" onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
+        </div>
       )}
     </>
   );
