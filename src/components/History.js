@@ -39,8 +39,6 @@ export default function History() {
     fetchData();
   }, [currentUser.uid]);
 
-  const testClass = "testClass";
-
   return (
     <div className={styles.historyContainer}>
       {isLoading ? (
