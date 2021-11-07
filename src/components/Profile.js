@@ -48,19 +48,18 @@ export default function Dashboard() {
             </div>
           </div>
           <div>
-            <div>
-              {error && <div variant="danger">{error}</div>}
+            {error && <div>{error}</div>}
+            <p>
+              <strong>User Name:</strong> {currentUserData?.userName}
+            </p>
+            <p>
+              {console.log("currentUserData", currentUserData)}
               <strong>Email:</strong> {currentUser.email}
-              {/* <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link> */}
-            </div>
+            </p>
           </div>
-          <div className="">
-            <button className="logout-btn" onClick={handleLogout}>
-              Log Out
-            </button>
-          </div>
+          <button className="logout-btn" onClick={handleLogout}>
+            Log Out
+          </button>
         </div>
       )}
     </>
