@@ -1,0 +1,10 @@
+.toastContainer {
+  position: absolute;
+  bottom: 6rem;
+  background: var(--green);
+  text-align: center;
+  z-index: 20;
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 0;
+}
