@@ -6,6 +6,7 @@ import { db } from "../firebase";
 import { calcPercentage } from "../util/utils";
 import Modal from "./Modal";
 import "./Session.css";
+import Toast from "./Toast";
 
 export default function Session(props) {
   const [seconds, setSeconds] = useState(0);
@@ -35,6 +36,7 @@ export default function Session(props) {
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
+  const [isToastDisplayed, setIsToastDisplayed] = useState(false);
 
   function handleMiss() {
     setSessionStarted(true);
@@ -115,6 +117,7 @@ export default function Session(props) {
 
     resetSession();
     setIsModalDisplayed(false);
+    setIsToastDisplayed(true);
   }
 
   function resetSession() {
@@ -192,6 +195,7 @@ export default function Session(props) {
           onCancel={() => cancelLogSession()}
         />
       )}
+      {isToastDisplayed && <Toast message="Session logged successfully!" />}
     </>
   );
 }
