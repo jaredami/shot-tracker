@@ -36,7 +36,7 @@ export default function Session(props) {
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
-  const [isToastDisplayed, setIsToastDisplayed] = useState(false);
+  const [isToastDisplayed, setIsToastDisplayed] = useState("");
 
   function handleMiss() {
     setSessionStarted(true);
@@ -61,6 +61,7 @@ export default function Session(props) {
   }
 
   function handleLogSessionClicked() {
+    setIsToastDisplayed("");
     setIsModalDisplayed(true);
   }
 
@@ -69,58 +70,68 @@ export default function Session(props) {
   }
 
   function logSession() {
-    var batch = db.batch();
+    try {
+      var batch = db.batch();
 
-    const session = {
-      userId: currentUser.uid,
-      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-      shotsTaken: shotsTakenCount,
-      shotsMade: shotsMadeCount,
-      bestStreak,
-    };
-    // db.collection("sessions").doc().set(session);
-    var sessionsRef = db.collection("sessions").doc();
-    batch.set(sessionsRef, session);
+      const session = {
+        userId: currentUser.uid,
+        timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        shotsTaken: shotsTakenCount,
+        shotsMade: shotsMadeCount,
+        bestStreak,
+      };
+      // db.collection("sessions").doc().set(session);
+      var sessionsRef = db.collection("sessions").doc();
+      batch.set(sessionsRef, session);
 
-    const totalShotsTaken = currentUserData?.totalShotsTaken
-      ? currentUserData.totalShotsTaken + shotsTakenCount
-      : shotsTakenCount;
-    const totalShotsMade = currentUserData?.totalShotsMade
-      ? currentUserData.totalShotsMade + shotsMadeCount
-      : shotsMadeCount;
-    const bestStreakEver = currentUserData?.bestStreakEver
-      ? currentUserData.bestStreakEver >= bestStreak
-        ? currentUserData.bestStreakEver
-        : bestStreak
-      : bestStreak;
-    const totalSessions = currentUserData?.totalSessions
-      ? currentUserData.totalSessions + 1
-      : 1;
-    const totalPercentage = currentUserData?.totalPercentage
-      ? calcPercentage(
-          currentUserData.totalShotsMade + shotsMadeCount,
-          currentUserData.totalShotsTaken + shotsTakenCount
-        )
-      : calcPercentage(shotsMadeCount, shotsTakenCount);
-    const userData = {
-      totalShotsMade,
-      bestStreakEver,
-      totalShotsTaken,
-      totalSessions,
-      totalPercentage,
-    };
-    // db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
-    var userRef = db.collection("users").doc(currentUser.uid);
-    batch.set(userRef, userData, { merge: true });
+      const totalShotsTaken = currentUserData?.totalShotsTaken
+        ? currentUserData.totalShotsTaken + shotsTakenCount
+        : shotsTakenCount;
+      const totalShotsMade = currentUserData?.totalShotsMade
+        ? currentUserData.totalShotsMade + shotsMadeCount
+        : shotsMadeCount;
+      const bestStreakEver = currentUserData?.bestStreakEver
+        ? currentUserData.bestStreakEver >= bestStreak
+          ? currentUserData.bestStreakEver
+          : bestStreak
+        : bestStreak;
+      const totalSessions = currentUserData?.totalSessions
+        ? currentUserData.totalSessions + 1
+        : 1;
+      const totalPercentage = currentUserData?.totalPercentage
+        ? calcPercentage(
+            currentUserData.totalShotsMade + shotsMadeCount,
+            currentUserData.totalShotsTaken + shotsTakenCount
+          )
+        : calcPercentage(shotsMadeCount, shotsTakenCount);
+      const userData = {
+        totalShotsMade,
+        bestStreakEver,
+        totalShotsTaken,
+        totalSessions,
+        totalPercentage,
+      };
+      // db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
+      var userRef = db.collection("users").doc(currentUser.uid);
+      batch.set(userRef, userData, { merge: true });
 
-    batch.commit();
-
-    resetSession();
-    setIsModalDisplayed(false);
-    setIsToastDisplayed(true);
-    setTimeout(() => {
-      setIsToastDisplayed(false);
-    }, 5000);
+      batch.commit();
+      resetSession();
+      setIsModalDisplayed(false);
+      setIsToastDisplayed("Session logged successfully!");
+      setTimeout(() => {
+        setIsToastDisplayed("");
+      }, 5000);
+    } catch (error) {
+      console.error("error", error);
+      setIsModalDisplayed(false);
+      setIsToastDisplayed(
+        "There was a problem logging your session. Please try again."
+      );
+      setTimeout(() => {
+        setIsToastDisplayed("");
+      }, 5000);
+    }
   }
 
   function resetSession() {
@@ -198,7 +209,7 @@ export default function Session(props) {
           onCancel={() => cancelLogSession()}
         />
       )}
-      {isToastDisplayed && <Toast message="Session logged successfully!" />}
+      {isToastDisplayed && <Toast message={isToastDisplayed} />}
     </>
   );
 }
