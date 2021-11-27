@@ -36,7 +36,7 @@ export default function Session(props) {
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
-  const [isToastDisplayed, setIsToastDisplayed] = useState("");
+  const [toast, setToast] = useState(null);
 
   function handleMiss() {
     setSessionStarted(true);
@@ -61,7 +61,7 @@ export default function Session(props) {
   }
 
   function handleLogSessionClicked() {
-    setIsToastDisplayed("");
+    setToast(null);
     setIsModalDisplayed(true);
   }
 
@@ -118,18 +118,19 @@ export default function Session(props) {
       batch.commit();
       resetSession();
       setIsModalDisplayed(false);
-      setIsToastDisplayed("Session logged successfully!");
+      setToast({ message: "Session logged successfully!", type: "success" });
       setTimeout(() => {
-        setIsToastDisplayed("");
+        setToast("");
       }, 5000);
     } catch (error) {
       console.error("error", error);
       setIsModalDisplayed(false);
-      setIsToastDisplayed(
-        "There was a problem logging your session. Please try again."
-      );
+      setToast({
+        message: "There was a problem logging your session. Please try again.",
+        type: "error",
+      });
       setTimeout(() => {
-        setIsToastDisplayed("");
+        setToast("");
       }, 5000);
     }
   }
@@ -209,7 +210,7 @@ export default function Session(props) {
           onCancel={() => cancelLogSession()}
         />
       )}
-      {isToastDisplayed && <Toast message={isToastDisplayed} />}
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </>
   );
 }

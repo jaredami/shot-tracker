@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as styles from "./Toast.module.css";
 
-export default function Toast({ message }) {
+export default function Toast({ message, type }) {
   const [isDisplayed, setIsDisplayed] = useState(true);
 
   useEffect(() => {
@@ -15,5 +15,13 @@ export default function Toast({ message }) {
     };
   }, []);
 
-  return isDisplayed && <div className={styles.toastContainer}>{message}</div>;
+  return (
+    isDisplayed && (
+      <div
+        className={`${styles.toast} ${type === "error" && styles.toastError}`}
+      >
+        {message}
+      </div>
+    )
+  );
 }
