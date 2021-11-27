@@ -118,6 +118,9 @@ export default function Session(props) {
     resetSession();
     setIsModalDisplayed(false);
     setIsToastDisplayed(true);
+    setTimeout(() => {
+      setIsToastDisplayed(false);
+    }, 5000);
   }
 
   function resetSession() {
