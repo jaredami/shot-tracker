@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
@@ -8,6 +9,8 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading } = useAuth();
   const history = useHistory();
+  const userNameRef = useRef();
+  const emailRef = useRef();
 
   async function handleLogout() {
     setError("");
@@ -18,6 +21,10 @@ export default function Dashboard() {
     } catch {
       setError("Failed to log out");
     }
+  }
+
+  function handleSubmit() {
+    console.log("test");
   }
 
   return (
@@ -47,19 +54,37 @@ export default function Dashboard() {
               <p className="stat-label">Best Streak</p>
             </div>
           </div>
-          <div>
-            {error && <div>{error}</div>}
-            <p>
-              <strong>User Name:</strong> {currentUserData?.userName}
-            </p>
-            <p>
-              {console.log("currentUserData", currentUserData)}
-              <strong>Email:</strong> {currentUser.email}
-            </p>
+
+          {/* TODO either copy styles in Profile.css or extract shared Form component */}
+          <div className="login-container">
+            <form className="login-form" onSubmit={handleSubmit}>
+              {error && <div>{error}</div>}
+              <div className="login-form-row" id="user-name">
+                <label>User Name</label>
+                <input
+                  defaultValue={currentUserData?.userName}
+                  type="text"
+                  ref={userNameRef}
+                  required
+                />
+              </div>
+              <div className="login-form-row" id="email">
+                <label>Email</label>
+                <input
+                  defaultValue={currentUser.email}
+                  type="email"
+                  ref={emailRef}
+                  required
+                />
+              </div>
+              <button disabled={loading} className="logout-btn" type="submit">
+                Save
+              </button>
+              <button className="logout-btn" onClick={handleLogout}>
+                Log Out
+              </button>
+            </form>
           </div>
-          <button className="logout-btn" onClick={handleLogout}>
-            Log Out
-          </button>
         </div>
       )}
     </>
