@@ -6,6 +6,10 @@
   margin: 1rem auto;
 }
 
+.sortOrderButton {
+  margin-bottom: 1rem;
+}
+
 .session {
   border-radius: 10px;
   background: var(--background-secondary);

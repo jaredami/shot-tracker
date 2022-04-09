@@ -9,6 +9,8 @@ export default function History() {
   const { currentUser } = useAuth();
   const [sessions, setSessions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isTimestampSortOrderDesc, setIsTimestampSortOrderDesc] =
+    useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +19,7 @@ export default function History() {
       const data = await db
         .collection("sessions")
         .where("userId", "==", currentUser.uid)
-        .orderBy("timestamp", "desc")
+        .orderBy("timestamp", isTimestampSortOrderDesc ? "desc" : "asc")
         .get();
 
       setIsLoading(false);
@@ -37,10 +39,22 @@ export default function History() {
       );
     };
     fetchData();
-  }, [currentUser.uid]);
+  }, [currentUser.uid, isTimestampSortOrderDesc]);
+
+  function toggleTimestampSortOrder() {
+    setIsTimestampSortOrderDesc(!isTimestampSortOrderDesc);
+  }
 
   return (
     <div className={styles.historyContainer}>
+      <button
+        className={styles.sortOrderButton}
+        onClick={() => toggleTimestampSortOrder()}
+      >
+        <i
+          className={`fas fa-caret-${isTimestampSortOrderDesc ? "down" : "up"}`}
+        ></i>
+      </button>
       {isLoading ? (
         <LoadingIndicator />
       ) : sessions && sessions.length ? (
