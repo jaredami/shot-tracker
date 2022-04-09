@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
@@ -8,9 +7,12 @@ import "./Profile.css";
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading } = useAuth();
+
   const history = useHistory();
   const userNameRef = useRef();
   const emailRef = useRef();
+  // TODO: set to true when either userName or email changed (currently just userName)
+  const [isFormDirty, setIsFormDirty] = useState(false);
 
   async function handleLogout() {
     setError("");
@@ -24,7 +26,13 @@ export default function Dashboard() {
   }
 
   function handleSubmit() {
-    console.log("test");
+    // TODO: submit profile data updates here
+    console.log("handleSubmit");
+  }
+
+  function onUserNameChange(e) {
+    const value = e.target.value;
+    setIsFormDirty(value !== currentUserData?.userName);
   }
 
   return (
@@ -63,6 +71,7 @@ export default function Dashboard() {
                 <label>User Name</label>
                 <input
                   defaultValue={currentUserData?.userName}
+                  onChange={onUserNameChange}
                   type="text"
                   ref={userNameRef}
                   required
@@ -77,7 +86,11 @@ export default function Dashboard() {
                   required
                 />
               </div>
-              <button disabled={loading} className="logout-btn" type="submit">
+              <button
+                disabled={!isFormDirty}
+                className="logout-btn"
+                type="submit"
+              >
                 Save
               </button>
               <button className="logout-btn" onClick={handleLogout}>
