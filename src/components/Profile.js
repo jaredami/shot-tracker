@@ -11,7 +11,6 @@ export default function Dashboard() {
   const history = useHistory();
   const userNameRef = useRef();
   const emailRef = useRef();
-  // TODO: set to true when either userName or email changed (currently just userName)
   const [isFormDirty, setIsFormDirty] = useState(false);
 
   async function handleLogout() {
@@ -25,14 +24,24 @@ export default function Dashboard() {
     }
   }
 
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const userName = userNameRef.current.value;
+    console.log("userName", userName);
+    const email = emailRef.current.value;
+    console.log("email", email);
     // TODO: submit profile data updates here
-    console.log("handleSubmit");
   }
 
-  function onUserNameChange(e) {
-    const value = e.target.value;
-    setIsFormDirty(value !== currentUserData?.userName);
+  function validateForm(e) {
+    const userName = userNameRef.current.value;
+    const email = emailRef.current.value;
+    const nameIsDirty = userName !== currentUserData?.userName;
+    const emailIsDirty = email !== currentUserData?.email;
+    setIsFormDirty(nameIsDirty || emailIsDirty);
+
+    // TODO: validate email format?
   }
 
   return (
@@ -65,13 +74,16 @@ export default function Dashboard() {
 
           {/* TODO either copy styles in Profile.css or extract shared Form component */}
           <div className="login-container">
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form
+              className="login-form"
+              onChange={validateForm}
+              onSubmit={handleSubmit}
+            >
               {error && <div>{error}</div>}
               <div className="login-form-row" id="user-name">
                 <label>User Name</label>
                 <input
                   defaultValue={currentUserData?.userName}
-                  onChange={onUserNameChange}
                   type="text"
                   ref={userNameRef}
                   required
