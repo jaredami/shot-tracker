@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import LoadingIndicator from "./LoadingIndicator";
@@ -8,10 +9,22 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading } = useAuth();
 
+  const { register, handleSubmit, formState, reset } = useForm({
+    defaultValues: {
+      userName: currentUserData?.userName,
+      email: currentUser.email,
+    },
+  });
   const history = useHistory();
   const userNameRef = useRef();
   const emailRef = useRef();
-  const [isFormDirty, setIsFormDirty] = useState(false);
+
+  useEffect(() => {
+    reset({
+      userName: currentUserData?.userName,
+      email: currentUser.email,
+    });
+  }, [currentUserData, currentUser]);
 
   async function handleLogout() {
     setError("");
@@ -24,7 +37,7 @@ export default function Dashboard() {
     }
   }
 
-  function handleSubmit(e) {
+  function onSubmit(e) {
     e.preventDefault();
 
     const userName = userNameRef.current.value;
@@ -32,16 +45,6 @@ export default function Dashboard() {
     const email = emailRef.current.value;
     console.log("email", email);
     // TODO: submit profile data updates here
-  }
-
-  function validateForm(e) {
-    const userName = userNameRef.current.value;
-    const email = emailRef.current.value;
-    const nameIsDirty = userName !== currentUserData?.userName;
-    const emailIsDirty = email !== currentUserData?.email;
-    setIsFormDirty(nameIsDirty || emailIsDirty);
-
-    // TODO: validate email format?
   }
 
   return (
@@ -74,32 +77,18 @@ export default function Dashboard() {
 
           {/* TODO either copy styles in Profile.css or extract shared Form component */}
           <div className="login-container">
-            <form
-              className="login-form"
-              onChange={validateForm}
-              onSubmit={handleSubmit}
-            >
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {error && <div>{error}</div>}
               <div className="login-form-row" id="user-name">
                 <label>User Name</label>
-                <input
-                  defaultValue={currentUserData?.userName}
-                  type="text"
-                  ref={userNameRef}
-                  required
-                />
+                <input type="text" {...register("userName")} />
               </div>
               <div className="login-form-row" id="email">
                 <label>Email</label>
-                <input
-                  defaultValue={currentUser.email}
-                  type="email"
-                  ref={emailRef}
-                  required
-                />
+                <input type="email" {...register("email")} />
               </div>
               <button
-                disabled={!isFormDirty}
+                disabled={!formState.isDirty}
                 className="logout-btn"
                 type="submit"
               >
