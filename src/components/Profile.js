@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -8,7 +8,6 @@ import "./Profile.css";
 export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading } = useAuth();
-
   const { register, handleSubmit, formState, reset } = useForm({
     defaultValues: {
       userName: currentUserData?.userName,
@@ -16,8 +15,6 @@ export default function Dashboard() {
     },
   });
   const history = useHistory();
-  const userNameRef = useRef();
-  const emailRef = useRef();
 
   useEffect(() => {
     reset({
@@ -37,12 +34,9 @@ export default function Dashboard() {
     }
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
-
-    const userName = userNameRef.current.value;
+  function onSubmit(formData) {
+    const { userName, email } = formData;
     console.log("userName", userName);
-    const email = emailRef.current.value;
     console.log("email", email);
     // TODO: submit profile data updates here
   }
