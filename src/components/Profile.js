@@ -39,6 +39,7 @@ export default function Dashboard() {
   }
 
   function onSubmit(formData) {
+    // TODO only attempt email update when email has changed; same for userName
     const { userName, email } = formData;
     updateEmail(email)
       .then(() => {
