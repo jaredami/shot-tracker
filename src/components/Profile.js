@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { db } from "../firebase";
 import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
 import Toast from "./Toast";
@@ -39,15 +40,9 @@ export default function Dashboard() {
 
   function onSubmit(formData) {
     const { userName, email } = formData;
-    console.log("userName", userName);
-    console.log("email", email);
-    // TODO: submit profile data updates here
-    return updateEmail(email)
-      .then((resp) => {
-        console.log("resp", resp);
-        // db.collection("users")
-        //   .doc(resp.user.uid)
-        //   .set({ email: resp.user.email, userName: userName });
+    updateEmail(email)
+      .then(() => {
+        db.collection("users").doc(currentUser.uid).set({ email, userName });
       })
       .catch((error) => {
         console.error("error", error);
