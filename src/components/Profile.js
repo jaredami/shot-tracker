@@ -21,7 +21,7 @@ export default function Dashboard() {
       userName: currentUserData?.userName,
       email: currentUser.email,
     });
-  }, [currentUserData, currentUser]);
+  }, [currentUserData?.userName, currentUser.email, reset]);
 
   async function handleLogout() {
     setError("");
