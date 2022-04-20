@@ -91,29 +91,27 @@ export default function Dashboard() {
             </div>
 
             {/* TODO either copy styles in Profile.css or extract shared Form component */}
-            <div className="login-container">
-              <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-                {error && <div>{error}</div>}
-                <div className="login-form-row" id="user-name">
-                  <label>User Name</label>
-                  <input type="text" {...register("userName")} />
-                </div>
-                <div className="login-form-row" id="email">
-                  <label>Email</label>
-                  <input type="email" {...register("email")} />
-                </div>
-                <button
-                  disabled={!formState.isDirty}
-                  className="logout-btn"
-                  type="submit"
-                >
-                  Save
-                </button>
-                <button className="logout-btn" onClick={handleLogout}>
-                  Log Out
-                </button>
-              </form>
-            </div>
+            <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+              {error && <div>{error}</div>}
+              <div className="login-form-row" id="user-name">
+                <label>User Name</label>
+                <input type="text" {...register("userName")} />
+              </div>
+              <div className="login-form-row" id="email">
+                <label>Email</label>
+                <input type="email" {...register("email")} />
+              </div>
+              <button
+                disabled={!formState.isDirty}
+                className="logout-btn"
+                type="submit"
+              >
+                Save
+              </button>
+              <button className="logout-btn" onClick={handleLogout}>
+                Log Out
+              </button>
+            </form>
           </div>
           {toast && <Toast message={toast.message} type={toast.type} />}
         </>
