@@ -13,7 +13,12 @@ export default function Session(props) {
   const [minutes, setMinutes] = useState(0);
   const [timer, setTimer] = useState("--:--");
   const [sessionStarted, setSessionStarted] = useState(false);
-  const [isModalDisplayed, setIsModalDisplayed] = useState(false);
+  const [isLogConfirmationModalDisplayed, setIsLogConfirmationModalDisplayed] =
+    useState(false);
+  const [
+    isResetConfirmationModalDisplayed,
+    setIsResetConfirmationModalDisplayed,
+  ] = useState(false);
 
   useInterval(
     () => {
@@ -62,11 +67,11 @@ export default function Session(props) {
 
   function handleLogSessionClicked() {
     setToast(null);
-    setIsModalDisplayed(true);
+    setIsLogConfirmationModalDisplayed(true);
   }
 
   function cancelLogSession() {
-    setIsModalDisplayed(false);
+    setIsLogConfirmationModalDisplayed(false);
   }
 
   function logSession() {
@@ -117,14 +122,14 @@ export default function Session(props) {
 
       batch.commit();
       resetSession();
-      setIsModalDisplayed(false);
+      setIsLogConfirmationModalDisplayed(false);
       setToast({ message: "Session logged successfully!", type: "success" });
       setTimeout(() => {
         setToast("");
       }, 5000);
     } catch (error) {
       console.error("error", error);
-      setIsModalDisplayed(false);
+      setIsLogConfirmationModalDisplayed(false);
       setToast({
         message: "There was a problem logging your session. Please try again.",
         type: "error",
@@ -133,6 +138,15 @@ export default function Session(props) {
         setToast("");
       }, 5000);
     }
+  }
+
+  function handleResetSessionClicked() {
+    setToast(null);
+    setIsResetConfirmationModalDisplayed(true);
+  }
+
+  function cancelResetSession() {
+    setIsResetConfirmationModalDisplayed(false);
   }
 
   function resetSession() {
@@ -145,6 +159,8 @@ export default function Session(props) {
     setSeconds(0);
     setMinutes(0);
     setTimer("--:--");
+
+    setIsResetConfirmationModalDisplayed(false);
   }
 
   return (
@@ -183,31 +199,45 @@ export default function Session(props) {
           <button
             className="make-miss-btn miss-btn"
             onClick={() => handleMiss()}
-            disabled={isModalDisplayed}
+            disabled={isLogConfirmationModalDisplayed}
           >
             MISS
           </button>
           <button
             className="make-miss-btn make-btn"
             onClick={() => handleMake()}
-            disabled={isModalDisplayed}
+            disabled={isLogConfirmationModalDisplayed}
           >
             MAKE
           </button>
           <button
             className="log-session-btn"
-            onClick={() => handleLogSessionClicked()}
-            disabled={!sessionStarted || isModalDisplayed}
+            onClick={() => handleResetSessionClicked()}
+            disabled={!sessionStarted || isResetConfirmationModalDisplayed}
           >
-            LOG SESSION
+            <i className="fas fa-redo-alt"></i>
+          </button>
+          <button
+            className="log-session-btn"
+            onClick={() => handleLogSessionClicked()}
+            disabled={!sessionStarted || isLogConfirmationModalDisplayed}
+          >
+            LOG
           </button>
         </div>
       </div>
-      {isModalDisplayed && (
+      {isLogConfirmationModalDisplayed && (
         <Modal
-          message="Are you sure you want to log the current session?"
+          message="Are you sure you want to LOG the current session?"
           onConfirm={() => logSession()}
           onCancel={() => cancelLogSession()}
+        />
+      )}
+      {isResetConfirmationModalDisplayed && (
+        <Modal
+          message="Are you sure you want to CLEAR the current session?"
+          onConfirm={() => resetSession()}
+          onCancel={() => cancelResetSession()}
         />
       )}
       {toast && <Toast message={toast.message} type={toast.type} />}

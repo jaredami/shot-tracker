@@ -71,7 +71,7 @@
 }
 
 .log-session-btn {
-  grid-area: 4 / 1 / 5 / 3;
+  /* grid-area: 4 / 1 / 5 / 3; */
   justify-self: stretch;
   padding: 2rem;
   background: var(--dark-gray);
