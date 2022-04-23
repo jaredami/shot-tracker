@@ -11,7 +11,7 @@
 }
 
 .session {
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--background-secondary);
   margin-bottom: 1rem;
   animation-name: slide-in-left;
@@ -40,7 +40,7 @@
 .date {
   background: var(--white);
   color: var(--background-primary);
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 4px 4px 0px 0px;
   padding: 0.5rem 1rem;
 }
 

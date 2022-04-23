@@ -12,7 +12,7 @@
   font-family: inherit;
   margin: 0.5rem 0 0 1rem;
   background: var(--background-secondary);
-  border-radius: 10px;
+  border-radius: 4px;
   width: 10rem;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .userCard {
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--background-secondary);
   margin-bottom: 1rem;
   padding: 0.5rem 1rem;
