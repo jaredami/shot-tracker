@@ -43,7 +43,7 @@ export default function Dashboard() {
     const { userName, email } = formData;
     updateEmail(email)
       .then(() => {
-        db.collection("users").doc(currentUser.uid).set({ email, userName });
+        db.collection("users").doc(currentUser.uid).update({ email, userName });
       })
       .catch((error) => {
         console.error("error", error);
