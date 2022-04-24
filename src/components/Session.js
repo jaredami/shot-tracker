@@ -222,7 +222,7 @@ export default function Session(props) {
             onClick={() => handleLogSessionClicked()}
             disabled={!sessionStarted || isLogConfirmationModalDisplayed}
           >
-            LOG
+            LOG SESSION
           </button>
         </div>
       </div>
