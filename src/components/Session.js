@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import { useEffect, useRef, useState } from "react";
 import { Prompt } from "react-router";
+import Select from "react-select";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import { calcPercentage } from "../util/utils";
@@ -166,11 +167,56 @@ export default function Session(props) {
     setIsResetConfirmationModalDisplayed(false);
   }
 
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [usersData, setUsersData] = useState([]);
+  const [userOptions, setUserOptions] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoadingUsers(true);
+
+      const usersData = await db
+        .collection("users")
+        .where("totalSessions", ">", 0)
+        .get();
+
+      // TODO cleaner way to do this?
+      let users = [];
+      usersData.forEach((doc) => {
+        users.push({ ...doc.data(), id: doc.id });
+      });
+      setUsersData(users);
+
+      setIsLoadingUsers(false);
+      setUserOptions(
+        users.map((user) => {
+          return {
+            value: user.id,
+            label: user.userName,
+          };
+        })
+      );
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <Prompt
         when={sessionStarted}
         message="If you leave without logging the current session, it will not be saved. Are you sure you want to leave?"
+      />
+      <Select
+        className="basic-single"
+        classNamePrefix="select"
+        defaultValue={userOptions[0]}
+        isDisabled={false}
+        isLoading={isLoadingUsers}
+        isClearable={true}
+        isRtl={false}
+        isSearchable={true}
+        name="color"
+        options={userOptions}
       />
       <div className="container">
         <div
