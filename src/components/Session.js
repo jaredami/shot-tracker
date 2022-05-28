@@ -76,50 +76,9 @@ export default function Session(props) {
 
   function logSession() {
     try {
-      var batch = db.batch();
-
-      const session = {
-        userId: currentUser.uid,
-        timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-        shotsTaken: shotsTakenCount,
-        shotsMade: shotsMadeCount,
-        bestStreak,
-      };
-      // db.collection("sessions").doc().set(session);
-      var sessionsRef = db.collection("sessions").doc();
-      batch.set(sessionsRef, session);
-
-      const totalShotsTaken = currentUserData?.totalShotsTaken
-        ? currentUserData.totalShotsTaken + shotsTakenCount
-        : shotsTakenCount;
-      const totalShotsMade = currentUserData?.totalShotsMade
-        ? currentUserData.totalShotsMade + shotsMadeCount
-        : shotsMadeCount;
-      const bestStreakEver = currentUserData?.bestStreakEver
-        ? currentUserData.bestStreakEver >= bestStreak
-          ? currentUserData.bestStreakEver
-          : bestStreak
-        : bestStreak;
-      const totalSessions = currentUserData?.totalSessions
-        ? currentUserData.totalSessions + 1
-        : 1;
-      const totalPercentage = currentUserData?.totalPercentage
-        ? calcPercentage(
-            currentUserData.totalShotsMade + shotsMadeCount,
-            currentUserData.totalShotsTaken + shotsTakenCount
-          )
-        : calcPercentage(shotsMadeCount, shotsTakenCount);
-      const userData = {
-        totalShotsMade,
-        bestStreakEver,
-        totalShotsTaken,
-        totalSessions,
-        totalPercentage,
-      };
-      // db.collection("users").doc(currentUser.uid).set(userData, { merge: true });
-      var userRef = db.collection("users").doc(currentUser.uid);
-      batch.set(userRef, userData, { merge: true });
-
+      const batch = db.batch();
+      addSessionToBatch(batch);
+      addUpdatedUserDataToBatch(batch);
       batch.commit();
       resetSession();
       setIsLogConfirmationModalDisplayed(false);
@@ -138,6 +97,50 @@ export default function Session(props) {
         setToast("");
       }, 5000);
     }
+  }
+
+  function addSessionToBatch(batch) {
+    const session = {
+      userId: currentUser.uid,
+      timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+      shotsTaken: shotsTakenCount,
+      shotsMade: shotsMadeCount,
+      bestStreak,
+    };
+    var sessionsRef = db.collection("sessions").doc();
+    batch.set(sessionsRef, session);
+  }
+
+  function addUpdatedUserDataToBatch(batch) {
+    const totalShotsTaken = currentUserData?.totalShotsTaken
+      ? currentUserData.totalShotsTaken + shotsTakenCount
+      : shotsTakenCount;
+    const totalShotsMade = currentUserData?.totalShotsMade
+      ? currentUserData.totalShotsMade + shotsMadeCount
+      : shotsMadeCount;
+    const bestStreakEver = currentUserData?.bestStreakEver
+      ? currentUserData.bestStreakEver >= bestStreak
+        ? currentUserData.bestStreakEver
+        : bestStreak
+      : bestStreak;
+    const totalSessions = currentUserData?.totalSessions
+      ? currentUserData.totalSessions + 1
+      : 1;
+    const totalPercentage = currentUserData?.totalPercentage
+      ? calcPercentage(
+          currentUserData.totalShotsMade + shotsMadeCount,
+          currentUserData.totalShotsTaken + shotsTakenCount
+        )
+      : calcPercentage(shotsMadeCount, shotsTakenCount);
+    const userData = {
+      totalShotsMade,
+      bestStreakEver,
+      totalShotsTaken,
+      totalSessions,
+      totalPercentage,
+    };
+    var userRef = db.collection("users").doc(currentUser.uid);
+    batch.set(userRef, userData, { merge: true });
   }
 
   function handleResetSessionClicked() {
