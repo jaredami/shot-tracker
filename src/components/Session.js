@@ -37,7 +37,7 @@ export default function Session(props) {
     sessionStarted ? 1000 : null
   );
 
-  const { currentUser, currentUserData } = useAuth();
+  const { currentUser } = useAuth();
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
@@ -175,28 +175,29 @@ export default function Session(props) {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingUsers(true);
-      const usersDocs = await db
-        .collection("users")
-        .where("totalSessions", ">", 0)
-        .get();
+
+      const usersDocs = await db.collection("users").get();
       let userOptionsArray = [];
       usersDocs.forEach((doc) => {
         const userData = doc.data();
         userOptionsArray.push({ value: doc.id, label: userData.userName });
       });
       setUserOptions(userOptionsArray);
+
       setIsLoadingUsers(false);
     };
     fetchData();
   }, []);
 
   useEffect(() => {
-    // Set current user as default selected user
-    if (userOptions.length) {
-      handleUserSelected(
-        userOptions.find((option) => option.value === currentUser.uid)
-      );
-    }
+    if (!userOptions.length) return;
+
+    const currentUserOption = userOptions.find(
+      (option) => option.value === currentUser.uid
+    );
+    if (!currentUserOption) return;
+
+    handleUserSelected(currentUserOption);
   }, [userOptions, currentUser]);
 
   async function handleUserSelected(event) {
