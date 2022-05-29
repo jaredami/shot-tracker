@@ -101,7 +101,6 @@ export default function Session(props) {
   }
 
   function addSessionToBatch(batch) {
-    // TODO initialize selectedUserData with currentUser
     const session = {
       userId: selectedUserData.id,
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -170,6 +169,7 @@ export default function Session(props) {
 
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
+  const [selectedUserOption, setSelectedUserOption] = useState();
   const [selectedUserData, setSelectedUserData] = useState();
 
   useEffect(() => {
@@ -190,10 +190,18 @@ export default function Session(props) {
     fetchData();
   }, []);
 
-  // TODO setSelectedUserData with current user's data from once done loading users
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // Set current user as default selected user
+    if (userOptions.length) {
+      handleUserSelected(
+        userOptions.find((option) => option.value === currentUser.uid)
+      );
+    }
+  }, [userOptions, currentUser]);
 
   async function handleUserSelected(event) {
+    setSelectedUserOption(event);
+
     const userId = event.value;
     await db
       .collection("users")
@@ -218,14 +226,10 @@ export default function Session(props) {
         >
           <div className="timer">{timer}</div>
         </div>
-        {console.log("selectedUserData", selectedUserData)}
-        {console.log("currentUser.uid", currentUser.uid)}
-        {console.log("currentUserData", currentUserData)}
         <Select
           className="basic-single"
           classNamePrefix="select"
-          // value={currentUser.uid}
-          // defaultValue={currentUser.uid}
+          value={selectedUserOption}
           isDisabled={false}
           isLoading={isLoadingUsers}
           isClearable={true}
