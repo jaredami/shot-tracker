@@ -168,8 +168,8 @@ export default function Session(props) {
   }
 
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
-  const [usersData, setUsersData] = useState([]);
   const [userOptions, setUserOptions] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState(currentUser.uid);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -179,44 +179,26 @@ export default function Session(props) {
         .collection("users")
         .where("totalSessions", ">", 0)
         .get();
-
-      // TODO cleaner way to do this?
-      let users = [];
+      let options = [];
       usersData.forEach((doc) => {
-        users.push({ ...doc.data(), id: doc.id });
+        options.push({ value: doc.id, label: doc.data().userName });
       });
-      setUsersData(users);
+      setUserOptions(options);
 
       setIsLoadingUsers(false);
-      setUserOptions(
-        users.map((user) => {
-          return {
-            value: user.id,
-            label: user.userName,
-          };
-        })
-      );
     };
     fetchData();
   }, []);
+
+  function handleUserSelected(event) {
+    setSelectedUserId(event.value);
+  }
 
   return (
     <>
       <Prompt
         when={sessionStarted}
         message="If you leave without logging the current session, it will not be saved. Are you sure you want to leave?"
-      />
-      <Select
-        className="basic-single"
-        classNamePrefix="select"
-        defaultValue={userOptions[0]}
-        isDisabled={false}
-        isLoading={isLoadingUsers}
-        isClearable={true}
-        isRtl={false}
-        isSearchable={true}
-        name="color"
-        options={userOptions}
       />
       <div className="container">
         <div
@@ -226,6 +208,19 @@ export default function Session(props) {
         >
           <div className="timer">{timer}</div>
         </div>
+        <Select
+          className="basic-single"
+          classNamePrefix="select"
+          defaultValue={userOptions[0]}
+          isDisabled={false}
+          isLoading={isLoadingUsers}
+          isClearable={true}
+          isRtl={false}
+          isSearchable={true}
+          name="color"
+          onChange={handleUserSelected}
+          options={userOptions}
+        />
         <div className="session-grid">
           <div className="stat-container">
             <p className="stat">
