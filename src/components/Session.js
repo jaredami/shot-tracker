@@ -169,29 +169,35 @@ export default function Session(props) {
 
   const [isLoadingUsers, setIsLoadingUsers] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState(currentUser.uid);
+  const [selectedUserData, setSelectedUserData] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingUsers(true);
-
-      const usersData = await db
+      const usersDocs = await db
         .collection("users")
         .where("totalSessions", ">", 0)
         .get();
-      let options = [];
-      usersData.forEach((doc) => {
-        options.push({ value: doc.id, label: doc.data().userName });
+      let userOptionsArray = [];
+      usersDocs.forEach((doc) => {
+        const userData = doc.data();
+        userOptionsArray.push({ value: doc.id, label: userData.userName });
       });
-      setUserOptions(options);
-
+      setUserOptions(userOptionsArray);
       setIsLoadingUsers(false);
     };
     fetchData();
   }, []);
 
-  function handleUserSelected(event) {
-    setSelectedUserId(event.value);
+  async function handleUserSelected(event) {
+    const userId = event.value;
+    await db
+      .collection("users")
+      .doc(userId)
+      .get()
+      .then((userDoc) => {
+        setSelectedUserData(userDoc.data());
+      });
   }
 
   return (
@@ -208,6 +214,7 @@ export default function Session(props) {
         >
           <div className="timer">{timer}</div>
         </div>
+        {console.log("selectedUserData", selectedUserData)}
         <Select
           className="basic-single"
           classNamePrefix="select"
