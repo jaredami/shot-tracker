@@ -101,8 +101,9 @@ export default function Session(props) {
   }
 
   function addSessionToBatch(batch) {
+    // TODO initialize selectedUserData with currentUser
     const session = {
-      userId: currentUser.uid,
+      userId: selectedUserData.id,
       timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
       shotsTaken: shotsTakenCount,
       shotsMade: shotsMadeCount,
@@ -113,24 +114,24 @@ export default function Session(props) {
   }
 
   function addUpdatedUserDataToBatch(batch) {
-    const totalShotsTaken = currentUserData?.totalShotsTaken
-      ? currentUserData.totalShotsTaken + shotsTakenCount
+    const totalShotsTaken = selectedUserData.totalShotsTaken
+      ? selectedUserData.totalShotsTaken + shotsTakenCount
       : shotsTakenCount;
-    const totalShotsMade = currentUserData?.totalShotsMade
-      ? currentUserData.totalShotsMade + shotsMadeCount
+    const totalShotsMade = selectedUserData.totalShotsMade
+      ? selectedUserData.totalShotsMade + shotsMadeCount
       : shotsMadeCount;
-    const bestStreakEver = currentUserData?.bestStreakEver
-      ? currentUserData.bestStreakEver >= bestStreak
-        ? currentUserData.bestStreakEver
+    const bestStreakEver = selectedUserData.bestStreakEver
+      ? selectedUserData.bestStreakEver >= bestStreak
+        ? selectedUserData.bestStreakEver
         : bestStreak
       : bestStreak;
-    const totalSessions = currentUserData?.totalSessions
-      ? currentUserData.totalSessions + 1
+    const totalSessions = selectedUserData.totalSessions
+      ? selectedUserData.totalSessions + 1
       : 1;
-    const totalPercentage = currentUserData?.totalPercentage
+    const totalPercentage = selectedUserData.totalPercentage
       ? calcPercentage(
-          currentUserData.totalShotsMade + shotsMadeCount,
-          currentUserData.totalShotsTaken + shotsTakenCount
+          selectedUserData.totalShotsMade + shotsMadeCount,
+          selectedUserData.totalShotsTaken + shotsTakenCount
         )
       : calcPercentage(shotsMadeCount, shotsTakenCount);
     const userData = {
@@ -140,7 +141,7 @@ export default function Session(props) {
       totalSessions,
       totalPercentage,
     };
-    var userRef = db.collection("users").doc(currentUser.uid);
+    var userRef = db.collection("users").doc(selectedUserData.id);
     batch.set(userRef, userData, { merge: true });
   }
 
@@ -189,6 +190,9 @@ export default function Session(props) {
     fetchData();
   }, []);
 
+  // TODO setSelectedUserData with current user's data from once done loading users
+  useEffect(() => {}, []);
+
   async function handleUserSelected(event) {
     const userId = event.value;
     await db
@@ -196,7 +200,7 @@ export default function Session(props) {
       .doc(userId)
       .get()
       .then((userDoc) => {
-        setSelectedUserData(userDoc.data());
+        setSelectedUserData({ id: userDoc.id, ...userDoc.data() });
       });
   }
 
@@ -215,10 +219,13 @@ export default function Session(props) {
           <div className="timer">{timer}</div>
         </div>
         {console.log("selectedUserData", selectedUserData)}
+        {console.log("currentUser.uid", currentUser.uid)}
+        {console.log("currentUserData", currentUserData)}
         <Select
           className="basic-single"
           classNamePrefix="select"
-          defaultValue={userOptions[0]}
+          // value={currentUser.uid}
+          // defaultValue={currentUser.uid}
           isDisabled={false}
           isLoading={isLoadingUsers}
           isClearable={true}
