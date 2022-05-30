@@ -44,6 +44,13 @@ export default function Dashboard() {
     updateEmail(email)
       .then(() => {
         db.collection("users").doc(currentUser.uid).update({ email, userName });
+        setToast({
+          message: "Profile updated successfully!",
+          type: "success",
+        });
+        setTimeout(() => {
+          setToast("");
+        }, 5000);
       })
       .catch((error) => {
         console.error("error", error);
