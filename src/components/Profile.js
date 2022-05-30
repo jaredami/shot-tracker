@@ -11,12 +11,14 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading, updateEmail } =
     useAuth();
-  const { register, handleSubmit, formState, reset } = useForm({
+  const { register, handleSubmit, formState, reset, watch } = useForm({
     defaultValues: {
       userName: currentUserData?.userName,
       email: currentUser.email,
     },
   });
+  const watchUserName = watch("userName");
+  const watchEmail = watch("email");
   const history = useHistory();
   const [toast, setToast] = useState(null);
 
@@ -97,6 +99,7 @@ export default function Dashboard() {
               </div>
             </div>
 
+            {console.log("watchUserName", watchUserName)}
             {/* TODO either copy styles in Profile.css or extract shared Form component */}
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {error && <div>{error}</div>}
@@ -109,7 +112,11 @@ export default function Dashboard() {
                 <input type="email" {...register("email")} />
               </div>
               <button
-                disabled={!formState.isDirty}
+                disabled={
+                  !formState.isDirty ||
+                  !watchUserName.length ||
+                  !watchEmail.length
+                }
                 className="logout-btn"
                 type="submit"
               >
