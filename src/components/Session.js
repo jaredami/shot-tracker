@@ -201,6 +201,7 @@ export default function Session(props) {
   }, [userOptions, currentUser]);
 
   async function handleUserSelected(event) {
+    if (!event) return;
     setSelectedUserOption(event);
 
     const userId = event.value;
@@ -233,7 +234,6 @@ export default function Session(props) {
           value={selectedUserOption}
           isDisabled={false}
           isLoading={isLoadingUsers}
-          isClearable={true}
           isRtl={false}
           isSearchable={true}
           name="color"
