@@ -266,7 +266,7 @@ export default function Session(props) {
       />
       <div className="container">
         <div className="user-select-container">
-          <h3>Logging session for:</h3>
+          <h3>Log session for:</h3>
           <Select
             className="basic-single"
             classNamePrefix="select"
