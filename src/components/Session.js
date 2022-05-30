@@ -266,7 +266,7 @@ export default function Session(props) {
       />
       <div className="container">
         <div className="user-select-container">
-          <h3>Log session for:</h3>
+          <p>Log session for:</p>
           <Select
             className="basic-single"
             classNamePrefix="select"
@@ -281,13 +281,13 @@ export default function Session(props) {
             styles={userSelectStyles}
           />
         </div>
-        {/* <div
+        <div
           className={`timer-container ${
             !sessionStarted ? "timer-container--paused" : ""
           }`}
         >
           <div className="timer">{timer}</div>
-        </div> */}
+        </div>
         <div className="session-grid">
           <div className="stat-container">
             <p className="stat">
