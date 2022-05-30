@@ -81,7 +81,7 @@ export default function Session(props) {
     sessionStarted ? 1000 : null
   );
 
-  const { currentUser } = useAuth();
+  const { currentUser, currentUserData } = useAuth();
   const [shotsTakenCount, setShotsTakenCount] = useState(0);
   const [shotsMadeCount, setShotsMadeCount] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
@@ -265,22 +265,24 @@ export default function Session(props) {
         message="If you leave without logging the current session, it will not be saved. Are you sure you want to leave?"
       />
       <div className="container">
-        <div className="user-select-container">
-          <p>Log session for:</p>
-          <Select
-            className="basic-single"
-            classNamePrefix="select"
-            value={selectedUserOption}
-            isDisabled={false}
-            isLoading={isLoadingUsers}
-            isRtl={false}
-            isSearchable={true}
-            name="color"
-            onChange={handleUserSelected}
-            options={userOptions}
-            styles={userSelectStyles}
-          />
-        </div>
+        {currentUserData && currentUserData.isAdmin && (
+          <div className="user-select-container">
+            <p>Log session for:</p>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              value={selectedUserOption}
+              isDisabled={false}
+              isLoading={isLoadingUsers}
+              isRtl={false}
+              isSearchable={true}
+              name="color"
+              onChange={handleUserSelected}
+              options={userOptions}
+              styles={userSelectStyles}
+            />
+          </div>
+        )}
         <div
           className={`timer-container ${
             !sessionStarted ? "timer-container--paused" : ""

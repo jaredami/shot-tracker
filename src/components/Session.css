@@ -12,7 +12,7 @@
 }
 
 .timer-container {
-  margin: 0rem auto 1rem;
+  margin: 1rem auto 1rem;
   box-sizing: border-box;
   background: var(--background-secondary);
   border: 8px solid var(--white);
