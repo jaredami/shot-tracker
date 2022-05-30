@@ -96,7 +96,7 @@
   cursor: not-allowed;
 }
 
-@media only screen and (max-height: 700px) {
+@media only screen and (max-height: 800px) {
   .timer-container {
     height: 5rem;
     border-radius: 4px;
@@ -104,7 +104,7 @@
   }
 }
 
-@media only screen and (max-height: 850px) {
+@media only screen and (max-height: 860px) {
   .stat-container {
     padding: 0.5rem 1rem;
   }
