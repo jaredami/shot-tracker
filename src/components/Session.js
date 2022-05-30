@@ -265,6 +265,22 @@ export default function Session(props) {
         message="If you leave without logging the current session, it will not be saved. Are you sure you want to leave?"
       />
       <div className="container">
+        <div className="user-select-container">
+          <h3>Logging session for:</h3>
+          <Select
+            className="basic-single"
+            classNamePrefix="select"
+            value={selectedUserOption}
+            isDisabled={false}
+            isLoading={isLoadingUsers}
+            isRtl={false}
+            isSearchable={true}
+            name="color"
+            onChange={handleUserSelected}
+            options={userOptions}
+            styles={userSelectStyles}
+          />
+        </div>
         <div
           className={`timer-container ${
             !sessionStarted ? "timer-container--paused" : ""
@@ -272,19 +288,6 @@ export default function Session(props) {
         >
           <div className="timer">{timer}</div>
         </div>
-        <Select
-          className="basic-single"
-          classNamePrefix="select"
-          value={selectedUserOption}
-          isDisabled={false}
-          isLoading={isLoadingUsers}
-          isRtl={false}
-          isSearchable={true}
-          name="color"
-          onChange={handleUserSelected}
-          options={userOptions}
-          styles={userSelectStyles}
-        />
         <div className="session-grid">
           <div className="stat-container">
             <p className="stat">

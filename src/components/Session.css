@@ -2,6 +2,11 @@
   padding: 1rem 1rem 4.5rem;
 }
 
+.user-select-container {
+  max-width: 500px;
+  margin: 0 auto 1rem;
+}
+
 .timer-container {
   margin: 0rem auto 1rem;
   box-sizing: border-box;
