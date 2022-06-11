@@ -68,7 +68,15 @@ export default function History() {
             const style = { "--animation-order": index + 1 };
             return (
               <div style={style} className={styles.session} key={session.id}>
-                <div className={styles.date}>{session.date}</div>
+                <div className={styles.date}>
+                  <span>{session.date}</span>
+                  <button
+                    className={styles.editSessionButton}
+                    onClick={() => toggleTimestampSortOrder()}
+                  >
+                    <i className="fas fa-pen"></i>
+                  </button>
+                </div>
                 <div className={styles.statsContainer}>
                   <div className={styles.statContainer}>
                     <div className={styles.stat}>{session.percentage}</div>

@@ -42,6 +42,15 @@
   color: var(--background-primary);
   border-radius: 4px 4px 0px 0px;
   padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.editSessionButton {
+  border: 0;
+  background: inherit;
+  cursor: pointer;
+  color: var(--background-primary);
 }
 
 .statsContainer {
