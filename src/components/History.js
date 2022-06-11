@@ -14,6 +14,7 @@ export default function History() {
     useState(true);
   const [isEditSessionModalDisplayed, setIsEditSessionModalDisplayed] =
     useState(false);
+  const [sessionBeingEdited, setSessionBeingEdited] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +49,11 @@ export default function History() {
     setIsTimestampSortOrderDesc(!isTimestampSortOrderDesc);
   }
 
+  function handleSessionEditButtonClicked(session) {
+    setIsEditSessionModalDisplayed(true);
+    setSessionBeingEdited(session);
+  }
+
   return (
     <>
       <div className={styles.historyContainer}>
@@ -72,11 +78,7 @@ export default function History() {
                   <span>{session.date}</span>
                   <button
                     className={styles.editSessionButton}
-                    onClick={() =>
-                      setIsEditSessionModalDisplayed(
-                        !isEditSessionModalDisplayed
-                      )
-                    }
+                    onClick={() => handleSessionEditButtonClicked(session)}
                   >
                     <i className="fas fa-pen"></i>
                   </button>
@@ -108,9 +110,9 @@ export default function History() {
       </div>
       {isEditSessionModalDisplayed && (
         <EditSessionModal
-          message="Are you sure you want to LOG the current session?"
           onSave={() => console.log("save")}
           onCancel={() => setIsEditSessionModalDisplayed(false)}
+          sessionBeingEdited={sessionBeingEdited}
         />
       )}
     </>
