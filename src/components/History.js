@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import { calcPercentage } from "../util/utils";
+import EditSessionModal from "./EditSessionModal";
 import * as styles from "./History.module.css";
 import LoadingIndicator from "./LoadingIndicator";
 
@@ -11,6 +12,8 @@ export default function History() {
   const [isLoading, setIsLoading] = useState(false);
   const [isTimestampSortOrderDesc, setIsTimestampSortOrderDesc] =
     useState(true);
+  const [isEditSessionModalDisplayed, setIsEditSessionModalDisplayed] =
+    useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,47 +49,58 @@ export default function History() {
   }
 
   return (
-    <div className={styles.historyContainer}>
-      <button
-        className={styles.sortOrderButton}
-        onClick={() => toggleTimestampSortOrder()}
-      >
-        <i
-          className={`fas fa-caret-${isTimestampSortOrderDesc ? "down" : "up"}`}
-        ></i>
-      </button>
-      {isLoading ? (
-        <LoadingIndicator />
-      ) : sessions && sessions.length ? (
-        sessions.map((session, index) => {
-          const style = { "--animation-order": index + 1 };
-          return (
-            <div style={style} className={styles.session} key={session.id}>
-              <div className={styles.date}>{session.date}</div>
-              <div className={styles.statsContainer}>
-                <div className={styles.statContainer}>
-                  <div className={styles.stat}>{session.percentage}</div>
-                  <div className={styles.statLabel}>Percentage</div>
-                </div>
-                <div className={styles.statContainer}>
-                  <div className={styles.stat}>{session.shotsMade}</div>
-                  <div className={styles.statLabel}>Shots Made</div>
-                </div>
-                <div className={styles.statContainer}>
-                  <div className={styles.stat}>{session.shotsTaken}</div>
-                  <div className={styles.statLabel}>Shots Taken</div>
-                </div>
-                <div className={styles.statContainer}>
-                  <div className={styles.stat}>{session.bestStreak}</div>
-                  <div className={styles.statLabel}>Best Streak</div>
+    <>
+      <div className={styles.historyContainer}>
+        <button
+          className={styles.sortOrderButton}
+          onClick={() => toggleTimestampSortOrder()}
+        >
+          <i
+            className={`fas fa-caret-${
+              isTimestampSortOrderDesc ? "down" : "up"
+            }`}
+          ></i>
+        </button>
+        {isLoading ? (
+          <LoadingIndicator />
+        ) : sessions && sessions.length ? (
+          sessions.map((session, index) => {
+            const style = { "--animation-order": index + 1 };
+            return (
+              <div style={style} className={styles.session} key={session.id}>
+                <div className={styles.date}>{session.date}</div>
+                <div className={styles.statsContainer}>
+                  <div className={styles.statContainer}>
+                    <div className={styles.stat}>{session.percentage}</div>
+                    <div className={styles.statLabel}>Percentage</div>
+                  </div>
+                  <div className={styles.statContainer}>
+                    <div className={styles.stat}>{session.shotsMade}</div>
+                    <div className={styles.statLabel}>Shots Made</div>
+                  </div>
+                  <div className={styles.statContainer}>
+                    <div className={styles.stat}>{session.shotsTaken}</div>
+                    <div className={styles.statLabel}>Shots Taken</div>
+                  </div>
+                  <div className={styles.statContainer}>
+                    <div className={styles.stat}>{session.bestStreak}</div>
+                    <div className={styles.statLabel}>Best Streak</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })
-      ) : (
-        <div>No Sessions Logged</div>
+            );
+          })
+        ) : (
+          <div>No Sessions Logged</div>
+        )}
+      </div>
+      {isEditSessionModalDisplayed && (
+        <EditSessionModal
+          message="Are you sure you want to LOG the current session?"
+          onSave={() => console.log("save")}
+          onCancel={() => console.log("cancel")}
+        />
       )}
-    </div>
+    </>
   );
 }
