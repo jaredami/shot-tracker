@@ -1,7 +1,7 @@
 import React from "react";
-import "./Modal.css";
+import "./ConfirmationModal.css";
 
-export default function Modal({ message, onConfirm, onCancel }) {
+export default function ConfirmationModal({ message, onConfirm, onCancel }) {
   return (
     <div className="modal__container">
       <div className="modal">

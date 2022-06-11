@@ -5,7 +5,7 @@ import Select from "react-select";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import { calcPercentage } from "../util/utils";
-import Modal from "./Modal";
+import ConfirmationModal from "./ConfirmationModal";
 import "./Session.css";
 import Toast from "./Toast";
 
@@ -340,14 +340,14 @@ export default function Session(props) {
         </div>
       </div>
       {isLogConfirmationModalDisplayed && (
-        <Modal
+        <ConfirmationModal
           message="Are you sure you want to LOG the current session?"
           onConfirm={() => logSession()}
           onCancel={() => cancelLogSession()}
         />
       )}
       {isResetConfirmationModalDisplayed && (
-        <Modal
+        <ConfirmationModal
           message="Are you sure you want to CLEAR the current session?"
           onConfirm={() => resetSession()}
           onCancel={() => cancelResetSession()}
