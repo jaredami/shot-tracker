@@ -72,7 +72,11 @@ export default function History() {
                   <span>{session.date}</span>
                   <button
                     className={styles.editSessionButton}
-                    onClick={() => toggleTimestampSortOrder()}
+                    onClick={() =>
+                      setIsEditSessionModalDisplayed(
+                        !isEditSessionModalDisplayed
+                      )
+                    }
                   >
                     <i className="fas fa-pen"></i>
                   </button>
@@ -106,7 +110,7 @@ export default function History() {
         <EditSessionModal
           message="Are you sure you want to LOG the current session?"
           onSave={() => console.log("save")}
-          onCancel={() => console.log("cancel")}
+          onCancel={() => setIsEditSessionModalDisplayed(false)}
         />
       )}
     </>
