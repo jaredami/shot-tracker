@@ -54,6 +54,11 @@ export default function History() {
     setSessionBeingEdited(session);
   }
 
+  function cancelEditingSession() {
+    setIsEditSessionModalDisplayed(false);
+    setSessionBeingEdited(null);
+  }
+
   return (
     <>
       <div className={styles.historyContainer}>
@@ -111,7 +116,7 @@ export default function History() {
       {isEditSessionModalDisplayed && (
         <EditSessionModal
           onSave={() => console.log("save")}
-          onCancel={() => setIsEditSessionModalDisplayed(false)}
+          onCancel={() => cancelEditingSession()}
           sessionBeingEdited={sessionBeingEdited}
         />
       )}
