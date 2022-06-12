@@ -9,11 +9,17 @@ export default function EditSessionModal({
   return (
     <div className={styles.modal__container}>
       <div className={styles.modal}>
-        <div className="login-form-row" id="user-name">
+        <div
+          className={`login-form-row ${styles.modal__inputContainer}`}
+          id="user-name"
+        >
           <label>Shots Made</label>
           <input type="text" value={sessionBeingEdited.shotsMade} />
         </div>
-        <div className="login-form-row" id="user-name">
+        <div
+          className={`login-form-row ${styles.modal__inputContainer}`}
+          id="user-name"
+        >
           <label>Shots Taken</label>
           <input type="text" value={sessionBeingEdited.shotsTaken} />
         </div>
