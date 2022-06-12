@@ -37,12 +37,12 @@
   color: var(--white);
 }
 
-.modal__button--yes {
+.modal__buttonYes {
   grid-area: 2 / 1 / 3 / 2;
   background: var(--green);
 }
 
-.modal__button--no {
+.modal__buttonNo {
   grid-area: 2 / 2 / 3 / 3;
   background: var(--dark-gray);
 }
