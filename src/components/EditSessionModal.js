@@ -21,14 +21,24 @@ export default function EditSessionModal({
           id="user-name"
         >
           <label>Shots Made</label>
-          <input type="text" {...register("shotsMade")} />
+          <input
+            type="number"
+            {...register("shotsMade", {
+              valueAsNumber: true,
+            })}
+          />
         </div>
         <div
           className={`login-form-row ${styles.modal__inputContainer}`}
           id="user-name"
         >
           <label>Shots Taken</label>
-          <input type="text" {...register("shotsTaken")} />
+          <input
+            type="number"
+            {...register("shotsTaken", {
+              valueAsNumber: true,
+            })}
+          />
         </div>
         <button
           className={[styles.modal__button, styles.modal__buttonYes].join(" ")}
