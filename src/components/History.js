@@ -7,7 +7,7 @@ import * as styles from "./History.module.css";
 import LoadingIndicator from "./LoadingIndicator";
 
 export default function History() {
-  const { currentUser } = useAuth();
+  const { currentUser, currentUserData } = useAuth();
   const [sessions, setSessions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isTimestampSortOrderDesc, setIsTimestampSortOrderDesc] =
@@ -81,12 +81,14 @@ export default function History() {
               <div style={style} className={styles.session} key={session.id}>
                 <div className={styles.date}>
                   <span>{session.date}</span>
-                  <button
-                    className={styles.editSessionButton}
-                    onClick={() => handleSessionEditButtonClicked(session)}
-                  >
-                    <i className="fas fa-pen"></i>
-                  </button>
+                  {currentUserData && currentUserData.isAdmin && (
+                    <button
+                      className={styles.editSessionButton}
+                      onClick={() => handleSessionEditButtonClicked(session)}
+                    >
+                      <i className="fas fa-pen"></i>
+                    </button>
+                  )}
                 </div>
                 <div className={styles.statsContainer}>
                   <div className={styles.statContainer}>
