@@ -11,6 +11,7 @@ export default function EditSessionModal({
     register,
     formState: { errors },
     getValues,
+    watch,
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -18,6 +19,9 @@ export default function EditSessionModal({
       shotsTaken: sessionBeingEdited.shotsTaken,
     },
   });
+
+  const watchShotsMade = watch("shotsMade");
+  const watchShotsTaken = watch("shotsTaken");
 
   return (
     <div className={styles.modal__container}>
@@ -63,7 +67,11 @@ export default function EditSessionModal({
         <button
           className={[styles.modal__button, styles.modal__buttonYes].join(" ")}
           onClick={() => onSave()}
-          disabled={errors.shotsMade || errors.shotsTaken}
+          disabled={
+            watchShotsMade > watchShotsTaken ||
+            watchShotsMade < 0 ||
+            watchShotsTaken < 0
+          }
         >
           Save
         </button>
