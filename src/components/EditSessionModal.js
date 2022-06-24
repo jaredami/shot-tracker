@@ -7,12 +7,18 @@ export default function EditSessionModal({
   onCancel,
   sessionBeingEdited,
 }) {
-  const { register } = useForm({
+  const {
+    register,
+    formState: { errors },
+    getValues,
+  } = useForm({
+    mode: "onChange",
     defaultValues: {
       shotsMade: sessionBeingEdited.shotsMade,
       shotsTaken: sessionBeingEdited.shotsTaken,
     },
   });
+
   return (
     <div className={styles.modal__container}>
       <div className={styles.modal}>
@@ -25,6 +31,12 @@ export default function EditSessionModal({
             type="number"
             {...register("shotsMade", {
               valueAsNumber: true,
+              validate: {
+                negative: (v) => parseInt(v) > 0 || "should be greater than 0",
+                greaterThanShotsTaken: (v) =>
+                  parseInt(v) <= getValues("shotsTaken") ||
+                  "should not be greater than shots taken",
+              },
             })}
           />
         </div>
@@ -43,6 +55,7 @@ export default function EditSessionModal({
         <button
           className={[styles.modal__button, styles.modal__buttonYes].join(" ")}
           onClick={() => onSave()}
+          disabled={errors.shotsMade || errors.shotsTaken}
         >
           Save
         </button>
