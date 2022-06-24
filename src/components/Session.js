@@ -15,7 +15,7 @@ const userSelectStyles = {
     background: "#222626",
     // Match with the menu
     borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
-    // Overwrittes the different states of border
+    // Overwrites the different states of border
     borderColor: state.isFocused ? "#5c8688" : null,
     // Removes weird border around container
     boxShadow: state.isFocused ? null : null,
