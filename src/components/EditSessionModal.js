@@ -28,6 +28,7 @@ export default function EditSessionModal({
         >
           <label>Shots Made</label>
           <input
+            className={errors.shotsMade && styles.invalidInput}
             type="number"
             {...register("shotsMade", {
               valueAsNumber: true,
@@ -46,9 +47,16 @@ export default function EditSessionModal({
         >
           <label>Shots Taken</label>
           <input
+            className={errors.shotsTaken && styles.invalidInput}
             type="number"
             {...register("shotsTaken", {
               valueAsNumber: true,
+              validate: {
+                negative: (v) => parseInt(v) > 0 || "should be greater than 0",
+                lessThanShotsMade: (v) =>
+                  parseInt(v) >= getValues("shotsMade") ||
+                  "should not be less than shots made",
+              },
             })}
           />
         </div>

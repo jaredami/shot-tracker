@@ -31,6 +31,9 @@
 .modal__inputContainer input {
   color: var(--background-primary);
 }
+.invalidInput {
+  border-color: red;
+}
 
 .modal__button {
   border: none;
