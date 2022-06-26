@@ -75,7 +75,7 @@ export default function EditSessionModal({
             })}
           />
         </div>
-        <div>
+        <div className={styles.modal__buttonsContainer}>
           <button
             className={[styles.modal__button, styles.modal__buttonYes].join(
               " "
