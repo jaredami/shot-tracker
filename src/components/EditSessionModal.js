@@ -17,6 +17,7 @@ export default function EditSessionModal({
     defaultValues: {
       shotsMade: sessionBeingEdited.shotsMade,
       shotsTaken: sessionBeingEdited.shotsTaken,
+      bestStreak: sessionBeingEdited.bestStreak,
     },
   });
 
@@ -26,10 +27,7 @@ export default function EditSessionModal({
   return (
     <div className={styles.modal__container}>
       <div className={styles.modal}>
-        <div
-          className={`login-form-row ${styles.modal__inputContainer}`}
-          id="user-name"
-        >
+        <div className={styles.modal__inputContainer}>
           <label>Shots Made</label>
           <input
             className={errors.shotsMade && styles.invalidInput}
@@ -45,10 +43,7 @@ export default function EditSessionModal({
             })}
           />
         </div>
-        <div
-          className={`login-form-row ${styles.modal__inputContainer}`}
-          id="user-name"
-        >
+        <div className={styles.modal__inputContainer}>
           <label>Shots Taken</label>
           <input
             className={errors.shotsTaken && styles.invalidInput}
@@ -64,23 +59,43 @@ export default function EditSessionModal({
             })}
           />
         </div>
-        <button
-          className={[styles.modal__button, styles.modal__buttonYes].join(" ")}
-          onClick={() => onSave()}
-          disabled={
-            watchShotsMade > watchShotsTaken ||
-            watchShotsMade < 0 ||
-            watchShotsTaken < 0
-          }
-        >
-          Save
-        </button>
-        <button
-          className={[styles.modal__button, styles.modal__buttonNo].join(" ")}
-          onClick={() => onCancel()}
-        >
-          Cancel
-        </button>
+        <div className={styles.modal__inputContainer}>
+          <label>Best Streak</label>
+          <input
+            className={errors.shotsTaken && styles.invalidInput}
+            type="number"
+            {...register("bestStreak", {
+              valueAsNumber: true,
+              validate: {
+                negative: (v) => parseInt(v) > 0 || "should be greater than 0",
+                greaterThanShotsMade: (v) =>
+                  parseInt(v) <= getValues("shotsMade") ||
+                  "should not be greater than shots made",
+              },
+            })}
+          />
+        </div>
+        <div>
+          <button
+            className={[styles.modal__button, styles.modal__buttonYes].join(
+              " "
+            )}
+            onClick={() => onSave()}
+            disabled={
+              watchShotsMade > watchShotsTaken ||
+              watchShotsMade < 0 ||
+              watchShotsTaken < 0
+            }
+          >
+            Save
+          </button>
+          <button
+            className={[styles.modal__button, styles.modal__buttonNo].join(" ")}
+            onClick={() => onCancel()}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -27,9 +27,14 @@
 .modal__inputContainer {
   color: var(--background-primary);
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 .modal__inputContainer input {
   color: var(--background-primary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
 }
 .invalidInput {
   border-color: red;
@@ -47,11 +52,11 @@
 }
 
 .modal__buttonYes {
-  grid-area: 2 / 1 / 3 / 2;
+  /* grid-area: 2 / 1 / 3 / 2; */
   background: var(--green);
 }
 
 .modal__buttonNo {
-  grid-area: 2 / 2 / 3 / 3;
+  /* grid-area: 2 / 2 / 3 / 3; */
   background: var(--dark-gray);
 }
