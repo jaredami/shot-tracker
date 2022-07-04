@@ -80,7 +80,7 @@ export default function EditSessionModal({
             className={[styles.modal__button, styles.modal__buttonYes].join(
               " "
             )}
-            onClick={() => onSave()}
+            onClick={() => onSave(getValues())}
             disabled={
               watchShotsMade > watchShotsTaken ||
               watchShotsMade < 0 ||

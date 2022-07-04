@@ -59,6 +59,66 @@ export default function History() {
     setSessionBeingEdited(null);
   }
 
+  // TODO only update things that have changed
+  function updateSession(updatedSession) {
+    console.log("updatedSession", updatedSession);
+    try {
+      const batch = db.batch();
+      addSessionToBatch(batch, updatedSession);
+      addUpdatedUserDataToBatch(batch, updatedSession);
+      console.log("batch", batch);
+      // batch.commit();
+      setIsEditSessionModalDisplayed(false);
+      // setToast({ message: "Session logged successfully!", type: "success" });
+      // setTimeout(() => {
+      //   setToast("");
+      // }, 5000);
+    } catch (error) {
+      console.error("error", error);
+      setIsEditSessionModalDisplayed(false);
+      // setToast({
+      //   message:
+      //     "There was a problem logging your session. Please try again.",
+      //   type: "error",
+      // });
+      // setTimeout(() => {
+      //   setToast("");
+      // }, 5000);
+    }
+  }
+
+  function addSessionToBatch(batch, updatedSession) {
+    var sessionsRef = db.collection("sessions").doc(sessionBeingEdited.id);
+    batch.set(sessionsRef, updatedSession, { merge: true });
+  }
+
+  function addUpdatedUserDataToBatch(batch, updatedSession) {
+    const shotsTakenDiff =
+      updatedSession.shotsTaken - sessionBeingEdited.shotsTaken;
+    const totalShotsTaken = currentUserData.totalShotsTaken + shotsTakenDiff;
+
+    const shotsMadeDiff =
+      updatedSession.shotsMade - sessionBeingEdited.shotsMade;
+    const totalShotsMade = currentUserData.totalShotsMade + shotsMadeDiff;
+
+    const bestStreakEver =
+      currentUserData.bestStreakEver >= updatedSession.bestStreak
+        ? currentUserData.bestStreakEver
+        : updatedSession.bestStreak;
+
+    const totalPercentage = calcPercentage(totalShotsMade, totalShotsTaken);
+
+    const userData = {
+      totalShotsMade,
+      bestStreakEver,
+      totalShotsTaken,
+      totalPercentage,
+    };
+    console.log("userData", userData);
+    var userRef = db.collection("users").doc(currentUserData.id);
+    batch.set(userRef, userData, { merge: true });
+  }
+
   return (
     <>
       <div className={styles.historyContainer}>
@@ -117,9 +177,9 @@ export default function History() {
       </div>
       {isEditSessionModalDisplayed && (
         <EditSessionModal
-          onSave={() => console.log("save")}
+          onSave={updateSession}
           onCancel={() => cancelEditingSession()}
-          sessionBeingEdited={sessionBeingEdited}
+          sessionBeingEdited={{ ...sessionBeingEdited }}
         />
       )}
     </>
