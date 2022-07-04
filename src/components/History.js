@@ -5,6 +5,7 @@ import { calcPercentage } from "../util/utils";
 import EditSessionModal from "./EditSessionModal";
 import * as styles from "./History.module.css";
 import LoadingIndicator from "./LoadingIndicator";
+import Toast from "./Toast";
 
 export default function History() {
   const { currentUser, currentUserData } = useAuth();
@@ -15,6 +16,7 @@ export default function History() {
   const [isEditSessionModalDisplayed, setIsEditSessionModalDisplayed] =
     useState(false);
   const [sessionBeingEdited, setSessionBeingEdited] = useState();
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,29 +63,26 @@ export default function History() {
 
   // TODO only update things that have changed
   function updateSession(updatedSession) {
-    console.log("updatedSession", updatedSession);
     try {
       const batch = db.batch();
       addSessionToBatch(batch, updatedSession);
       addUpdatedUserDataToBatch(batch, updatedSession);
-      console.log("batch", batch);
       // batch.commit();
       setIsEditSessionModalDisplayed(false);
-      // setToast({ message: "Session logged successfully!", type: "success" });
-      // setTimeout(() => {
-      //   setToast("");
-      // }, 5000);
+      setToast({ message: "Session updated successfully!", type: "success" });
+      setTimeout(() => {
+        setToast("");
+      }, 5000);
     } catch (error) {
       console.error("error", error);
       setIsEditSessionModalDisplayed(false);
-      // setToast({
-      //   message:
-      //     "There was a problem logging your session. Please try again.",
-      //   type: "error",
-      // });
-      // setTimeout(() => {
-      //   setToast("");
-      // }, 5000);
+      setToast({
+        message: "There was a problem updating the session. Please try again.",
+        type: "error",
+      });
+      setTimeout(() => {
+        setToast("");
+      }, 5000);
     }
   }
 
@@ -114,7 +113,6 @@ export default function History() {
       totalShotsTaken,
       totalPercentage,
     };
-    console.log("userData", userData);
     var userRef = db.collection("users").doc(currentUserData.id);
     batch.set(userRef, userData, { merge: true });
   }
@@ -182,6 +180,7 @@ export default function History() {
           sessionBeingEdited={{ ...sessionBeingEdited }}
         />
       )}
+      {toast && <Toast message={toast.message} type={toast.type} />}
     </>
   );
 }
