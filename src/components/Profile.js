@@ -99,7 +99,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {console.log("watchUserName", watchUserName)}
             {/* TODO either copy styles in Profile.css or extract shared Form component */}
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {error && <div>{error}</div>}
