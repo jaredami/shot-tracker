@@ -23,6 +23,7 @@ export default function EditSessionModal({
 
   const watchShotsMade = watch("shotsMade");
   const watchShotsTaken = watch("shotsTaken");
+  const watchBestStreak = watch("bestStreak");
 
   return (
     <div className={styles.modal__container}>
@@ -84,7 +85,8 @@ export default function EditSessionModal({
             disabled={
               watchShotsMade > watchShotsTaken ||
               watchShotsMade < 0 ||
-              watchShotsTaken < 0
+              watchShotsTaken < 0 ||
+              watchBestStreak > watchShotsMade
             }
           >
             Save
