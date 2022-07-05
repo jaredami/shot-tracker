@@ -67,7 +67,7 @@ export default function History() {
       const batch = db.batch();
       addSessionToBatch(batch, updatedSession);
       addUpdatedUserDataToBatch(batch, updatedSession);
-      // batch.commit();
+      batch.commit();
       setIsEditSessionModalDisplayed(false);
       setToast({ message: "Session updated successfully!", type: "success" });
       setTimeout(() => {
