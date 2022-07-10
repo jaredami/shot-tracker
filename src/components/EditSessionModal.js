@@ -12,6 +12,7 @@ export default function EditSessionModal({
     formState: { errors },
     getValues,
     watch,
+    formState: { isDirty },
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -83,6 +84,7 @@ export default function EditSessionModal({
             )}
             onClick={() => onSave(getValues())}
             disabled={
+              !isDirty ||
               watchShotsMade > watchShotsTaken ||
               watchShotsMade < 0 ||
               watchShotsTaken < 0 ||
