@@ -50,6 +50,7 @@
 }
 .modal__button:disabled {
   filter: brightness(80%);
+  cursor: not-allowed;
 }
 
 .modal__buttonYes {
