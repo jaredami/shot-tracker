@@ -216,6 +216,7 @@ export default function Session(props) {
   const [selectedUserOption, setSelectedUserOption] = useState();
   const [selectedUserData, setSelectedUserData] = useState();
 
+  // get user dropdown options
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingUsers(true);

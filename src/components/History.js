@@ -69,6 +69,7 @@ export default function History() {
   const [selectedUserOption, setSelectedUserOption] = useState();
   const [selectedUserData, setSelectedUserData] = useState();
 
+  // get user dropdown options
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingUsers(true);
@@ -119,6 +120,7 @@ export default function History() {
     const fetchData = async () => {
       setIsLoading(true);
 
+      // TODO utilize getSessionData here (how to handle dependencies array?)
       const data = await db
         .collection("sessions")
         .where("userId", "==", selectedUserData.id)
@@ -144,6 +146,35 @@ export default function History() {
     fetchData();
   }, [selectedUserData, isTimestampSortOrderDesc]);
 
+  function getSessionData() {
+    const fetchData = async () => {
+      setIsLoading(true);
+
+      const data = await db
+        .collection("sessions")
+        .where("userId", "==", selectedUserData.id)
+        .orderBy("timestamp", isTimestampSortOrderDesc ? "desc" : "asc")
+        .get();
+
+      setIsLoading(false);
+
+      const sessionsData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setSessions(
+        sessionsData.map((session) => {
+          return {
+            ...session,
+            date: session.timestamp.toDate().toDateString(),
+            percentage: calcPercentage(session.shotsMade, session.shotsTaken),
+          };
+        })
+      );
+    };
+    fetchData();
+  }
+
   function toggleTimestampSortOrder() {
     setIsTimestampSortOrderDesc(!isTimestampSortOrderDesc);
   }
@@ -167,6 +198,7 @@ export default function History() {
       addUpdatedUserDataToBatch(batch, updatedSession);
       batch.commit();
       setIsEditSessionModalDisplayed(false);
+      getSessionData();
       setToast({ message: "Session updated successfully!", type: "success" });
       setTimeout(() => {
         setToast("");
