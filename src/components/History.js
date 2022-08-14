@@ -6,6 +6,52 @@ import EditSessionModal from "./EditSessionModal";
 import * as styles from "./History.module.css";
 import LoadingIndicator from "./LoadingIndicator";
 import Toast from "./Toast";
+import Select from "react-select";
+
+// TODO extract and share with Session?
+const userSelectStyles = {
+  control: (base, state) => ({
+    ...base,
+    background: "#222626",
+    // Match with the menu
+    borderRadius: state.isFocused ? "3px 3px 0 0" : 3,
+    // Overwrites the different states of border
+    borderColor: state.isFocused ? "#5c8688" : null,
+    // Removes weird border around container
+    boxShadow: state.isFocused ? null : null,
+    "&:hover": {
+      // Overwrites the different states of border
+      borderColor: state.isFocused ? "#5c8688" : "#dedae0",
+    },
+  }),
+  input: (base) => ({
+    ...base,
+    color: "#dedae0",
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: "#dedae0",
+  }),
+  menu: (base) => ({
+    ...base,
+    // Override border radius to match the box
+    borderRadius: 0,
+    // Kill the gap
+    marginTop: 0,
+    background: "#2d3134",
+  }),
+  menuList: (base) => ({
+    ...base,
+    // Kill the white space on first and last option
+    padding: 0,
+  }),
+  option: (styles, state) => {
+    return {
+      ...styles,
+      backgroundColor: state.isFocused ? "#505155" : null,
+    };
+  },
+};
 
 export default function History() {
   const { currentUser, currentUserData } = useAuth();
@@ -117,9 +163,74 @@ export default function History() {
     batch.set(userRef, userData, { merge: true });
   }
 
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [userOptions, setUserOptions] = useState([]);
+  const [selectedUserOption, setSelectedUserOption] = useState();
+  const [selectedUserData, setSelectedUserData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoadingUsers(true);
+
+      const usersDocs = await db.collection("users").get();
+      let userOptionsArray = [];
+      usersDocs.forEach((doc) => {
+        const userData = doc.data();
+        userOptionsArray.push({ value: doc.id, label: userData.userName });
+      });
+      setUserOptions(userOptionsArray);
+
+      setIsLoadingUsers(false);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!userOptions.length) return;
+
+    const currentUserOption = userOptions.find(
+      (option) => option.value === currentUser.uid
+    );
+    if (!currentUserOption) return;
+
+    handleUserSelected(currentUserOption);
+  }, [userOptions, currentUser]);
+
+  async function handleUserSelected(event) {
+    if (!event) return;
+    setSelectedUserOption(event);
+
+    const userId = event.value;
+    await db
+      .collection("users")
+      .doc(userId)
+      .get()
+      .then((userDoc) => {
+        setSelectedUserData({ id: userDoc.id, ...userDoc.data() });
+      });
+  }
+
   return (
     <>
       <div className={styles.historyContainer}>
+        {currentUserData && currentUserData.isAdmin && (
+          <div>
+            <p>Log session for:</p>
+            <Select
+              className="basic-single"
+              classNamePrefix="select"
+              value={selectedUserOption}
+              isDisabled={false}
+              isLoading={isLoadingUsers}
+              isRtl={false}
+              isSearchable={true}
+              name="color"
+              onChange={handleUserSelected}
+              options={userOptions}
+              styles={userSelectStyles}
+            />
+          </div>
+        )}
         <button
           className={styles.sortOrderButton}
           onClick={() => toggleTimestampSortOrder()}
