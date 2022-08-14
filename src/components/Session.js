@@ -233,6 +233,7 @@ export default function Session(props) {
     fetchData();
   }, []);
 
+  // auto-select current user when component loads
   useEffect(() => {
     if (!userOptions.length) return;
 

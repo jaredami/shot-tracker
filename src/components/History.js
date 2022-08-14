@@ -64,13 +64,64 @@ export default function History() {
   const [sessionBeingEdited, setSessionBeingEdited] = useState();
   const [toast, setToast] = useState(null);
 
+  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
+  const [userOptions, setUserOptions] = useState([]);
+  const [selectedUserOption, setSelectedUserOption] = useState();
+  const [selectedUserData, setSelectedUserData] = useState();
+
   useEffect(() => {
+    const fetchData = async () => {
+      setIsLoadingUsers(true);
+
+      const usersDocs = await db.collection("users").get();
+      let userOptionsArray = [];
+      usersDocs.forEach((doc) => {
+        const userData = doc.data();
+        userOptionsArray.push({ value: doc.id, label: userData.userName });
+      });
+      console.log("userOptionsArray", userOptionsArray);
+      setUserOptions(userOptionsArray);
+
+      setIsLoadingUsers(false);
+    };
+    fetchData();
+  }, []);
+
+  // auto-select current user when component loads
+  useEffect(() => {
+    if (!userOptions.length) return;
+
+    const currentUserOption = userOptions.find(
+      (option) => option.value === currentUser.uid
+    );
+    if (!currentUserOption) return;
+
+    handleUserSelected(currentUserOption);
+  }, [userOptions, currentUser]);
+
+  async function handleUserSelected(event) {
+    if (!event) return;
+    setSelectedUserOption(event);
+
+    const userId = event.value;
+    await db
+      .collection("users")
+      .doc(userId)
+      .get()
+      .then((userDoc) => {
+        setSelectedUserData({ id: userDoc.id, ...userDoc.data() });
+      });
+  }
+
+  useEffect(() => {
+    if (!selectedUserData) return;
+
     const fetchData = async () => {
       setIsLoading(true);
 
       const data = await db
         .collection("sessions")
-        .where("userId", "==", currentUser.uid)
+        .where("userId", "==", selectedUserData.id)
         .orderBy("timestamp", isTimestampSortOrderDesc ? "desc" : "asc")
         .get();
 
@@ -91,7 +142,7 @@ export default function History() {
       );
     };
     fetchData();
-  }, [currentUser.uid, isTimestampSortOrderDesc]);
+  }, [selectedUserData, isTimestampSortOrderDesc]);
 
   function toggleTimestampSortOrder() {
     setIsTimestampSortOrderDesc(!isTimestampSortOrderDesc);
@@ -108,6 +159,7 @@ export default function History() {
   }
 
   // TODO only update things that have changed
+  // TODO need to refresh data after update
   function updateSession(updatedSession) {
     try {
       const batch = db.batch();
@@ -140,15 +192,15 @@ export default function History() {
   function addUpdatedUserDataToBatch(batch, updatedSession) {
     const shotsTakenDiff =
       updatedSession.shotsTaken - sessionBeingEdited.shotsTaken;
-    const totalShotsTaken = currentUserData.totalShotsTaken + shotsTakenDiff;
+    const totalShotsTaken = selectedUserData.totalShotsTaken + shotsTakenDiff;
 
     const shotsMadeDiff =
       updatedSession.shotsMade - sessionBeingEdited.shotsMade;
-    const totalShotsMade = currentUserData.totalShotsMade + shotsMadeDiff;
+    const totalShotsMade = selectedUserData.totalShotsMade + shotsMadeDiff;
 
     const bestStreakEver =
-      currentUserData.bestStreakEver >= updatedSession.bestStreak
-        ? currentUserData.bestStreakEver
+      selectedUserData.bestStreakEver >= updatedSession.bestStreak
+        ? selectedUserData.bestStreakEver
         : updatedSession.bestStreak;
 
     const totalPercentage = calcPercentage(totalShotsMade, totalShotsTaken);
@@ -159,55 +211,8 @@ export default function History() {
       totalShotsTaken,
       totalPercentage,
     };
-    var userRef = db.collection("users").doc(currentUserData.id);
+    var userRef = db.collection("users").doc(selectedUserData.id);
     batch.set(userRef, userData, { merge: true });
-  }
-
-  const [isLoadingUsers, setIsLoadingUsers] = useState(false);
-  const [userOptions, setUserOptions] = useState([]);
-  const [selectedUserOption, setSelectedUserOption] = useState();
-  const [selectedUserData, setSelectedUserData] = useState();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoadingUsers(true);
-
-      const usersDocs = await db.collection("users").get();
-      let userOptionsArray = [];
-      usersDocs.forEach((doc) => {
-        const userData = doc.data();
-        userOptionsArray.push({ value: doc.id, label: userData.userName });
-      });
-      setUserOptions(userOptionsArray);
-
-      setIsLoadingUsers(false);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (!userOptions.length) return;
-
-    const currentUserOption = userOptions.find(
-      (option) => option.value === currentUser.uid
-    );
-    if (!currentUserOption) return;
-
-    handleUserSelected(currentUserOption);
-  }, [userOptions, currentUser]);
-
-  async function handleUserSelected(event) {
-    if (!event) return;
-    setSelectedUserOption(event);
-
-    const userId = event.value;
-    await db
-      .collection("users")
-      .doc(userId)
-      .get()
-      .then((userDoc) => {
-        setSelectedUserData({ id: userDoc.id, ...userDoc.data() });
-      });
   }
 
   return (
