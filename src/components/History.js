@@ -77,9 +77,9 @@ export default function History() {
       let userOptionsArray = [];
       usersDocs.forEach((doc) => {
         const userData = doc.data();
+        if (!userData.userName) return;
         userOptionsArray.push({ value: doc.id, label: userData.userName });
       });
-      console.log("userOptionsArray", userOptionsArray);
       setUserOptions(userOptionsArray);
 
       setIsLoadingUsers(false);

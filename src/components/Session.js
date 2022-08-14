@@ -224,6 +224,7 @@ export default function Session(props) {
       let userOptionsArray = [];
       usersDocs.forEach((doc) => {
         const userData = doc.data();
+        if (!userData.userName) return;
         userOptionsArray.push({ value: doc.id, label: userData.userName });
       });
       setUserOptions(userOptionsArray);
