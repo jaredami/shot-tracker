@@ -6,6 +6,10 @@
   margin: 0 auto 1rem;
 }
 
+.userSelectContainer p {
+  color: var(--light-gray);
+}
+
 .sortOrderButton {
   margin: 1rem 0;
 }

@@ -251,7 +251,7 @@ export default function History() {
     <>
       <div className={styles.historyContainer}>
         {currentUserData && currentUserData.isAdmin && (
-          <div>
+          <div className={styles.userSelectContainer}>
             <p>View sessions for:</p>
             <Select
               className="basic-single"
