@@ -190,7 +190,6 @@ export default function History() {
   }
 
   // TODO only update things that have changed
-  // TODO need to refresh data after update
   function updateSession(updatedSession) {
     try {
       const batch = db.batch();
