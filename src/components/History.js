@@ -104,8 +104,7 @@ export default function History() {
     [history]
   );
 
-  // TODO fix this comment
-  // auto-select current user when component loads if no userId url param
+  // initialize and update selected user
   useEffect(() => {
     if (!userOptions.length) return;
 
