@@ -108,12 +108,24 @@ export default function History() {
   useEffect(() => {
     if (!userOptions.length) return;
 
-    const userId = userIdParam ?? currentUser.uid;
+    let userId;
+    if (currentUserData.isAdmin) {
+      userId = userIdParam ?? currentUser.uid;
+    } else {
+      userId = currentUser.uid;
+    }
+
     const userOption = userOptions.find((option) => option.value === userId);
     if (!userOption) return;
 
     handleUserSelected(userOption);
-  }, [userOptions, currentUser, userIdParam, handleUserSelected]);
+  }, [
+    userOptions,
+    currentUser.uid,
+    currentUserData,
+    userIdParam,
+    handleUserSelected,
+  ]);
 
   // get data for selected user
   useEffect(() => {
