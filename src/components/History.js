@@ -104,7 +104,7 @@ export default function History() {
     [history]
   );
 
-  // initialize and update selected user
+  // initialize selected user and handle updates
   useEffect(() => {
     if (!userOptions.length) return;
 
@@ -127,13 +127,12 @@ export default function History() {
     }
   }, [userIdParam]);
 
-  useEffect(() => {
+  const getSessionsData = useCallback(() => {
     if (!selectedUserData) return;
 
     const fetchData = async () => {
       setIsLoading(true);
 
-      // TODO utilize getSessionData here (how to handle dependencies array?)
       const data = await db
         .collection("sessions")
         .where("userId", "==", selectedUserData.id)
@@ -157,36 +156,16 @@ export default function History() {
       );
     };
     fetchData();
-  }, [selectedUserData, isTimestampSortOrderDesc]);
+  }, [isTimestampSortOrderDesc, selectedUserData]);
 
-  function getSessionData() {
+  // initialize sessions data and update when user selected
+  useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-
-      const data = await db
-        .collection("sessions")
-        .where("userId", "==", selectedUserData.id)
-        .orderBy("timestamp", isTimestampSortOrderDesc ? "desc" : "asc")
-        .get();
-
-      setIsLoading(false);
-
-      const sessionsData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setSessions(
-        sessionsData.map((session) => {
-          return {
-            ...session,
-            date: session.timestamp.toDate().toDateString(),
-            percentage: calcPercentage(session.shotsMade, session.shotsTaken),
-          };
-        })
-      );
+      getSessionsData();
     };
     fetchData();
-  }
+  }, [getSessionsData]);
 
   function toggleTimestampSortOrder() {
     setIsTimestampSortOrderDesc(!isTimestampSortOrderDesc);
@@ -210,7 +189,7 @@ export default function History() {
       addUpdatedUserDataToBatch(batch, updatedSession);
       batch.commit();
       setIsEditSessionModalDisplayed(false);
-      getSessionData();
+      getSessionsData();
       setToast({ message: "Session updated successfully!", type: "success" });
       setTimeout(() => {
         setToast("");
