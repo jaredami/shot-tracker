@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Select from "react-select";
 import { useAuth } from "../contexts/AuthContext";
@@ -55,7 +55,9 @@ const userSelectStyles = {
 };
 
 export default function History() {
+  const history = useHistory();
   const { userId: userIdParam } = useParams();
+
   const { currentUser, currentUserData } = useAuth();
   const [sessions, setSessions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -90,6 +92,18 @@ export default function History() {
     fetchData();
   }, []);
 
+  const handleUserSelected = useCallback(
+    (userOption) => {
+      setSelectedUserOption(userOption);
+
+      const selectedUserId = userOption.value;
+      history.replace({
+        pathname: `/history/${selectedUserId}`,
+      });
+    },
+    [history]
+  );
+
   // TODO fix this comment
   // auto-select current user when component loads if no userId url param
   useEffect(() => {
@@ -100,22 +114,7 @@ export default function History() {
     if (!userOption) return;
 
     handleUserSelected(userOption);
-  }, [userOptions, currentUser, userIdParam]);
-
-  async function handleUserSelected(userOption) {
-    if (!userOption) return;
-    setSelectedUserOption(userOption);
-
-    const selectedUserId = userOption.value;
-    setUserIdParam(selectedUserId);
-  }
-
-  const history = useHistory();
-  function setUserIdParam(id) {
-    history.replace({
-      pathname: `/history/${id}`,
-    });
-  }
+  }, [userOptions, currentUser, userIdParam, handleUserSelected]);
 
   // get sessions for selected user
   useEffect(() => {
