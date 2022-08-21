@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
+import Select from "react-select";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 import { calcPercentage } from "../util/utils";
@@ -6,7 +8,6 @@ import EditSessionModal from "./EditSessionModal";
 import * as styles from "./History.module.css";
 import LoadingIndicator from "./LoadingIndicator";
 import Toast from "./Toast";
-import Select from "react-select";
 
 // TODO extract and share with Session?
 const userSelectStyles = {
@@ -54,6 +55,7 @@ const userSelectStyles = {
 };
 
 export default function History() {
+  const { userId: userIdParam } = useParams();
   const { currentUser, currentUserData } = useAuth();
   const [sessions, setSessions] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -88,31 +90,44 @@ export default function History() {
     fetchData();
   }, []);
 
-  // auto-select current user when component loads
+  // TODO fix this comment
+  // auto-select current user when component loads if no userId url param
   useEffect(() => {
     if (!userOptions.length) return;
 
-    const currentUserOption = userOptions.find(
-      (option) => option.value === currentUser.uid
-    );
-    if (!currentUserOption) return;
+    const userId = userIdParam ?? currentUser.uid;
+    const userOption = userOptions.find((option) => option.value === userId);
+    if (!userOption) return;
 
-    handleUserSelected(currentUserOption);
-  }, [userOptions, currentUser]);
+    handleUserSelected(userOption);
+  }, [userOptions, currentUser, userIdParam]);
 
-  async function handleUserSelected(event) {
-    if (!event) return;
-    setSelectedUserOption(event);
+  async function handleUserSelected(userOption) {
+    if (!userOption) return;
+    setSelectedUserOption(userOption);
 
-    const userId = event.value;
-    await db
-      .collection("users")
-      .doc(userId)
-      .get()
-      .then((userDoc) => {
-        setSelectedUserData({ id: userDoc.id, ...userDoc.data() });
-      });
+    const selectedUserId = userOption.value;
+    setUserIdParam(selectedUserId);
   }
+
+  const history = useHistory();
+  function setUserIdParam(id) {
+    history.replace({
+      pathname: `/history/${id}`,
+    });
+  }
+
+  // get sessions for selected user
+  useEffect(() => {
+    if (userIdParam) {
+      db.collection("users")
+        .doc(userIdParam)
+        .get()
+        .then((userDoc) => {
+          setSelectedUserData({ id: userDoc.id, ...userDoc.data() });
+        });
+    }
+  }, [userIdParam]);
 
   useEffect(() => {
     if (!selectedUserData) return;

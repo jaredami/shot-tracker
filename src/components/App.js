@@ -47,7 +47,12 @@ function App() {
               pageTitle="TRAIN"
             ></PrivateRoute>
             <PrivateRoute
-              path="/history"
+              path={["/history/:userId"]}
+              component={History}
+              pageTitle="HISTORY"
+            ></PrivateRoute>
+            <PrivateRoute
+              path={["/history"]}
               component={History}
               pageTitle="HISTORY"
             ></PrivateRoute>
