@@ -115,7 +115,7 @@ export default function History() {
     handleUserSelected(userOption);
   }, [userOptions, currentUser, userIdParam, handleUserSelected]);
 
-  // get sessions for selected user
+  // get data for selected user
   useEffect(() => {
     if (userIdParam) {
       db.collection("users")
