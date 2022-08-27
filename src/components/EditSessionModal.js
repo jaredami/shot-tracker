@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as styles from "./EditSessionModal.module.css";
 
@@ -13,6 +13,7 @@ export default function EditSessionModal({
     getValues,
     watch,
     formState: { isDirty },
+    trigger,
   } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -26,8 +27,15 @@ export default function EditSessionModal({
   const watchShotsTaken = watch("shotsTaken");
   const watchBestStreak = watch("bestStreak");
 
+  // each input's validation ony triggers automatically when its value changes, but we
+  // need it to trigger on updates to the other inputs as well.
+  useEffect(() => {
+    trigger(["shotsMade", "shotsTaken", "bestStreak"]);
+  }, [watchShotsMade, watchShotsTaken, watchBestStreak, trigger]);
+
   return (
     <div className={styles.modal__container}>
+      {/* {console.log("errors", errors)} */}
       <div className={styles.modal}>
         <div className={styles.modal__inputContainer}>
           <label>Shots Made</label>
@@ -37,7 +45,7 @@ export default function EditSessionModal({
             {...register("shotsMade", {
               valueAsNumber: true,
               validate: {
-                negative: (v) => parseInt(v) > 0 || "should be greater than 0",
+                negative: (v) => parseInt(v) >= 0 || "should be at least 0",
                 greaterThanShotsTaken: (v) =>
                   parseInt(v) <= getValues("shotsTaken") ||
                   "should not be greater than shots taken",
@@ -64,12 +72,12 @@ export default function EditSessionModal({
         <div className={styles.modal__inputContainer}>
           <label>Best Streak</label>
           <input
-            className={errors.shotsTaken && styles.invalidInput}
+            className={errors.bestStreak && styles.invalidInput}
             type="number"
             {...register("bestStreak", {
               valueAsNumber: true,
               validate: {
-                negative: (v) => parseInt(v) > 0 || "should be greater than 0",
+                negative: (v) => parseInt(v) >= 0 || "should be at least 0",
                 greaterThanShotsMade: (v) =>
                   parseInt(v) <= getValues("shotsMade") ||
                   "should not be greater than shots made",
