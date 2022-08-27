@@ -91,13 +91,7 @@ export default function EditSessionModal({
               " "
             )}
             onClick={() => onSave(getValues())}
-            disabled={
-              !isDirty ||
-              watchShotsMade > watchShotsTaken ||
-              watchShotsMade < 0 ||
-              watchShotsTaken < 0 ||
-              watchBestStreak > watchShotsMade
-            }
+            disabled={!isDirty || Object.keys(errors).length}
           >
             Save
           </button>
