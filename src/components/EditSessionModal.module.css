@@ -35,6 +35,10 @@
 .invalidInput {
   border-color: red;
 }
+.invalidInputMessage {
+  color: red;
+  font-size: 12px;
+}
 
 .modal__buttonsContainer {
   display: flex;

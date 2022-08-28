@@ -45,14 +45,20 @@ export default function EditSessionModal({
             {...register("shotsMade", {
               valueAsNumber: true,
               validate: {
-                negative: (v) => parseInt(v) >= 0 || "should be at least 0",
+                negative: (v) =>
+                  parseInt(v) >= 0 || "Shots Made must be at least 0.",
                 greaterThanShotsTaken: (v) =>
                   parseInt(v) <= getValues("shotsTaken") ||
-                  "should not be greater than shots taken",
+                  "Shots Made cannot be greater than shots taken.",
               },
             })}
           />
         </div>
+        {errors.shotsMade && (
+          <span className={styles.invalidInputMessage}>
+            {errors.shotsMade.message}
+          </span>
+        )}
         <div className={styles.modal__inputContainer}>
           <label>Shots Taken</label>
           <input
@@ -61,14 +67,20 @@ export default function EditSessionModal({
             {...register("shotsTaken", {
               valueAsNumber: true,
               validate: {
-                negative: (v) => parseInt(v) > 0 || "should be greater than 0",
+                negative: (v) =>
+                  parseInt(v) > 0 || "Shots Taken must be greater than 0.",
                 lessThanShotsMade: (v) =>
                   parseInt(v) >= getValues("shotsMade") ||
-                  "should not be less than shots made",
+                  "Shots Taken cannot be less than shots made.",
               },
             })}
           />
         </div>
+        {errors.shotsTaken && (
+          <span className={styles.invalidInputMessage}>
+            {errors.shotsTaken.message}
+          </span>
+        )}
         <div className={styles.modal__inputContainer}>
           <label>Best Streak</label>
           <input
@@ -77,14 +89,20 @@ export default function EditSessionModal({
             {...register("bestStreak", {
               valueAsNumber: true,
               validate: {
-                negative: (v) => parseInt(v) >= 0 || "should be at least 0",
+                negative: (v) =>
+                  parseInt(v) >= 0 || "Best Streak must be at least 0.",
                 greaterThanShotsMade: (v) =>
                   parseInt(v) <= getValues("shotsMade") ||
-                  "should not be greater than shots made",
+                  "Best Streak cannot be greater than shots made.",
               },
             })}
           />
         </div>
+        {errors.bestStreak && (
+          <span className={styles.invalidInputMessage}>
+            {errors.bestStreak.message}
+          </span>
+        )}
         <div className={styles.modal__buttonsContainer}>
           <button
             className={[styles.modal__button, styles.modal__buttonYes].join(
