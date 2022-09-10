@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { v4 } from "uuid";
 import { useAuth } from "../contexts/AuthContext";
-import { db } from "../firebase";
+import { db, storage } from "../firebase";
 import LoadingIndicator from "./LoadingIndicator";
 import "./Profile.css";
 import Toast from "./Toast";
@@ -11,6 +12,7 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading, updateEmail } =
     useAuth();
+  const [imageToUpload, setImageToUpload] = useState(null);
   const { register, handleSubmit, formState, reset, watch } = useForm({
     defaultValues: {
       userName: currentUserData?.userName,
@@ -46,6 +48,9 @@ export default function Dashboard() {
     updateEmail(email)
       .then(() => {
         db.collection("users").doc(currentUser.uid).update({ email, userName });
+
+        uploadProfilePic();
+
         setToast({
           message: "Profile updated successfully!",
           type: "success",
@@ -66,6 +71,21 @@ export default function Dashboard() {
           setToast(null);
         }, 5000);
       });
+  }
+
+  function uploadProfilePic() {
+    if (imageToUpload == null) return;
+
+    const storageRef = storage.ref();
+    const profileImageRef = storageRef.child(
+      `images/profile-pics/${imageToUpload.name + v4()}`
+    );
+
+    profileImageRef.put(imageToUpload).then((snapshot) => {
+      snapshot.ref.getDownloadURL().then((url) => {
+        console.log("url", url);
+      });
+    });
   }
 
   return (
@@ -99,9 +119,22 @@ export default function Dashboard() {
               </div>
             </div>
 
+            {/* <img src="https://firebasestorage.googleapis.com/v0/b/shot-tracker-dev.appspot.com/o/images%2Fprofile-pics%2Fchuck-face.jpg6bbeda08-c4ce-4429-9738-8ce2331d2aba?alt=media&token=ee0f99af-74fe-42b2-816a-e289a85ed3c5" /> */}
+
             {/* TODO either copy styles in Profile.css or extract shared Form component */}
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {error && <div>{error}</div>}
+              <div className="login-form-row" id="user-name">
+                <label>Profile Picture</label>
+                <input
+                  className="file-upload-input"
+                  type="file"
+                  onChange={(event) => {
+                    console.log(event.target.files[0]);
+                    setImageToUpload(event.target.files[0]);
+                  }}
+                />
+              </div>
               <div className="login-form-row" id="user-name">
                 <label>User Name</label>
                 <input type="text" {...register("userName")} />
@@ -112,9 +145,10 @@ export default function Dashboard() {
               </div>
               <button
                 disabled={
-                  !formState.isDirty ||
-                  !watchUserName.length ||
-                  !watchEmail.length
+                  !imageToUpload &&
+                  (!formState.isDirty ||
+                    !watchUserName.length ||
+                    !watchEmail.length)
                 }
                 className="logout-btn"
                 type="submit"
