@@ -81,9 +81,11 @@ export default function Dashboard() {
       `images/profile-pics/${imageToUpload.name + v4()}`
     );
 
-    profileImageRef.put(imageToUpload).then((snapshot) => {
+    return profileImageRef.put(imageToUpload).then((snapshot) => {
       snapshot.ref.getDownloadURL().then((url) => {
-        console.log("url", url);
+        db.collection("users")
+          .doc(currentUser.uid)
+          .update({ profilePicUrl: url });
       });
     });
   }
@@ -119,7 +121,13 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* <img src="https://firebasestorage.googleapis.com/v0/b/shot-tracker-dev.appspot.com/o/images%2Fprofile-pics%2Fchuck-face.jpg6bbeda08-c4ce-4429-9738-8ce2331d2aba?alt=media&token=ee0f99af-74fe-42b2-816a-e289a85ed3c5" /> */}
+            {currentUserData && (
+              <img
+                src={currentUserData.profilePicUrl}
+                alt="profile pic"
+                width="100"
+              />
+            )}
 
             {/* TODO either copy styles in Profile.css or extract shared Form component */}
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
