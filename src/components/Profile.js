@@ -42,35 +42,41 @@ export default function Dashboard() {
     }
   }
 
-  function onSubmit(formData) {
+  async function onSubmit(formData) {
     // TODO only attempt email update when email has changed; same for userName, profile pic
-    const { userName, email } = formData;
-    updateEmail(email)
-      .then(() => {
-        db.collection("users").doc(currentUser.uid).update({ email, userName });
 
-        uploadProfilePic();
+    try {
+      const { userName, email } = formData;
 
-        setToast({
-          message: "Profile updated successfully!",
-          type: "success",
-        });
-        setTimeout(() => {
-          setToast("");
-        }, 5000);
-      })
-      .catch((error) => {
-        console.error("error", error);
-        setToast({
-          message:
-            error.message ??
-            "There was a problem updating your profile. Please try again.",
-          type: "error",
-        });
-        setTimeout(() => {
-          setToast(null);
-        }, 5000);
+      await updateEmail(email);
+
+      await db
+        .collection("users")
+        .doc(currentUser.uid)
+        .update({ email, userName });
+
+      await uploadProfilePic();
+
+      setToast({
+        message: "Profile updated successfully!",
+        type: "success",
       });
+      setTimeout(() => {
+        setToast("");
+      }, 5000);
+    } catch (error) {
+      console.error("error", error);
+
+      setToast({
+        message:
+          error.message ??
+          "There was a problem updating your profile. Please try again.",
+        type: "error",
+      });
+      setTimeout(() => {
+        setToast(null);
+      }, 5000);
+    }
   }
 
   function uploadProfilePic() {
@@ -82,7 +88,7 @@ export default function Dashboard() {
     );
 
     return profileImageRef.put(imageToUpload).then((snapshot) => {
-      snapshot.ref.getDownloadURL().then((url) => {
+      return snapshot.ref.getDownloadURL().then((url) => {
         db.collection("users")
           .doc(currentUser.uid)
           .update({ profilePicUrl: url });
