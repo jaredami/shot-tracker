@@ -121,14 +121,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {currentUserData && (
-              <img
-                className="profile-pic"
-                src={currentUserData.profilePicUrl}
-                alt="profile pic"
-              />
-            )}
-
             {/* TODO either copy styles in Profile.css or extract shared Form component */}
             <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
               {error && <div>{error}</div>}
@@ -161,7 +153,7 @@ export default function Dashboard() {
                 className="logout-btn"
                 type="submit"
               >
-                Save
+                Update
               </button>
               <button className="logout-btn" onClick={handleLogout}>
                 Log Out
