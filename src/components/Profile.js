@@ -22,6 +22,7 @@ export default function Dashboard() {
   const watchUserName = watch("userName");
   const watchEmail = watch("email");
   const history = useHistory();
+  const [isProfileUpdateLoading, setIsProfileUpdateLoading] = useState(false);
   const [toast, setToast] = useState(null);
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function Dashboard() {
 
   async function onSubmit(formData) {
     // TODO only attempt email update when email has changed; same for userName, profile pic
+    setIsProfileUpdateLoading(true);
 
     try {
       const { userName, email } = formData;
@@ -57,6 +59,8 @@ export default function Dashboard() {
 
       await uploadProfilePic();
 
+      setIsProfileUpdateLoading(false);
+
       setToast({
         message: "Profile updated successfully!",
         type: "success",
@@ -66,6 +70,8 @@ export default function Dashboard() {
       }, 5000);
     } catch (error) {
       console.error("error", error);
+
+      setIsProfileUpdateLoading(false);
 
       setToast({
         message:
@@ -159,7 +165,7 @@ export default function Dashboard() {
                 className="logout-btn"
                 type="submit"
               >
-                Update
+                {isProfileUpdateLoading ? <LoadingIndicator /> : "Update"}
               </button>
               <button className="logout-btn" onClick={handleLogout}>
                 Log Out

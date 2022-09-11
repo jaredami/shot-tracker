@@ -3,3 +3,14 @@
   justify-content: center;
   margin: 20vh 0;
 }
+
+button .loading-indicator-container {
+  margin: 0;
+  color: black;
+}
+
+button .loading-indicator-container svg {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--background-primary);
+}
