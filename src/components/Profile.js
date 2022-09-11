@@ -44,21 +44,25 @@ export default function Dashboard() {
   }
 
   async function onSubmit(formData) {
-    // TODO only attempt email update when email has changed; same for userName, profile pic
     setIsProfileUpdateLoading(true);
 
     try {
       const { userName, email, profilePicFileList } = formData;
       const profilePic = profilePicFileList.item(0);
 
-      await updateEmail(email);
+      const emailIsDirty = !!formState.dirtyFields.email;
+      const userNameIsDirty = !!formState.dirtyFields.userName;
+      const profilePicIsDirty = !!formState.dirtyFields.profilePicFileList;
 
-      await db
-        .collection("users")
-        .doc(currentUser.uid)
-        .update({ email, userName });
+      emailIsDirty && (await updateEmail(email));
 
-      await uploadProfilePic(profilePic);
+      (emailIsDirty || userNameIsDirty) &&
+        (await db
+          .collection("users")
+          .doc(currentUser.uid)
+          .update({ email, userName }));
+
+      profilePicIsDirty && (await uploadProfilePic(profilePic));
 
       setIsProfileUpdateLoading(false);
 
