@@ -102,7 +102,15 @@ export default function Rankings() {
                 <div className={styles.rank}>{index + 1}</div>
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userPicContainer}>
-                    <i className="fas fa-user"></i>
+                    {user.profilePicUrl ? (
+                      <img
+                        className="profile-pic"
+                        src={user.profilePicUrl}
+                        alt="profile pic"
+                      />
+                    ) : (
+                      <i className="fas fa-user"></i>
+                    )}
                   </div>
                   <div>{user.userName}</div>
                   <div>{user[currentStat.value]}</div>

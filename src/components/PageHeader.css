@@ -25,13 +25,13 @@
   color: var(--white);
 }
 
+.profile-pic {
+  border-radius: 100%;
+  width: 3rem;
+}
+
 .header {
   width: 110vw;
   margin: 0rem;
   font-size: 1.5rem;
-}
-
-.profile-pic {
-  border-radius: 50%;
-  width: 3rem;
 }
