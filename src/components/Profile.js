@@ -12,11 +12,11 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const { currentUser, logout, currentUserData, loading, updateEmail } =
     useAuth();
-  const [imageToUpload, setImageToUpload] = useState(null);
   const { register, handleSubmit, formState, reset, watch } = useForm({
     defaultValues: {
       userName: currentUserData?.userName,
       email: currentUser.email,
+      profilePicFileList: null,
     },
   });
   const watchUserName = watch("userName");
@@ -48,7 +48,8 @@ export default function Dashboard() {
     setIsProfileUpdateLoading(true);
 
     try {
-      const { userName, email } = formData;
+      const { userName, email, profilePicFileList } = formData;
+      const profilePic = profilePicFileList.item(0);
 
       await updateEmail(email);
 
@@ -57,7 +58,7 @@ export default function Dashboard() {
         .doc(currentUser.uid)
         .update({ email, userName });
 
-      await uploadProfilePic();
+      await uploadProfilePic(profilePic);
 
       setIsProfileUpdateLoading(false);
 
@@ -85,7 +86,7 @@ export default function Dashboard() {
     }
   }
 
-  function uploadProfilePic() {
+  function uploadProfilePic(imageToUpload) {
     if (imageToUpload == null) return;
 
     const storageRef = storage.ref();
@@ -142,9 +143,7 @@ export default function Dashboard() {
                   className="file-upload-input"
                   type="file"
                   accept="image/*"
-                  onChange={(event) => {
-                    setImageToUpload(event.target.files[0]);
-                  }}
+                  {...register("profilePicFileList")}
                 />
               </div>
               <div className="login-form-row" id="user-name">
@@ -157,10 +156,9 @@ export default function Dashboard() {
               </div>
               <button
                 disabled={
-                  !imageToUpload &&
-                  (!formState.isDirty ||
-                    !watchUserName.length ||
-                    !watchEmail.length)
+                  !formState.isDirty ||
+                  !watchUserName.length ||
+                  !watchEmail.length
                 }
                 className="logout-btn"
                 type="submit"
