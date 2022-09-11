@@ -43,7 +43,7 @@ export default function Dashboard() {
   }
 
   function onSubmit(formData) {
-    // TODO only attempt email update when email has changed; same for userName
+    // TODO only attempt email update when email has changed; same for userName, profile pic
     const { userName, email } = formData;
     updateEmail(email)
       .then(() => {
@@ -123,9 +123,9 @@ export default function Dashboard() {
 
             {currentUserData && (
               <img
+                className="profile-pic"
                 src={currentUserData.profilePicUrl}
                 alt="profile pic"
-                width="100"
               />
             )}
 

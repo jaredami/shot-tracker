@@ -13,11 +13,19 @@ export default function PageHeader({ pageTitle, displaysProfileBtn }) {
           <>
             <div className="user-name">{currentUserData?.userName}</div>
             <NavLink
-              className="profile-icon"
+              className="profile-link"
               activeClassName="profile-link-active"
               to="/profile"
             >
-              <i className="fas fa-user-circle"></i>
+              {currentUserData?.profilePicUrl ? (
+                <img
+                  className="profile-pic"
+                  src={currentUserData.profilePicUrl}
+                  alt="profile pic"
+                />
+              ) : (
+                <i className="fas fa-user-circle"></i>
+              )}
             </NavLink>
           </>
         )}
