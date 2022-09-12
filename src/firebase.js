@@ -12,7 +12,7 @@ const config = {
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
-const app = firebase.initializeApp(config);
+firebase.initializeApp(config);
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();
