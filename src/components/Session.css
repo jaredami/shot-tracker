@@ -3,7 +3,6 @@
 }
 
 .user-select-container {
-  max-width: 500px;
   margin: 0 auto 1rem;
 }
 
@@ -36,7 +35,6 @@
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
   place-items: stretch;
-  max-width: 500px;
   margin: 0 auto;
 }
 
