@@ -9,10 +9,12 @@ import ConfirmationModal from "./ConfirmationModal";
 import "./Session.css";
 import Toast from "./Toast";
 
+const timerDefault = "00:00";
+
 export default function Session(props) {
   const [seconds, setSeconds] = useState(0);
   const [minutes, setMinutes] = useState(0);
-  const [timer, setTimer] = useState("--:--");
+  const [timer, setTimer] = useState(timerDefault);
   const [sessionStarted, setSessionStarted] = useState(false);
   const [isLogConfirmationModalDisplayed, setIsLogConfirmationModalDisplayed] =
     useState(false);
@@ -162,7 +164,7 @@ export default function Session(props) {
     setSessionStarted(false);
     setSeconds(0);
     setMinutes(0);
-    setTimer("--:--");
+    setTimer(timerDefault);
 
     setIsResetConfirmationModalDisplayed(false);
   }
