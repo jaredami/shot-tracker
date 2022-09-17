@@ -10,7 +10,7 @@ nav {
   text-align: center;
   width: 100%;
   max-width: 600px;
-  height: 4.5rem;
+  padding: 1rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
