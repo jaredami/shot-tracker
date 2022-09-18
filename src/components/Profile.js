@@ -52,7 +52,7 @@ export default function Dashboard() {
 
       const emailIsDirty = !!formState.dirtyFields.email;
       const userNameIsDirty = !!formState.dirtyFields.userName;
-      const profilePicIsDirty = !!formState.dirtyFields.profilePicFileList;
+      const profilePicIsDirty = !!profilePic;
 
       emailIsDirty && (await updateEmail(email));
 
