@@ -54,15 +54,20 @@ export default function Dashboard() {
       const userNameIsDirty = !!formState.dirtyFields.userName;
       const profilePicIsDirty = !!profilePic;
 
-      emailIsDirty && (await updateEmail(email));
+      if (emailIsDirty) {
+        await updateEmail(email);
+      }
 
-      (emailIsDirty || userNameIsDirty) &&
-        (await db
+      if (emailIsDirty || userNameIsDirty) {
+        await db
           .collection("users")
           .doc(currentUser.uid)
-          .update({ email, userName }));
+          .update({ email, userName });
+      }
 
-      profilePicIsDirty && (await uploadProfilePic(profilePic));
+      if (profilePicIsDirty) {
+        await uploadProfilePic(profilePic);
+      }
 
       setIsProfileUpdateLoading(false);
 
