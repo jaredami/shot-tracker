@@ -100,9 +100,14 @@ export default function Dashboard() {
 
     return profileImageRef.put(imageToUpload).then((snapshot) => {
       return snapshot.ref.getDownloadURL().then((url) => {
+        // save profile pic url to user data
         db.collection("users")
           .doc(currentUser.uid)
           .update({ profilePicUrl: url });
+
+        // delete old profile pic
+        let oldImageRef = storage.refFromURL(currentUserData.profilePicUrl);
+        oldImageRef.delete();
       });
     });
   }
