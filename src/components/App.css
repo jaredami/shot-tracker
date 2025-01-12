@@ -8,7 +8,7 @@
   --white: #dedae0;
   --light-gray: #afafaf;
   --dark-gray: #505155;
-  --font-primary: "HelveticaNeue-CondensedBold", "Helvetica Neue";
+  --font-primary: "Inter", serif;
 }
 
 html {
@@ -44,9 +44,6 @@ input:focus-visible {
 }
 
 .main-wrapper {
-  /* font-family: "Share Tech Mono", monospace; */
-  /* font-family: "Roboto", sans-serif; */
-  /* font-family: "Bebas Neue", sans-serif; */
   font-family: var(--font-primary);
   background: var(--background-primary);
   height: 100%;
